@@ -97,7 +97,6 @@ all_searches = []
 for search in client.search.retrieve(
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     page=1,
-    page_size=15,
 ):
     # Do something with search here
     all_searches.append(search)
@@ -119,7 +118,6 @@ async def main() -> None:
     async for search in client.search.retrieve(
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
         page=1,
-        page_size=15,
     ):
         all_searches.append(search)
     print(all_searches)
@@ -134,7 +132,6 @@ Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get
 first_page = await client.search.retrieve(
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     page=1,
-    page_size=15,
 )
 if first_page.has_next_page():
     print(f"will fetch next page using these details: {first_page.next_page_info()}")
@@ -150,7 +147,6 @@ Or just work directly with the returned data:
 first_page = await client.search.retrieve(
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     page=1,
-    page_size=15,
 )
 for search in first_page.results:
     print(search.chunk_signature)
