@@ -17,7 +17,7 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncSearchPageQuery, AsyncSearchPageQuery
+from ..pagination import SyncSearchPage, AsyncSearchPage
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.text_result import TextResult
 from ..types.search_response import SearchResponse
@@ -32,7 +32,7 @@ class SearchResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
         return SearchResourceWithRawResponse(self)
 
@@ -41,7 +41,7 @@ class SearchResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#with_streaming_response
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
         return SearchResourceWithStreamingResponse(self)
 
@@ -57,7 +57,7 @@ class SearchResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncSearchPageQuery[TextResult]:
+    ) -> SyncSearchPage[TextResult]:
         """Retrieve additional pages from a previous search.
 
         This endpoint enables
@@ -82,7 +82,7 @@ class SearchResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/search",
-            page=SyncSearchPageQuery[TextResult],
+            page=SyncSearchPage[TextResult],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -178,7 +178,7 @@ class AsyncSearchResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
         return AsyncSearchResourceWithRawResponse(self)
 
@@ -187,7 +187,7 @@ class AsyncSearchResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#with_streaming_response
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
         return AsyncSearchResourceWithStreamingResponse(self)
 
@@ -203,7 +203,7 @@ class AsyncSearchResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[TextResult, AsyncSearchPageQuery[TextResult]]:
+    ) -> AsyncPaginator[TextResult, AsyncSearchPage[TextResult]]:
         """Retrieve additional pages from a previous search.
 
         This endpoint enables
@@ -228,7 +228,7 @@ class AsyncSearchResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/search",
-            page=AsyncSearchPageQuery[TextResult],
+            page=AsyncSearchPage[TextResult],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
