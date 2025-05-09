@@ -75,8 +75,8 @@ class TestStorageObject:
     @parametrize
     def test_method_delete(self, client: Raindrop) -> None:
         storage_object = client.storage_object.delete(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         )
         assert_matches_type(StorageObjectDeleteResponse, storage_object, path=["response"])
 
@@ -84,8 +84,8 @@ class TestStorageObject:
     @parametrize
     def test_raw_response_delete(self, client: Raindrop) -> None:
         response = client.storage_object.with_raw_response.delete(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         )
 
         assert response.is_closed is True
@@ -97,8 +97,8 @@ class TestStorageObject:
     @parametrize
     def test_streaming_response_delete(self, client: Raindrop) -> None:
         with client.storage_object.with_streaming_response.delete(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -113,24 +113,26 @@ class TestStorageObject:
     def test_path_params_delete(self, client: Raindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
             client.storage_object.with_raw_response.delete(
-                key="key",
+                key="my-key",
                 bucket="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
             client.storage_object.with_raw_response.delete(
                 key="",
-                bucket="bucket",
+                bucket="01jtgtrd37acrqf7k24dggg31s",
             )
 
     @pytest.mark.skip()
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_method_download(self, client: Raindrop, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/object/01jtgtrd37acrqf7k24dggg31s/my-key").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
         storage_object = client.storage_object.download(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         )
         assert storage_object.is_closed
         assert storage_object.json() == {"foo": "bar"}
@@ -141,11 +143,13 @@ class TestStorageObject:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response_download(self, client: Raindrop, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/object/01jtgtrd37acrqf7k24dggg31s/my-key").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
 
         storage_object = client.storage_object.with_raw_response.download(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         )
 
         assert storage_object.is_closed is True
@@ -157,10 +161,12 @@ class TestStorageObject:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_streaming_response_download(self, client: Raindrop, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/object/01jtgtrd37acrqf7k24dggg31s/my-key").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
         with client.storage_object.with_streaming_response.download(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         ) as storage_object:
             assert not storage_object.is_closed
             assert storage_object.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -177,22 +183,22 @@ class TestStorageObject:
     def test_path_params_download(self, client: Raindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
             client.storage_object.with_raw_response.download(
-                key="key",
+                key="my-key",
                 bucket="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
             client.storage_object.with_raw_response.download(
                 key="",
-                bucket="bucket",
+                bucket="01jtgtrd37acrqf7k24dggg31s",
             )
 
     @pytest.mark.skip()
     @parametrize
     def test_method_upload(self, client: Raindrop) -> None:
         storage_object = client.storage_object.upload(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
             body=b"raw file contents",
         )
         assert_matches_type(StorageObjectUploadResponse, storage_object, path=["response"])
@@ -201,8 +207,8 @@ class TestStorageObject:
     @parametrize
     def test_raw_response_upload(self, client: Raindrop) -> None:
         response = client.storage_object.with_raw_response.upload(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
             body=b"raw file contents",
         )
 
@@ -215,8 +221,8 @@ class TestStorageObject:
     @parametrize
     def test_streaming_response_upload(self, client: Raindrop) -> None:
         with client.storage_object.with_streaming_response.upload(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
             body=b"raw file contents",
         ) as response:
             assert not response.is_closed
@@ -232,7 +238,7 @@ class TestStorageObject:
     def test_path_params_upload(self, client: Raindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
             client.storage_object.with_raw_response.upload(
-                key="key",
+                key="my-key",
                 bucket="",
                 body=b"raw file contents",
             )
@@ -240,7 +246,7 @@ class TestStorageObject:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
             client.storage_object.with_raw_response.upload(
                 key="",
-                bucket="bucket",
+                bucket="01jtgtrd37acrqf7k24dggg31s",
                 body=b"raw file contents",
             )
 
@@ -294,8 +300,8 @@ class TestAsyncStorageObject:
     @parametrize
     async def test_method_delete(self, async_client: AsyncRaindrop) -> None:
         storage_object = await async_client.storage_object.delete(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         )
         assert_matches_type(StorageObjectDeleteResponse, storage_object, path=["response"])
 
@@ -303,8 +309,8 @@ class TestAsyncStorageObject:
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.storage_object.with_raw_response.delete(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         )
 
         assert response.is_closed is True
@@ -316,8 +322,8 @@ class TestAsyncStorageObject:
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncRaindrop) -> None:
         async with async_client.storage_object.with_streaming_response.delete(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -332,24 +338,26 @@ class TestAsyncStorageObject:
     async def test_path_params_delete(self, async_client: AsyncRaindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
             await async_client.storage_object.with_raw_response.delete(
-                key="key",
+                key="my-key",
                 bucket="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
             await async_client.storage_object.with_raw_response.delete(
                 key="",
-                bucket="bucket",
+                bucket="01jtgtrd37acrqf7k24dggg31s",
             )
 
     @pytest.mark.skip()
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_method_download(self, async_client: AsyncRaindrop, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/object/01jtgtrd37acrqf7k24dggg31s/my-key").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
         storage_object = await async_client.storage_object.download(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         )
         assert storage_object.is_closed
         assert await storage_object.json() == {"foo": "bar"}
@@ -360,11 +368,13 @@ class TestAsyncStorageObject:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_raw_response_download(self, async_client: AsyncRaindrop, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/object/01jtgtrd37acrqf7k24dggg31s/my-key").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
 
         storage_object = await async_client.storage_object.with_raw_response.download(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         )
 
         assert storage_object.is_closed is True
@@ -376,10 +386,12 @@ class TestAsyncStorageObject:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_download(self, async_client: AsyncRaindrop, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/object/01jtgtrd37acrqf7k24dggg31s/my-key").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
         async with async_client.storage_object.with_streaming_response.download(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
         ) as storage_object:
             assert not storage_object.is_closed
             assert storage_object.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -396,22 +408,22 @@ class TestAsyncStorageObject:
     async def test_path_params_download(self, async_client: AsyncRaindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
             await async_client.storage_object.with_raw_response.download(
-                key="key",
+                key="my-key",
                 bucket="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
             await async_client.storage_object.with_raw_response.download(
                 key="",
-                bucket="bucket",
+                bucket="01jtgtrd37acrqf7k24dggg31s",
             )
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_upload(self, async_client: AsyncRaindrop) -> None:
         storage_object = await async_client.storage_object.upload(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
             body=b"raw file contents",
         )
         assert_matches_type(StorageObjectUploadResponse, storage_object, path=["response"])
@@ -420,8 +432,8 @@ class TestAsyncStorageObject:
     @parametrize
     async def test_raw_response_upload(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.storage_object.with_raw_response.upload(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
             body=b"raw file contents",
         )
 
@@ -434,8 +446,8 @@ class TestAsyncStorageObject:
     @parametrize
     async def test_streaming_response_upload(self, async_client: AsyncRaindrop) -> None:
         async with async_client.storage_object.with_streaming_response.upload(
-            key="key",
-            bucket="bucket",
+            key="my-key",
+            bucket="01jtgtrd37acrqf7k24dggg31s",
             body=b"raw file contents",
         ) as response:
             assert not response.is_closed
@@ -451,7 +463,7 @@ class TestAsyncStorageObject:
     async def test_path_params_upload(self, async_client: AsyncRaindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
             await async_client.storage_object.with_raw_response.upload(
-                key="key",
+                key="my-key",
                 bucket="",
                 body=b"raw file contents",
             )
@@ -459,6 +471,6 @@ class TestAsyncStorageObject:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
             await async_client.storage_object.with_raw_response.upload(
                 key="",
-                bucket="bucket",
+                bucket="01jtgtrd37acrqf7k24dggg31s",
                 body=b"raw file contents",
             )

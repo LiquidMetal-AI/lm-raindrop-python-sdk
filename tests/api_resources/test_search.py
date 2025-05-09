@@ -19,49 +19,9 @@ class TestSearch:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_create(self, client: Raindrop) -> None:
-        search = client.search.create(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
-        )
-        assert_matches_type(SearchResponse, search, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_create(self, client: Raindrop) -> None:
-        response = client.search.with_raw_response.create(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        search = response.parse()
-        assert_matches_type(SearchResponse, search, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_create(self, client: Raindrop) -> None:
-        with client.search.with_streaming_response.create(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            search = response.parse()
-            assert_matches_type(SearchResponse, search, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
     def test_method_retrieve(self, client: Raindrop) -> None:
         search = client.search.retrieve(
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
         assert_matches_type(SearchResponse, search, path=["response"])
 
@@ -69,9 +29,9 @@ class TestSearch:
     @parametrize
     def test_method_retrieve_with_all_params(self, client: Raindrop) -> None:
         search = client.search.retrieve(
-            request_id="request_id",
-            page=0,
-            page_size=0,
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+            page=2,
+            page_size=10,
         )
         assert_matches_type(SearchResponse, search, path=["response"])
 
@@ -79,7 +39,7 @@ class TestSearch:
     @parametrize
     def test_raw_response_retrieve(self, client: Raindrop) -> None:
         response = client.search.with_raw_response.retrieve(
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
         assert response.is_closed is True
@@ -91,7 +51,47 @@ class TestSearch:
     @parametrize
     def test_streaming_response_retrieve(self, client: Raindrop) -> None:
         with client.search.with_streaming_response.retrieve(
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            search = response.parse()
+            assert_matches_type(SearchResponse, search, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_find(self, client: Raindrop) -> None:
+        search = client.search.find(
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        )
+        assert_matches_type(SearchResponse, search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_find(self, client: Raindrop) -> None:
+        response = client.search.with_raw_response.find(
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        search = response.parse()
+        assert_matches_type(SearchResponse, search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_find(self, client: Raindrop) -> None:
+        with client.search.with_streaming_response.find(
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -107,49 +107,9 @@ class TestAsyncSearch:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_create(self, async_client: AsyncRaindrop) -> None:
-        search = await async_client.search.create(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
-        )
-        assert_matches_type(SearchResponse, search, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_create(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.search.with_raw_response.create(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        search = await response.parse()
-        assert_matches_type(SearchResponse, search, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.search.with_streaming_response.create(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            search = await response.parse()
-            assert_matches_type(SearchResponse, search, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
     async def test_method_retrieve(self, async_client: AsyncRaindrop) -> None:
         search = await async_client.search.retrieve(
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
         assert_matches_type(SearchResponse, search, path=["response"])
 
@@ -157,9 +117,9 @@ class TestAsyncSearch:
     @parametrize
     async def test_method_retrieve_with_all_params(self, async_client: AsyncRaindrop) -> None:
         search = await async_client.search.retrieve(
-            request_id="request_id",
-            page=0,
-            page_size=0,
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+            page=2,
+            page_size=10,
         )
         assert_matches_type(SearchResponse, search, path=["response"])
 
@@ -167,7 +127,7 @@ class TestAsyncSearch:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.search.with_raw_response.retrieve(
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
         assert response.is_closed is True
@@ -179,7 +139,47 @@ class TestAsyncSearch:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncRaindrop) -> None:
         async with async_client.search.with_streaming_response.retrieve(
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            search = await response.parse()
+            assert_matches_type(SearchResponse, search, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_find(self, async_client: AsyncRaindrop) -> None:
+        search = await async_client.search.find(
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        )
+        assert_matches_type(SearchResponse, search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_find(self, async_client: AsyncRaindrop) -> None:
+        response = await async_client.search.with_raw_response.find(
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        search = await response.parse()
+        assert_matches_type(SearchResponse, search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_find(self, async_client: AsyncRaindrop) -> None:
+        async with async_client.search.with_streaming_response.find(
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

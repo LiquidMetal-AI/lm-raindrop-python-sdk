@@ -6,7 +6,7 @@ from typing import List
 
 import httpx
 
-from ..types import chunk_search_execute_params
+from ..types import chunk_search_find_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,7 +18,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.chunk_search_execute_response import ChunkSearchExecuteResponse
+from ..types.chunk_search_find_response import ChunkSearchFindResponse
 
 __all__ = ["ChunkSearchResource", "AsyncChunkSearchResource"]
 
@@ -43,7 +43,7 @@ class ChunkSearchResource(SyncAPIResource):
         """
         return ChunkSearchResourceWithStreamingResponse(self)
 
-    def execute(
+    def find(
         self,
         *,
         bucket_ids: List[str],
@@ -55,7 +55,7 @@ class ChunkSearchResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ChunkSearchExecuteResponse:
+    ) -> ChunkSearchFindResponse:
         """
         Chunk Search provides search capabilities that serve as a complete drop-in
         replacement for traditional RAG pipelines. This system enables AI agents to
@@ -91,12 +91,12 @@ class ChunkSearchResource(SyncAPIResource):
                     "input": input,
                     "request_id": request_id,
                 },
-                chunk_search_execute_params.ChunkSearchExecuteParams,
+                chunk_search_find_params.ChunkSearchFindParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ChunkSearchExecuteResponse,
+            cast_to=ChunkSearchFindResponse,
         )
 
 
@@ -120,7 +120,7 @@ class AsyncChunkSearchResource(AsyncAPIResource):
         """
         return AsyncChunkSearchResourceWithStreamingResponse(self)
 
-    async def execute(
+    async def find(
         self,
         *,
         bucket_ids: List[str],
@@ -132,7 +132,7 @@ class AsyncChunkSearchResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ChunkSearchExecuteResponse:
+    ) -> ChunkSearchFindResponse:
         """
         Chunk Search provides search capabilities that serve as a complete drop-in
         replacement for traditional RAG pipelines. This system enables AI agents to
@@ -168,12 +168,12 @@ class AsyncChunkSearchResource(AsyncAPIResource):
                     "input": input,
                     "request_id": request_id,
                 },
-                chunk_search_execute_params.ChunkSearchExecuteParams,
+                chunk_search_find_params.ChunkSearchFindParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ChunkSearchExecuteResponse,
+            cast_to=ChunkSearchFindResponse,
         )
 
 
@@ -181,8 +181,8 @@ class ChunkSearchResourceWithRawResponse:
     def __init__(self, chunk_search: ChunkSearchResource) -> None:
         self._chunk_search = chunk_search
 
-        self.execute = to_raw_response_wrapper(
-            chunk_search.execute,
+        self.find = to_raw_response_wrapper(
+            chunk_search.find,
         )
 
 
@@ -190,8 +190,8 @@ class AsyncChunkSearchResourceWithRawResponse:
     def __init__(self, chunk_search: AsyncChunkSearchResource) -> None:
         self._chunk_search = chunk_search
 
-        self.execute = async_to_raw_response_wrapper(
-            chunk_search.execute,
+        self.find = async_to_raw_response_wrapper(
+            chunk_search.find,
         )
 
 
@@ -199,8 +199,8 @@ class ChunkSearchResourceWithStreamingResponse:
     def __init__(self, chunk_search: ChunkSearchResource) -> None:
         self._chunk_search = chunk_search
 
-        self.execute = to_streamed_response_wrapper(
-            chunk_search.execute,
+        self.find = to_streamed_response_wrapper(
+            chunk_search.find,
         )
 
 
@@ -208,6 +208,6 @@ class AsyncChunkSearchResourceWithStreamingResponse:
     def __init__(self, chunk_search: AsyncChunkSearchResource) -> None:
         self._chunk_search = chunk_search
 
-        self.execute = async_to_streamed_response_wrapper(
-            chunk_search.execute,
+        self.find = async_to_streamed_response_wrapper(
+            chunk_search.find,
         )

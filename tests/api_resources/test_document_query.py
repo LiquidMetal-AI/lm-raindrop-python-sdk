@@ -9,7 +9,7 @@ import pytest
 
 from lm_raindrop import Raindrop, AsyncRaindrop
 from tests.utils import assert_matches_type
-from lm_raindrop.types import DocumentQueryCreateResponse
+from lm_raindrop.types import DocumentQueryAskResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -19,44 +19,44 @@ class TestDocumentQuery:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_create(self, client: Raindrop) -> None:
-        document_query = client.document_query.create(
-            bucket="bucket",
-            input="input",
+    def test_method_ask(self, client: Raindrop) -> None:
+        document_query = client.document_query.ask(
+            bucket="01jtgtrd37acrqf7k24dggg31s",
+            input="What is the key points in this document?",
             object_id="object_id",
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
-        assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
+        assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_create(self, client: Raindrop) -> None:
-        response = client.document_query.with_raw_response.create(
-            bucket="bucket",
-            input="input",
+    def test_raw_response_ask(self, client: Raindrop) -> None:
+        response = client.document_query.with_raw_response.ask(
+            bucket="01jtgtrd37acrqf7k24dggg31s",
+            input="What is the key points in this document?",
             object_id="object_id",
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         document_query = response.parse()
-        assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
+        assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_create(self, client: Raindrop) -> None:
-        with client.document_query.with_streaming_response.create(
-            bucket="bucket",
-            input="input",
+    def test_streaming_response_ask(self, client: Raindrop) -> None:
+        with client.document_query.with_streaming_response.ask(
+            bucket="01jtgtrd37acrqf7k24dggg31s",
+            input="What is the key points in this document?",
             object_id="object_id",
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             document_query = response.parse()
-            assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
+            assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -66,43 +66,43 @@ class TestAsyncDocumentQuery:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_create(self, async_client: AsyncRaindrop) -> None:
-        document_query = await async_client.document_query.create(
-            bucket="bucket",
-            input="input",
+    async def test_method_ask(self, async_client: AsyncRaindrop) -> None:
+        document_query = await async_client.document_query.ask(
+            bucket="01jtgtrd37acrqf7k24dggg31s",
+            input="What is the key points in this document?",
             object_id="object_id",
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
-        assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
+        assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.document_query.with_raw_response.create(
-            bucket="bucket",
-            input="input",
+    async def test_raw_response_ask(self, async_client: AsyncRaindrop) -> None:
+        response = await async_client.document_query.with_raw_response.ask(
+            bucket="01jtgtrd37acrqf7k24dggg31s",
+            input="What is the key points in this document?",
             object_id="object_id",
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         document_query = await response.parse()
-        assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
+        assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.document_query.with_streaming_response.create(
-            bucket="bucket",
-            input="input",
+    async def test_streaming_response_ask(self, async_client: AsyncRaindrop) -> None:
+        async with async_client.document_query.with_streaming_response.ask(
+            bucket="01jtgtrd37acrqf7k24dggg31s",
+            input="What is the key points in this document?",
             object_id="object_id",
-            request_id="request_id",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             document_query = await response.parse()
-            assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
+            assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
         assert cast(Any, response.is_closed) is True
