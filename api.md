@@ -8,7 +8,7 @@ from lm_raindrop.types import SearchResponse, TextResult
 
 Methods:
 
-- <code title="get /v1/search">client.search.<a href="./src/lm_raindrop/resources/search.py">retrieve</a>(\*\*<a href="src/lm_raindrop/types/search_retrieve_params.py">params</a>) -> <a href="./src/lm_raindrop/types/search_response.py">SearchResponse</a></code>
+- <code title="get /v1/search">client.search.<a href="./src/lm_raindrop/resources/search.py">retrieve</a>(\*\*<a href="src/lm_raindrop/types/search_retrieve_params.py">params</a>) -> <a href="./src/lm_raindrop/types/text_result.py">SyncSearchPage[TextResult]</a></code>
 - <code title="post /v1/search">client.search.<a href="./src/lm_raindrop/resources/search.py">find</a>(\*\*<a href="src/lm_raindrop/types/search_find_params.py">params</a>) -> <a href="./src/lm_raindrop/types/search_response.py">SearchResponse</a></code>
 
 # DocumentQuery

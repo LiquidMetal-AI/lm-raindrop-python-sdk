@@ -81,6 +81,83 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
+## Pagination
+
+List methods in the Raindrop API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```python
+from lm_raindrop import Raindrop
+
+client = Raindrop()
+
+all_searches = []
+# Automatically fetches more pages as needed.
+for search in client.search.retrieve(
+    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+    page=1,
+    page_size=15,
+):
+    # Do something with search here
+    all_searches.append(search)
+print(all_searches)
+```
+
+Or, asynchronously:
+
+```python
+import asyncio
+from lm_raindrop import AsyncRaindrop
+
+client = AsyncRaindrop()
+
+
+async def main() -> None:
+    all_searches = []
+    # Iterate through items across all pages, issuing requests as needed.
+    async for search in client.search.retrieve(
+        request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+        page=1,
+        page_size=15,
+    ):
+        all_searches.append(search)
+    print(all_searches)
+
+
+asyncio.run(main())
+```
+
+Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
+
+```python
+first_page = await client.search.retrieve(
+    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+    page=1,
+    page_size=15,
+)
+if first_page.has_next_page():
+    print(f"will fetch next page using these details: {first_page.next_page_info()}")
+    next_page = await first_page.get_next_page()
+    print(f"number of items we just fetched: {len(next_page.results)}")
+
+# Remove `await` for non-async usage.
+```
+
+Or just work directly with the returned data:
+
+```python
+first_page = await client.search.retrieve(
+    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+    page=1,
+    page_size=15,
+)
+for search in first_page.results:
+    print(search.chunk_signature)
+
+# Remove `await` for non-async usage.
+```
+
 ## Handling errors
 
 When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `lm_raindrop.APIConnectionError` is raised.
