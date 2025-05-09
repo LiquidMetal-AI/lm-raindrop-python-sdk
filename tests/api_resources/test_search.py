@@ -10,7 +10,7 @@ import pytest
 from lm_raindrop import Raindrop, AsyncRaindrop
 from tests.utils import assert_matches_type
 from lm_raindrop.types import TextResult, SearchResponse
-from lm_raindrop.pagination import SyncSearchPage, AsyncSearchPage
+from lm_raindrop.pagination import SyncSearchPageQuery, AsyncSearchPageQuery
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -24,7 +24,7 @@ class TestSearch:
         search = client.search.retrieve(
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
-        assert_matches_type(SyncSearchPage[TextResult], search, path=["response"])
+        assert_matches_type(SyncSearchPageQuery[TextResult], search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -34,7 +34,7 @@ class TestSearch:
             page=2,
             page_size=10,
         )
-        assert_matches_type(SyncSearchPage[TextResult], search, path=["response"])
+        assert_matches_type(SyncSearchPageQuery[TextResult], search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -46,7 +46,7 @@ class TestSearch:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         search = response.parse()
-        assert_matches_type(SyncSearchPage[TextResult], search, path=["response"])
+        assert_matches_type(SyncSearchPageQuery[TextResult], search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -58,7 +58,7 @@ class TestSearch:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             search = response.parse()
-            assert_matches_type(SyncSearchPage[TextResult], search, path=["response"])
+            assert_matches_type(SyncSearchPageQuery[TextResult], search, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -112,7 +112,7 @@ class TestAsyncSearch:
         search = await async_client.search.retrieve(
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
-        assert_matches_type(AsyncSearchPage[TextResult], search, path=["response"])
+        assert_matches_type(AsyncSearchPageQuery[TextResult], search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -122,7 +122,7 @@ class TestAsyncSearch:
             page=2,
             page_size=10,
         )
-        assert_matches_type(AsyncSearchPage[TextResult], search, path=["response"])
+        assert_matches_type(AsyncSearchPageQuery[TextResult], search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -134,7 +134,7 @@ class TestAsyncSearch:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         search = await response.parse()
-        assert_matches_type(AsyncSearchPage[TextResult], search, path=["response"])
+        assert_matches_type(AsyncSearchPageQuery[TextResult], search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -146,7 +146,7 @@ class TestAsyncSearch:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             search = await response.parse()
-            assert_matches_type(AsyncSearchPage[TextResult], search, path=["response"])
+            assert_matches_type(AsyncSearchPageQuery[TextResult], search, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
