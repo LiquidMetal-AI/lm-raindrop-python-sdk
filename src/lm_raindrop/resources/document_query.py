@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import document_query_ask_params
+from ..types import document_query_create_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -16,7 +16,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.document_query_ask_response import DocumentQueryAskResponse
+from ..types.document_query_create_response import DocumentQueryCreateResponse
 
 __all__ = ["DocumentQueryResource", "AsyncDocumentQueryResource"]
 
@@ -28,7 +28,7 @@ class DocumentQueryResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
         return DocumentQueryResourceWithRawResponse(self)
 
@@ -37,11 +37,11 @@ class DocumentQueryResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#with_streaming_response
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
         return DocumentQueryResourceWithStreamingResponse(self)
 
-    def ask(
+    def create(
         self,
         *,
         bucket: str,
@@ -54,7 +54,7 @@ class DocumentQueryResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentQueryAskResponse:
+    ) -> DocumentQueryCreateResponse:
         """
         Enables natural conversational interactions with documents stored in
         SmartBuckets. This endpoint allows users to ask questions, request summaries,
@@ -106,12 +106,12 @@ class DocumentQueryResource(SyncAPIResource):
                     "object_id": object_id,
                     "request_id": request_id,
                 },
-                document_query_ask_params.DocumentQueryAskParams,
+                document_query_create_params.DocumentQueryCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentQueryAskResponse,
+            cast_to=DocumentQueryCreateResponse,
         )
 
 
@@ -122,7 +122,7 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
         return AsyncDocumentQueryResourceWithRawResponse(self)
 
@@ -131,11 +131,11 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#with_streaming_response
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
         return AsyncDocumentQueryResourceWithStreamingResponse(self)
 
-    async def ask(
+    async def create(
         self,
         *,
         bucket: str,
@@ -148,7 +148,7 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentQueryAskResponse:
+    ) -> DocumentQueryCreateResponse:
         """
         Enables natural conversational interactions with documents stored in
         SmartBuckets. This endpoint allows users to ask questions, request summaries,
@@ -200,12 +200,12 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
                     "object_id": object_id,
                     "request_id": request_id,
                 },
-                document_query_ask_params.DocumentQueryAskParams,
+                document_query_create_params.DocumentQueryCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentQueryAskResponse,
+            cast_to=DocumentQueryCreateResponse,
         )
 
 
@@ -213,8 +213,8 @@ class DocumentQueryResourceWithRawResponse:
     def __init__(self, document_query: DocumentQueryResource) -> None:
         self._document_query = document_query
 
-        self.ask = to_raw_response_wrapper(
-            document_query.ask,
+        self.create = to_raw_response_wrapper(
+            document_query.create,
         )
 
 
@@ -222,8 +222,8 @@ class AsyncDocumentQueryResourceWithRawResponse:
     def __init__(self, document_query: AsyncDocumentQueryResource) -> None:
         self._document_query = document_query
 
-        self.ask = async_to_raw_response_wrapper(
-            document_query.ask,
+        self.create = async_to_raw_response_wrapper(
+            document_query.create,
         )
 
 
@@ -231,8 +231,8 @@ class DocumentQueryResourceWithStreamingResponse:
     def __init__(self, document_query: DocumentQueryResource) -> None:
         self._document_query = document_query
 
-        self.ask = to_streamed_response_wrapper(
-            document_query.ask,
+        self.create = to_streamed_response_wrapper(
+            document_query.create,
         )
 
 
@@ -240,6 +240,6 @@ class AsyncDocumentQueryResourceWithStreamingResponse:
     def __init__(self, document_query: AsyncDocumentQueryResource) -> None:
         self._document_query = document_query
 
-        self.ask = async_to_streamed_response_wrapper(
-            document_query.ask,
+        self.create = async_to_streamed_response_wrapper(
+            document_query.create,
         )

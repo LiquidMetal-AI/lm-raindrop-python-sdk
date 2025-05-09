@@ -6,10 +6,10 @@ from typing_extensions import Required, TypedDict
 
 from .._types import FileTypes
 
-__all__ = ["ObjectUploadParams"]
+__all__ = ["StorageObjectUploadParams"]
 
 
-class ObjectUploadParams(TypedDict, total=False):
+class StorageObjectUploadParams(TypedDict, total=False):
     bucket: Required[str]
 
     body: Required[FileTypes]

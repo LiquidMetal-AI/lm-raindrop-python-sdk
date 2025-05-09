@@ -9,10 +9,14 @@ import httpx
 import pytest
 from respx import MockRouter
 
-from raindrop import Raindrop, AsyncRaindrop
+from lm_raindrop import Raindrop, AsyncRaindrop
 from tests.utils import assert_matches_type
-from raindrop.types import ObjectListResponse, ObjectDeleteResponse, ObjectUploadResponse
-from raindrop._response import (
+from lm_raindrop.types import (
+    StorageObjectListResponse,
+    StorageObjectDeleteResponse,
+    StorageObjectUploadResponse,
+)
+from lm_raindrop._response import (
     BinaryAPIResponse,
     AsyncBinaryAPIResponse,
     StreamedBinaryAPIResponse,
@@ -22,40 +26,40 @@ from raindrop._response import (
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestObject:
+class TestStorageObject:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @pytest.mark.skip()
     @parametrize
     def test_method_list(self, client: Raindrop) -> None:
-        object_ = client.object.list(
+        storage_object = client.storage_object.list(
             "bucket",
         )
-        assert_matches_type(ObjectListResponse, object_, path=["response"])
+        assert_matches_type(StorageObjectListResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_list(self, client: Raindrop) -> None:
-        response = client.object.with_raw_response.list(
+        response = client.storage_object.with_raw_response.list(
             "bucket",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        object_ = response.parse()
-        assert_matches_type(ObjectListResponse, object_, path=["response"])
+        storage_object = response.parse()
+        assert_matches_type(StorageObjectListResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_list(self, client: Raindrop) -> None:
-        with client.object.with_streaming_response.list(
+        with client.storage_object.with_streaming_response.list(
             "bucket",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            object_ = response.parse()
-            assert_matches_type(ObjectListResponse, object_, path=["response"])
+            storage_object = response.parse()
+            assert_matches_type(StorageObjectListResponse, storage_object, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -63,44 +67,44 @@ class TestObject:
     @parametrize
     def test_path_params_list(self, client: Raindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
-            client.object.with_raw_response.list(
+            client.storage_object.with_raw_response.list(
                 "",
             )
 
     @pytest.mark.skip()
     @parametrize
     def test_method_delete(self, client: Raindrop) -> None:
-        object_ = client.object.delete(
+        storage_object = client.storage_object.delete(
             key="key",
             bucket="bucket",
         )
-        assert_matches_type(ObjectDeleteResponse, object_, path=["response"])
+        assert_matches_type(StorageObjectDeleteResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_delete(self, client: Raindrop) -> None:
-        response = client.object.with_raw_response.delete(
+        response = client.storage_object.with_raw_response.delete(
             key="key",
             bucket="bucket",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        object_ = response.parse()
-        assert_matches_type(ObjectDeleteResponse, object_, path=["response"])
+        storage_object = response.parse()
+        assert_matches_type(StorageObjectDeleteResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_delete(self, client: Raindrop) -> None:
-        with client.object.with_streaming_response.delete(
+        with client.storage_object.with_streaming_response.delete(
             key="key",
             bucket="bucket",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            object_ = response.parse()
-            assert_matches_type(ObjectDeleteResponse, object_, path=["response"])
+            storage_object = response.parse()
+            assert_matches_type(StorageObjectDeleteResponse, storage_object, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -108,13 +112,13 @@ class TestObject:
     @parametrize
     def test_path_params_delete(self, client: Raindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
-            client.object.with_raw_response.delete(
+            client.storage_object.with_raw_response.delete(
                 key="key",
                 bucket="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
-            client.object.with_raw_response.delete(
+            client.storage_object.with_raw_response.delete(
                 key="",
                 bucket="bucket",
             )
@@ -124,14 +128,14 @@ class TestObject:
     @pytest.mark.respx(base_url=base_url)
     def test_method_download(self, client: Raindrop, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        object_ = client.object.download(
+        storage_object = client.storage_object.download(
             key="key",
             bucket="bucket",
         )
-        assert object_.is_closed
-        assert object_.json() == {"foo": "bar"}
-        assert cast(Any, object_.is_closed) is True
-        assert isinstance(object_, BinaryAPIResponse)
+        assert storage_object.is_closed
+        assert storage_object.json() == {"foo": "bar"}
+        assert cast(Any, storage_object.is_closed) is True
+        assert isinstance(storage_object, BinaryAPIResponse)
 
     @pytest.mark.skip()
     @parametrize
@@ -139,46 +143,46 @@ class TestObject:
     def test_raw_response_download(self, client: Raindrop, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        object_ = client.object.with_raw_response.download(
+        storage_object = client.storage_object.with_raw_response.download(
             key="key",
             bucket="bucket",
         )
 
-        assert object_.is_closed is True
-        assert object_.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert object_.json() == {"foo": "bar"}
-        assert isinstance(object_, BinaryAPIResponse)
+        assert storage_object.is_closed is True
+        assert storage_object.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert storage_object.json() == {"foo": "bar"}
+        assert isinstance(storage_object, BinaryAPIResponse)
 
     @pytest.mark.skip()
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_streaming_response_download(self, client: Raindrop, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        with client.object.with_streaming_response.download(
+        with client.storage_object.with_streaming_response.download(
             key="key",
             bucket="bucket",
-        ) as object_:
-            assert not object_.is_closed
-            assert object_.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as storage_object:
+            assert not storage_object.is_closed
+            assert storage_object.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert object_.json() == {"foo": "bar"}
-            assert cast(Any, object_.is_closed) is True
-            assert isinstance(object_, StreamedBinaryAPIResponse)
+            assert storage_object.json() == {"foo": "bar"}
+            assert cast(Any, storage_object.is_closed) is True
+            assert isinstance(storage_object, StreamedBinaryAPIResponse)
 
-        assert cast(Any, object_.is_closed) is True
+        assert cast(Any, storage_object.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_path_params_download(self, client: Raindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
-            client.object.with_raw_response.download(
+            client.storage_object.with_raw_response.download(
                 key="key",
                 bucket="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
-            client.object.with_raw_response.download(
+            client.storage_object.with_raw_response.download(
                 key="",
                 bucket="bucket",
             )
@@ -186,17 +190,17 @@ class TestObject:
     @pytest.mark.skip()
     @parametrize
     def test_method_upload(self, client: Raindrop) -> None:
-        object_ = client.object.upload(
+        storage_object = client.storage_object.upload(
             key="key",
             bucket="bucket",
             body=b"raw file contents",
         )
-        assert_matches_type(ObjectUploadResponse, object_, path=["response"])
+        assert_matches_type(StorageObjectUploadResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_upload(self, client: Raindrop) -> None:
-        response = client.object.with_raw_response.upload(
+        response = client.storage_object.with_raw_response.upload(
             key="key",
             bucket="bucket",
             body=b"raw file contents",
@@ -204,13 +208,13 @@ class TestObject:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        object_ = response.parse()
-        assert_matches_type(ObjectUploadResponse, object_, path=["response"])
+        storage_object = response.parse()
+        assert_matches_type(StorageObjectUploadResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_upload(self, client: Raindrop) -> None:
-        with client.object.with_streaming_response.upload(
+        with client.storage_object.with_streaming_response.upload(
             key="key",
             bucket="bucket",
             body=b"raw file contents",
@@ -218,8 +222,8 @@ class TestObject:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            object_ = response.parse()
-            assert_matches_type(ObjectUploadResponse, object_, path=["response"])
+            storage_object = response.parse()
+            assert_matches_type(StorageObjectUploadResponse, storage_object, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -227,54 +231,54 @@ class TestObject:
     @parametrize
     def test_path_params_upload(self, client: Raindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
-            client.object.with_raw_response.upload(
+            client.storage_object.with_raw_response.upload(
                 key="key",
                 bucket="",
                 body=b"raw file contents",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
-            client.object.with_raw_response.upload(
+            client.storage_object.with_raw_response.upload(
                 key="",
                 bucket="bucket",
                 body=b"raw file contents",
             )
 
 
-class TestAsyncObject:
+class TestAsyncStorageObject:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_list(self, async_client: AsyncRaindrop) -> None:
-        object_ = await async_client.object.list(
+        storage_object = await async_client.storage_object.list(
             "bucket",
         )
-        assert_matches_type(ObjectListResponse, object_, path=["response"])
+        assert_matches_type(StorageObjectListResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.object.with_raw_response.list(
+        response = await async_client.storage_object.with_raw_response.list(
             "bucket",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        object_ = await response.parse()
-        assert_matches_type(ObjectListResponse, object_, path=["response"])
+        storage_object = await response.parse()
+        assert_matches_type(StorageObjectListResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.object.with_streaming_response.list(
+        async with async_client.storage_object.with_streaming_response.list(
             "bucket",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            object_ = await response.parse()
-            assert_matches_type(ObjectListResponse, object_, path=["response"])
+            storage_object = await response.parse()
+            assert_matches_type(StorageObjectListResponse, storage_object, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -282,44 +286,44 @@ class TestAsyncObject:
     @parametrize
     async def test_path_params_list(self, async_client: AsyncRaindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
-            await async_client.object.with_raw_response.list(
+            await async_client.storage_object.with_raw_response.list(
                 "",
             )
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_delete(self, async_client: AsyncRaindrop) -> None:
-        object_ = await async_client.object.delete(
+        storage_object = await async_client.storage_object.delete(
             key="key",
             bucket="bucket",
         )
-        assert_matches_type(ObjectDeleteResponse, object_, path=["response"])
+        assert_matches_type(StorageObjectDeleteResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.object.with_raw_response.delete(
+        response = await async_client.storage_object.with_raw_response.delete(
             key="key",
             bucket="bucket",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        object_ = await response.parse()
-        assert_matches_type(ObjectDeleteResponse, object_, path=["response"])
+        storage_object = await response.parse()
+        assert_matches_type(StorageObjectDeleteResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.object.with_streaming_response.delete(
+        async with async_client.storage_object.with_streaming_response.delete(
             key="key",
             bucket="bucket",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            object_ = await response.parse()
-            assert_matches_type(ObjectDeleteResponse, object_, path=["response"])
+            storage_object = await response.parse()
+            assert_matches_type(StorageObjectDeleteResponse, storage_object, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -327,13 +331,13 @@ class TestAsyncObject:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncRaindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
-            await async_client.object.with_raw_response.delete(
+            await async_client.storage_object.with_raw_response.delete(
                 key="key",
                 bucket="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
-            await async_client.object.with_raw_response.delete(
+            await async_client.storage_object.with_raw_response.delete(
                 key="",
                 bucket="bucket",
             )
@@ -343,14 +347,14 @@ class TestAsyncObject:
     @pytest.mark.respx(base_url=base_url)
     async def test_method_download(self, async_client: AsyncRaindrop, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        object_ = await async_client.object.download(
+        storage_object = await async_client.storage_object.download(
             key="key",
             bucket="bucket",
         )
-        assert object_.is_closed
-        assert await object_.json() == {"foo": "bar"}
-        assert cast(Any, object_.is_closed) is True
-        assert isinstance(object_, AsyncBinaryAPIResponse)
+        assert storage_object.is_closed
+        assert await storage_object.json() == {"foo": "bar"}
+        assert cast(Any, storage_object.is_closed) is True
+        assert isinstance(storage_object, AsyncBinaryAPIResponse)
 
     @pytest.mark.skip()
     @parametrize
@@ -358,46 +362,46 @@ class TestAsyncObject:
     async def test_raw_response_download(self, async_client: AsyncRaindrop, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        object_ = await async_client.object.with_raw_response.download(
+        storage_object = await async_client.storage_object.with_raw_response.download(
             key="key",
             bucket="bucket",
         )
 
-        assert object_.is_closed is True
-        assert object_.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert await object_.json() == {"foo": "bar"}
-        assert isinstance(object_, AsyncBinaryAPIResponse)
+        assert storage_object.is_closed is True
+        assert storage_object.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert await storage_object.json() == {"foo": "bar"}
+        assert isinstance(storage_object, AsyncBinaryAPIResponse)
 
     @pytest.mark.skip()
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_download(self, async_client: AsyncRaindrop, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/object/bucket/key").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        async with async_client.object.with_streaming_response.download(
+        async with async_client.storage_object.with_streaming_response.download(
             key="key",
             bucket="bucket",
-        ) as object_:
-            assert not object_.is_closed
-            assert object_.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as storage_object:
+            assert not storage_object.is_closed
+            assert storage_object.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert await object_.json() == {"foo": "bar"}
-            assert cast(Any, object_.is_closed) is True
-            assert isinstance(object_, AsyncStreamedBinaryAPIResponse)
+            assert await storage_object.json() == {"foo": "bar"}
+            assert cast(Any, storage_object.is_closed) is True
+            assert isinstance(storage_object, AsyncStreamedBinaryAPIResponse)
 
-        assert cast(Any, object_.is_closed) is True
+        assert cast(Any, storage_object.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_path_params_download(self, async_client: AsyncRaindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
-            await async_client.object.with_raw_response.download(
+            await async_client.storage_object.with_raw_response.download(
                 key="key",
                 bucket="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
-            await async_client.object.with_raw_response.download(
+            await async_client.storage_object.with_raw_response.download(
                 key="",
                 bucket="bucket",
             )
@@ -405,17 +409,17 @@ class TestAsyncObject:
     @pytest.mark.skip()
     @parametrize
     async def test_method_upload(self, async_client: AsyncRaindrop) -> None:
-        object_ = await async_client.object.upload(
+        storage_object = await async_client.storage_object.upload(
             key="key",
             bucket="bucket",
             body=b"raw file contents",
         )
-        assert_matches_type(ObjectUploadResponse, object_, path=["response"])
+        assert_matches_type(StorageObjectUploadResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_upload(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.object.with_raw_response.upload(
+        response = await async_client.storage_object.with_raw_response.upload(
             key="key",
             bucket="bucket",
             body=b"raw file contents",
@@ -423,13 +427,13 @@ class TestAsyncObject:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        object_ = await response.parse()
-        assert_matches_type(ObjectUploadResponse, object_, path=["response"])
+        storage_object = await response.parse()
+        assert_matches_type(StorageObjectUploadResponse, storage_object, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_upload(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.object.with_streaming_response.upload(
+        async with async_client.storage_object.with_streaming_response.upload(
             key="key",
             bucket="bucket",
             body=b"raw file contents",
@@ -437,8 +441,8 @@ class TestAsyncObject:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            object_ = await response.parse()
-            assert_matches_type(ObjectUploadResponse, object_, path=["response"])
+            storage_object = await response.parse()
+            assert_matches_type(StorageObjectUploadResponse, storage_object, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -446,14 +450,14 @@ class TestAsyncObject:
     @parametrize
     async def test_path_params_upload(self, async_client: AsyncRaindrop) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket` but received ''"):
-            await async_client.object.with_raw_response.upload(
+            await async_client.storage_object.with_raw_response.upload(
                 key="key",
                 bucket="",
                 body=b"raw file contents",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `key` but received ''"):
-            await async_client.object.with_raw_response.upload(
+            await async_client.storage_object.with_raw_response.upload(
                 key="",
                 bucket="bucket",
                 body=b"raw file contents",
