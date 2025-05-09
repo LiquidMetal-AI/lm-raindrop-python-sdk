@@ -52,9 +52,16 @@ Methods:
 Types:
 
 ```python
-from lm_raindrop.types import StorageObjectDeleteResponse
+from lm_raindrop.types import (
+    StorageObjectListResponse,
+    StorageObjectDeleteResponse,
+    StorageObjectUploadResponse,
+)
 ```
 
 Methods:
 
+- <code title="get /v1/object/{bucket}">client.storage_object.<a href="./src/lm_raindrop/resources/storage_object.py">list</a>(bucket) -> <a href="./src/lm_raindrop/types/storage_object_list_response.py">StorageObjectListResponse</a></code>
 - <code title="delete /v1/object/{bucket}/{key}">client.storage_object.<a href="./src/lm_raindrop/resources/storage_object.py">delete</a>(key, \*, bucket) -> <a href="./src/lm_raindrop/types/storage_object_delete_response.py">StorageObjectDeleteResponse</a></code>
+- <code title="get /v1/object/{bucket}/{key}">client.storage_object.<a href="./src/lm_raindrop/resources/storage_object.py">download</a>(key, \*, bucket) -> BinaryAPIResponse</code>
+- <code title="put /v1/object/{bucket}/{key}">client.storage_object.<a href="./src/lm_raindrop/resources/storage_object.py">upload</a>(key, \*, bucket, \*\*<a href="src/lm_raindrop/types/storage_object_upload_params.py">params</a>) -> <a href="./src/lm_raindrop/types/storage_object_upload_response.py">StorageObjectUploadResponse</a></code>
