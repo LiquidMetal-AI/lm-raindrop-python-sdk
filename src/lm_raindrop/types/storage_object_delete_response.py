@@ -2,8 +2,8 @@
 
 from .._models import BaseModel
 
-__all__ = ["ObjectDeleteResponse"]
+__all__ = ["StorageObjectDeleteResponse"]
 
 
-class ObjectDeleteResponse(BaseModel):
+class StorageObjectDeleteResponse(BaseModel):
     success: bool

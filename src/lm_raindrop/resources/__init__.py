@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .object import (
-    ObjectResource,
-    AsyncObjectResource,
-    ObjectResourceWithRawResponse,
-    AsyncObjectResourceWithRawResponse,
-    ObjectResourceWithStreamingResponse,
-    AsyncObjectResourceWithStreamingResponse,
-)
 from .search import (
     SearchResource,
     AsyncSearchResource,
@@ -31,6 +23,14 @@ from .document_query import (
     AsyncDocumentQueryResourceWithRawResponse,
     DocumentQueryResourceWithStreamingResponse,
     AsyncDocumentQueryResourceWithStreamingResponse,
+)
+from .storage_object import (
+    StorageObjectResource,
+    AsyncStorageObjectResource,
+    StorageObjectResourceWithRawResponse,
+    AsyncStorageObjectResourceWithRawResponse,
+    StorageObjectResourceWithStreamingResponse,
+    AsyncStorageObjectResourceWithStreamingResponse,
 )
 from .summarize_page import (
     SummarizePageResource,
@@ -66,10 +66,10 @@ __all__ = [
     "AsyncSummarizePageResourceWithRawResponse",
     "SummarizePageResourceWithStreamingResponse",
     "AsyncSummarizePageResourceWithStreamingResponse",
-    "ObjectResource",
-    "AsyncObjectResource",
-    "ObjectResourceWithRawResponse",
-    "AsyncObjectResourceWithRawResponse",
-    "ObjectResourceWithStreamingResponse",
-    "AsyncObjectResourceWithStreamingResponse",
+    "StorageObjectResource",
+    "AsyncStorageObjectResource",
+    "StorageObjectResourceWithRawResponse",
+    "AsyncStorageObjectResourceWithRawResponse",
+    "StorageObjectResourceWithStreamingResponse",
+    "AsyncStorageObjectResourceWithStreamingResponse",
 ]

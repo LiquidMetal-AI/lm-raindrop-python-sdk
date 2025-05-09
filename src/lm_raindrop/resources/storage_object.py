@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import object_upload_params
+from ..types import storage_object_upload_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -24,32 +24,32 @@ from .._response import (
     async_to_custom_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.object_list_response import ObjectListResponse
-from ..types.object_delete_response import ObjectDeleteResponse
-from ..types.object_upload_response import ObjectUploadResponse
+from ..types.storage_object_list_response import StorageObjectListResponse
+from ..types.storage_object_delete_response import StorageObjectDeleteResponse
+from ..types.storage_object_upload_response import StorageObjectUploadResponse
 
-__all__ = ["ObjectResource", "AsyncObjectResource"]
+__all__ = ["StorageObjectResource", "AsyncStorageObjectResource"]
 
 
-class ObjectResource(SyncAPIResource):
+class StorageObjectResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ObjectResourceWithRawResponse:
+    def with_raw_response(self) -> StorageObjectResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
-        return ObjectResourceWithRawResponse(self)
+        return StorageObjectResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ObjectResourceWithStreamingResponse:
+    def with_streaming_response(self) -> StorageObjectResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#with_streaming_response
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
-        return ObjectResourceWithStreamingResponse(self)
+        return StorageObjectResourceWithStreamingResponse(self)
 
     def list(
         self,
@@ -61,7 +61,7 @@ class ObjectResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ObjectListResponse:
+    ) -> StorageObjectListResponse:
         """List all objects in a SmartBucket or regular bucket.
 
         The bucket parameter (ID)
@@ -83,7 +83,7 @@ class ObjectResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObjectListResponse,
+            cast_to=StorageObjectListResponse,
         )
 
     def delete(
@@ -97,7 +97,7 @@ class ObjectResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ObjectDeleteResponse:
+    ) -> StorageObjectDeleteResponse:
         """Delete a file from a SmartBucket or regular bucket.
 
         The bucket parameter (ID) is
@@ -122,7 +122,7 @@ class ObjectResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObjectDeleteResponse,
+            cast_to=StorageObjectDeleteResponse,
         )
 
     def download(
@@ -177,7 +177,7 @@ class ObjectResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ObjectUploadResponse:
+    ) -> StorageObjectUploadResponse:
         """Upload a file to a SmartBucket or regular bucket.
 
         The bucket parameter (ID) is
@@ -199,33 +199,33 @@ class ObjectResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `key` but received {key!r}")
         return self._put(
             f"/v1/object/{bucket}/{key}",
-            body=maybe_transform(body, object_upload_params.ObjectUploadParams),
+            body=maybe_transform(body, storage_object_upload_params.StorageObjectUploadParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObjectUploadResponse,
+            cast_to=StorageObjectUploadResponse,
         )
 
 
-class AsyncObjectResource(AsyncAPIResource):
+class AsyncStorageObjectResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncObjectResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncStorageObjectResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
-        return AsyncObjectResourceWithRawResponse(self)
+        return AsyncStorageObjectResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncObjectResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncStorageObjectResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/raindrop-python#with_streaming_response
+        For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
-        return AsyncObjectResourceWithStreamingResponse(self)
+        return AsyncStorageObjectResourceWithStreamingResponse(self)
 
     async def list(
         self,
@@ -237,7 +237,7 @@ class AsyncObjectResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ObjectListResponse:
+    ) -> StorageObjectListResponse:
         """List all objects in a SmartBucket or regular bucket.
 
         The bucket parameter (ID)
@@ -259,7 +259,7 @@ class AsyncObjectResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObjectListResponse,
+            cast_to=StorageObjectListResponse,
         )
 
     async def delete(
@@ -273,7 +273,7 @@ class AsyncObjectResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ObjectDeleteResponse:
+    ) -> StorageObjectDeleteResponse:
         """Delete a file from a SmartBucket or regular bucket.
 
         The bucket parameter (ID) is
@@ -298,7 +298,7 @@ class AsyncObjectResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObjectDeleteResponse,
+            cast_to=StorageObjectDeleteResponse,
         )
 
     async def download(
@@ -353,7 +353,7 @@ class AsyncObjectResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ObjectUploadResponse:
+    ) -> StorageObjectUploadResponse:
         """Upload a file to a SmartBucket or regular bucket.
 
         The bucket parameter (ID) is
@@ -375,85 +375,85 @@ class AsyncObjectResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `key` but received {key!r}")
         return await self._put(
             f"/v1/object/{bucket}/{key}",
-            body=await async_maybe_transform(body, object_upload_params.ObjectUploadParams),
+            body=await async_maybe_transform(body, storage_object_upload_params.StorageObjectUploadParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObjectUploadResponse,
+            cast_to=StorageObjectUploadResponse,
         )
 
 
-class ObjectResourceWithRawResponse:
-    def __init__(self, object: ObjectResource) -> None:
-        self._object = object
+class StorageObjectResourceWithRawResponse:
+    def __init__(self, storage_object: StorageObjectResource) -> None:
+        self._storage_object = storage_object
 
         self.list = to_raw_response_wrapper(
-            object.list,
+            storage_object.list,
         )
         self.delete = to_raw_response_wrapper(
-            object.delete,
+            storage_object.delete,
         )
         self.download = to_custom_raw_response_wrapper(
-            object.download,
+            storage_object.download,
             BinaryAPIResponse,
         )
         self.upload = to_raw_response_wrapper(
-            object.upload,
+            storage_object.upload,
         )
 
 
-class AsyncObjectResourceWithRawResponse:
-    def __init__(self, object: AsyncObjectResource) -> None:
-        self._object = object
+class AsyncStorageObjectResourceWithRawResponse:
+    def __init__(self, storage_object: AsyncStorageObjectResource) -> None:
+        self._storage_object = storage_object
 
         self.list = async_to_raw_response_wrapper(
-            object.list,
+            storage_object.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            object.delete,
+            storage_object.delete,
         )
         self.download = async_to_custom_raw_response_wrapper(
-            object.download,
+            storage_object.download,
             AsyncBinaryAPIResponse,
         )
         self.upload = async_to_raw_response_wrapper(
-            object.upload,
+            storage_object.upload,
         )
 
 
-class ObjectResourceWithStreamingResponse:
-    def __init__(self, object: ObjectResource) -> None:
-        self._object = object
+class StorageObjectResourceWithStreamingResponse:
+    def __init__(self, storage_object: StorageObjectResource) -> None:
+        self._storage_object = storage_object
 
         self.list = to_streamed_response_wrapper(
-            object.list,
+            storage_object.list,
         )
         self.delete = to_streamed_response_wrapper(
-            object.delete,
+            storage_object.delete,
         )
         self.download = to_custom_streamed_response_wrapper(
-            object.download,
+            storage_object.download,
             StreamedBinaryAPIResponse,
         )
         self.upload = to_streamed_response_wrapper(
-            object.upload,
+            storage_object.upload,
         )
 
 
-class AsyncObjectResourceWithStreamingResponse:
-    def __init__(self, object: AsyncObjectResource) -> None:
-        self._object = object
+class AsyncStorageObjectResourceWithStreamingResponse:
+    def __init__(self, storage_object: AsyncStorageObjectResource) -> None:
+        self._storage_object = storage_object
 
         self.list = async_to_streamed_response_wrapper(
-            object.list,
+            storage_object.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            object.delete,
+            storage_object.delete,
         )
         self.download = async_to_custom_streamed_response_wrapper(
-            object.download,
+            storage_object.download,
             AsyncStreamedBinaryAPIResponse,
         )
         self.upload = async_to_streamed_response_wrapper(
-            object.upload,
+            storage_object.upload,
         )

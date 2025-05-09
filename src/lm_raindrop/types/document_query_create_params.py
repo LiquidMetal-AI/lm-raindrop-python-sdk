@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["DocumentQueryAskParams"]
+__all__ = ["DocumentQueryCreateParams"]
 
 
-class DocumentQueryAskParams(TypedDict, total=False):
+class DocumentQueryCreateParams(TypedDict, total=False):
     bucket: Required[str]
     """The storage bucket ID containing the target document.
 

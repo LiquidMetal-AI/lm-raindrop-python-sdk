@@ -7,17 +7,17 @@ from ._proxy import LazyProxy
 
 
 class ResourcesProxy(LazyProxy[Any]):
-    """A proxy for the `raindrop.resources` module.
+    """A proxy for the `lm_raindrop.resources` module.
 
-    This is used so that we can lazily import `raindrop.resources` only when
-    needed *and* so that users can just import `raindrop` and reference `raindrop.resources`
+    This is used so that we can lazily import `lm_raindrop.resources` only when
+    needed *and* so that users can just import `lm_raindrop` and reference `lm_raindrop.resources`
     """
 
     @override
     def __load__(self) -> Any:
         import importlib
 
-        mod = importlib.import_module("raindrop.resources")
+        mod = importlib.import_module("lm_raindrop.resources")
         return mod
 
 
