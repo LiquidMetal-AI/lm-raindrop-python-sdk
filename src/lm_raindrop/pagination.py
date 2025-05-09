@@ -6,13 +6,7 @@ from typing_extensions import override
 from ._models import BaseModel
 from ._base_client import BasePage, PageInfo, BaseSyncPage, BaseAsyncPage
 
-__all__ = [
-    "SearchPagePagination",
-    "SyncSearchPage",
-    "AsyncSearchPage",
-    "SyncChunkSearchResults",
-    "AsyncChunkSearchResults",
-]
+__all__ = ["SearchPagePagination", "SyncSearchPage", "AsyncSearchPage"]
 
 _T = TypeVar("_T")
 
@@ -59,37 +53,3 @@ class AsyncSearchPage(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
         last_page = cast("int | None", self._options.params.get("page")) or 1
 
         return PageInfo(params={"page": last_page + 1})
-
-
-class SyncChunkSearchResults(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
-    results: List[_T]
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        results = self.results
-        if not results:
-            return []
-        return results
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        last_page = cast("int | None", self._options.params.get("dummy_page")) or 1
-
-        return PageInfo(params={"dummy_page": last_page + 1})
-
-
-class AsyncChunkSearchResults(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
-    results: List[_T]
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        results = self.results
-        if not results:
-            return []
-        return results
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        last_page = cast("int | None", self._options.params.get("dummy_page")) or 1
-
-        return PageInfo(params={"dummy_page": last_page + 1})
