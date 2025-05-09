@@ -148,6 +148,8 @@ first_page = await client.search.retrieve(
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     page=1,
 )
+
+print(f"page number: {first_page.pagination.page}")  # => "page number: 1"
 for search in first_page.results:
     print(search.chunk_signature)
 
