@@ -787,7 +787,11 @@ class TestRaindrop:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.find(bucket_ids=["string"], input="input", request_id="request_id")
+        response = client.search.with_raw_response.find(
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -812,9 +816,9 @@ class TestRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = client.search.with_raw_response.find(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": Omit()},
         )
 
@@ -840,9 +844,9 @@ class TestRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = client.search.with_raw_response.find(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": "42"},
         )
 
@@ -1595,7 +1599,9 @@ class TestAsyncRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.find(
-            bucket_ids=["string"], input="input", request_id="request_id"
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
         assert response.retries_taken == failures_before_success
@@ -1622,9 +1628,9 @@ class TestAsyncRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.find(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": Omit()},
         )
 
@@ -1651,9 +1657,9 @@ class TestAsyncRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.find(
-            bucket_ids=["string"],
-            input="input",
-            request_id="request_id",
+            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            input="Find me all documents with pictures of a cat that do not talk about dogs",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": "42"},
         )
 
