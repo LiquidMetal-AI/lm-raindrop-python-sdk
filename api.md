@@ -8,32 +8,32 @@ from lm_raindrop.types import SearchResponse, TextResult
 
 Methods:
 
-- <code title="post /v1/search">client.search.<a href="./src/lm_raindrop/resources/search.py">create</a>(\*\*<a href="src/lm_raindrop/types/search_create_params.py">params</a>) -> <a href="./src/lm_raindrop/types/search_response.py">SearchResponse</a></code>
 - <code title="get /v1/search">client.search.<a href="./src/lm_raindrop/resources/search.py">retrieve</a>(\*\*<a href="src/lm_raindrop/types/search_retrieve_params.py">params</a>) -> <a href="./src/lm_raindrop/types/search_response.py">SearchResponse</a></code>
+- <code title="post /v1/search">client.search.<a href="./src/lm_raindrop/resources/search.py">find</a>(\*\*<a href="src/lm_raindrop/types/search_find_params.py">params</a>) -> <a href="./src/lm_raindrop/types/search_response.py">SearchResponse</a></code>
 
 # DocumentQuery
 
 Types:
 
 ```python
-from lm_raindrop.types import DocumentQueryCreateResponse
+from lm_raindrop.types import DocumentQueryAskResponse
 ```
 
 Methods:
 
-- <code title="post /v1/document_query">client.document_query.<a href="./src/lm_raindrop/resources/document_query.py">create</a>(\*\*<a href="src/lm_raindrop/types/document_query_create_params.py">params</a>) -> <a href="./src/lm_raindrop/types/document_query_create_response.py">DocumentQueryCreateResponse</a></code>
+- <code title="post /v1/document_query">client.document_query.<a href="./src/lm_raindrop/resources/document_query.py">ask</a>(\*\*<a href="src/lm_raindrop/types/document_query_ask_params.py">params</a>) -> <a href="./src/lm_raindrop/types/document_query_ask_response.py">DocumentQueryAskResponse</a></code>
 
 # ChunkSearch
 
 Types:
 
 ```python
-from lm_raindrop.types import ChunkSearchExecuteResponse
+from lm_raindrop.types import ChunkSearchFindResponse
 ```
 
 Methods:
 
-- <code title="post /v1/chunk_search">client.chunk_search.<a href="./src/lm_raindrop/resources/chunk_search.py">execute</a>(\*\*<a href="src/lm_raindrop/types/chunk_search_execute_params.py">params</a>) -> <a href="./src/lm_raindrop/types/chunk_search_execute_response.py">ChunkSearchExecuteResponse</a></code>
+- <code title="post /v1/chunk_search">client.chunk_search.<a href="./src/lm_raindrop/resources/chunk_search.py">find</a>(\*\*<a href="src/lm_raindrop/types/chunk_search_find_params.py">params</a>) -> <a href="./src/lm_raindrop/types/chunk_search_find_response.py">ChunkSearchFindResponse</a></code>
 
 # SummarizePage
 

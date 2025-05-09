@@ -5,24 +5,22 @@ from __future__ import annotations
 from typing import List
 from typing_extensions import Required, TypedDict
 
-__all__ = ["ChunkSearchExecuteParams"]
+__all__ = ["SearchFindParams"]
 
 
-class ChunkSearchExecuteParams(TypedDict, total=False):
+class SearchFindParams(TypedDict, total=False):
     bucket_ids: Required[List[str]]
     """Optional list of specific bucket IDs to search in.
 
-    If not provided, searches the latest version of all accessible buckets
+    If not provided, searches the latest version of all buckets
     """
 
     input: Required[str]
-    """Natural language query or question.
-
-    Can include complex criteria and relationships
-    """
+    """Natural language search query that can include complex criteria"""
 
     request_id: Required[str]
     """Client-provided search session identifier.
 
-    We recommend using a UUID or ULID for this value.
+    Required for pagination and result tracking. We recommend using a UUID or ULID
+    for this value.
     """

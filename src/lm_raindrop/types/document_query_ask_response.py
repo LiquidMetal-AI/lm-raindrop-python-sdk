@@ -2,10 +2,10 @@
 
 from .._models import BaseModel
 
-__all__ = ["DocumentQueryCreateResponse"]
+__all__ = ["DocumentQueryAskResponse"]
 
 
-class DocumentQueryCreateResponse(BaseModel):
+class DocumentQueryAskResponse(BaseModel):
     answer: str
     """
     AI-generated response that may include direct document quotes, content

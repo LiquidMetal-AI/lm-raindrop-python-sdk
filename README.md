@@ -31,7 +31,7 @@ client = Raindrop(
     api_key=os.environ.get("RAINDROP_API_KEY"),  # This is the default and can be omitted
 )
 
-search_response = client.search.create(
+search_response = client.search.find(
     bucket_ids=["string"],
     input="REPLACE_ME",
     request_id="REPLACE_ME",
@@ -59,7 +59,7 @@ client = AsyncRaindrop(
 
 
 async def main() -> None:
-    search_response = await client.search.create(
+    search_response = await client.search.find(
         bucket_ids=["string"],
         input="REPLACE_ME",
         request_id="REPLACE_ME",
@@ -97,8 +97,8 @@ from lm_raindrop import Raindrop
 client = Raindrop()
 
 try:
-    client.search.create(
-        bucket_ids=["string"],
+    client.search.find(
+        bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
         input="all my pdfs with images of cats that do not talk about dogs",
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     )
@@ -144,8 +144,8 @@ client = Raindrop(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).search.create(
-    bucket_ids=["string"],
+client.with_options(max_retries=5).search.find(
+    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -171,8 +171,8 @@ client = Raindrop(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).search.create(
-    bucket_ids=["string"],
+client.with_options(timeout=5.0).search.find(
+    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -216,14 +216,14 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from lm_raindrop import Raindrop
 
 client = Raindrop()
-response = client.search.with_raw_response.create(
-    bucket_ids=["string"],
+response = client.search.with_raw_response.find(
+    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
 print(response.headers.get('X-My-Header'))
 
-search = response.parse()  # get the object that `search.create()` would have returned
+search = response.parse()  # get the object that `search.find()` would have returned
 print(search.pagination)
 ```
 
@@ -238,8 +238,8 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.search.with_streaming_response.create(
-    bucket_ids=["string"],
+with client.search.with_streaming_response.find(
+    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 ) as response:
