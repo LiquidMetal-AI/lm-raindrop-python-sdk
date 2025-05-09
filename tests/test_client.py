@@ -722,7 +722,12 @@ class TestRaindrop:
                 body=cast(
                     object,
                     maybe_transform(
-                        dict(bucket_ids=["string"], input="REPLACE_ME", request_id="REPLACE_ME"), SearchCreateParams
+                        dict(
+                            bucket_ids=["string"],
+                            input="all my pdfs with images of cats that do not talk about dogs",
+                            request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+                        ),
+                        SearchCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -742,7 +747,12 @@ class TestRaindrop:
                 body=cast(
                     object,
                     maybe_transform(
-                        dict(bucket_ids=["string"], input="REPLACE_ME", request_id="REPLACE_ME"), SearchCreateParams
+                        dict(
+                            bucket_ids=["string"],
+                            input="all my pdfs with images of cats that do not talk about dogs",
+                            request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+                        ),
+                        SearchCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1518,7 +1528,12 @@ class TestAsyncRaindrop:
                 body=cast(
                     object,
                     maybe_transform(
-                        dict(bucket_ids=["string"], input="REPLACE_ME", request_id="REPLACE_ME"), SearchCreateParams
+                        dict(
+                            bucket_ids=["string"],
+                            input="all my pdfs with images of cats that do not talk about dogs",
+                            request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+                        ),
+                        SearchCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1538,7 +1553,12 @@ class TestAsyncRaindrop:
                 body=cast(
                     object,
                     maybe_transform(
-                        dict(bucket_ids=["string"], input="REPLACE_ME", request_id="REPLACE_ME"), SearchCreateParams
+                        dict(
+                            bucket_ids=["string"],
+                            input="all my pdfs with images of cats that do not talk about dogs",
+                            request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+                        ),
+                        SearchCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,

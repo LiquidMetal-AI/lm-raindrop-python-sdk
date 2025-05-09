@@ -99,8 +99,8 @@ client = Raindrop()
 try:
     client.search.create(
         bucket_ids=["string"],
-        input="REPLACE_ME",
-        request_id="REPLACE_ME",
+        input="all my pdfs with images of cats that do not talk about dogs",
+        request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     )
 except lm_raindrop.APIConnectionError as e:
     print("The server could not be reached")
@@ -146,8 +146,8 @@ client = Raindrop(
 # Or, configure per-request:
 client.with_options(max_retries=5).search.create(
     bucket_ids=["string"],
-    input="REPLACE_ME",
-    request_id="REPLACE_ME",
+    input="all my pdfs with images of cats that do not talk about dogs",
+    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
 ```
 
@@ -173,8 +173,8 @@ client = Raindrop(
 # Override per-request:
 client.with_options(timeout=5.0).search.create(
     bucket_ids=["string"],
-    input="REPLACE_ME",
-    request_id="REPLACE_ME",
+    input="all my pdfs with images of cats that do not talk about dogs",
+    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
 ```
 
@@ -218,8 +218,8 @@ from lm_raindrop import Raindrop
 client = Raindrop()
 response = client.search.with_raw_response.create(
     bucket_ids=["string"],
-    input="REPLACE_ME",
-    request_id="REPLACE_ME",
+    input="all my pdfs with images of cats that do not talk about dogs",
+    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -240,8 +240,8 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 ```python
 with client.search.with_streaming_response.create(
     bucket_ids=["string"],
-    input="REPLACE_ME",
-    request_id="REPLACE_ME",
+    input="all my pdfs with images of cats that do not talk about dogs",
+    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
