@@ -17,7 +17,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncSearchPage, AsyncSearchPage
+from .._base_client import AsyncPaginator, make_request_options
+from ..types.text_result import TextResult
 from ..types.search_response import SearchResponse
 
 __all__ = ["SearchResource", "AsyncSearchResource"]
@@ -55,7 +57,7 @@ class SearchResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SearchResponse:
+    ) -> SyncSearchPage[TextResult]:
         """Retrieve additional pages from a previous search.
 
         This endpoint enables
@@ -78,8 +80,9 @@ class SearchResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/search",
+            page=SyncSearchPage[TextResult],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -94,7 +97,7 @@ class SearchResource(SyncAPIResource):
                     search_retrieve_params.SearchRetrieveParams,
                 ),
             ),
-            cast_to=SearchResponse,
+            model=TextResult,
         )
 
     def find(
@@ -188,7 +191,7 @@ class AsyncSearchResource(AsyncAPIResource):
         """
         return AsyncSearchResourceWithStreamingResponse(self)
 
-    async def retrieve(
+    def retrieve(
         self,
         *,
         request_id: str,
@@ -200,7 +203,7 @@ class AsyncSearchResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SearchResponse:
+    ) -> AsyncPaginator[TextResult, AsyncSearchPage[TextResult]]:
         """Retrieve additional pages from a previous search.
 
         This endpoint enables
@@ -223,14 +226,15 @@ class AsyncSearchResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/search",
+            page=AsyncSearchPage[TextResult],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "request_id": request_id,
                         "page": page,
@@ -239,7 +243,7 @@ class AsyncSearchResource(AsyncAPIResource):
                     search_retrieve_params.SearchRetrieveParams,
                 ),
             ),
-            cast_to=SearchResponse,
+            model=TextResult,
         )
 
     async def find(

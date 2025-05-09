@@ -14,22 +14,21 @@ _T = TypeVar("_T")
 class SearchPagePagination(BaseModel):
     has_more: Optional[bool] = None
 
-    page: Optional[int] = None
-
-    page_size: Optional[int] = None
-
     total: Optional[int] = None
 
     total_pages: Optional[int] = None
 
 
 class SyncSearchPage(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+    results: List[_T]
     pagination: Optional[SearchPagePagination] = None
 
     @override
     def _get_page_items(self) -> List[_T]:
-        data = self.data
-        return data
+        results = self.results
+        if not results:
+            return []
+        return results
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
@@ -39,12 +38,15 @@ class SyncSearchPage(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
 
 
 class AsyncSearchPage(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+    results: List[_T]
     pagination: Optional[SearchPagePagination] = None
 
     @override
     def _get_page_items(self) -> List[_T]:
-        data = self.data
-        return data
+        results = self.results
+        if not results:
+            return []
+        return results
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
