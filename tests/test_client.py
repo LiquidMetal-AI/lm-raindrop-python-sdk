@@ -724,8 +724,14 @@ class TestRaindrop:
                     maybe_transform(
                         dict(
                             bucket_locations=[
-                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                                {
+                                    "bucket": {
+                                        "application_name": "my-app",
+                                        "name": "my-bucket",
+                                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                                    }
+                                },
                             ],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -752,8 +758,14 @@ class TestRaindrop:
                     maybe_transform(
                         dict(
                             bucket_locations=[
-                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                                {
+                                    "bucket": {
+                                        "application_name": "my-app",
+                                        "name": "my-bucket",
+                                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                                    }
+                                },
                             ],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -795,8 +807,14 @@ class TestRaindrop:
 
         response = client.search.with_raw_response.find(
             bucket_locations=[
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {
+                    "bucket": {
+                        "application_name": "my-app",
+                        "name": "my-bucket",
+                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                    }
+                },
             ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -826,8 +844,14 @@ class TestRaindrop:
 
         response = client.search.with_raw_response.find(
             bucket_locations=[
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {
+                    "bucket": {
+                        "application_name": "my-app",
+                        "name": "my-bucket",
+                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                    }
+                },
             ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -857,8 +881,14 @@ class TestRaindrop:
 
         response = client.search.with_raw_response.find(
             bucket_locations=[
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {
+                    "bucket": {
+                        "application_name": "my-app",
+                        "name": "my-bucket",
+                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                    }
+                },
             ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -1549,8 +1579,14 @@ class TestAsyncRaindrop:
                     maybe_transform(
                         dict(
                             bucket_locations=[
-                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                                {
+                                    "bucket": {
+                                        "application_name": "my-app",
+                                        "name": "my-bucket",
+                                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                                    }
+                                },
                             ],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -1577,8 +1613,14 @@ class TestAsyncRaindrop:
                     maybe_transform(
                         dict(
                             bucket_locations=[
-                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                                {
+                                    "bucket": {
+                                        "application_name": "my-app",
+                                        "name": "my-bucket",
+                                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                                    }
+                                },
                             ],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -1621,8 +1663,14 @@ class TestAsyncRaindrop:
 
         response = await client.search.with_raw_response.find(
             bucket_locations=[
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {
+                    "bucket": {
+                        "application_name": "my-app",
+                        "name": "my-bucket",
+                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                    }
+                },
             ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -1653,8 +1701,14 @@ class TestAsyncRaindrop:
 
         response = await client.search.with_raw_response.find(
             bucket_locations=[
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {
+                    "bucket": {
+                        "application_name": "my-app",
+                        "name": "my-bucket",
+                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                    }
+                },
             ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -1685,8 +1739,14 @@ class TestAsyncRaindrop:
 
         response = await client.search.with_raw_response.find(
             bucket_locations=[
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {
+                    "bucket": {
+                        "application_name": "my-app",
+                        "name": "my-bucket",
+                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                    }
+                },
             ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",

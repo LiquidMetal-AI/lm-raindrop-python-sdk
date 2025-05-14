@@ -33,8 +33,14 @@ client = Raindrop(
 
 search_response = client.search.find(
     bucket_locations=[
-        {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-        {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+        {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+        {
+            "bucket": {
+                "application_name": "my-app",
+                "name": "my-bucket",
+                "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+            }
+        },
     ],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -64,8 +70,14 @@ client = AsyncRaindrop(
 async def main() -> None:
     search_response = await client.search.find(
         bucket_locations=[
-            {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-            {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+            {
+                "bucket": {
+                    "application_name": "my-app",
+                    "name": "my-bucket",
+                    "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                }
+            },
         ],
         input="all my pdfs with images of cats that do not talk about dogs",
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -162,24 +174,6 @@ for search in first_page.results:
 # Remove `await` for non-async usage.
 ```
 
-## Nested params
-
-Nested parameters are dictionaries, typed using `TypedDict`, for example:
-
-```python
-from lm_raindrop import Raindrop
-
-client = Raindrop()
-
-response = client.document_query.ask(
-    bucket_location={"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-    input="What is the key points in this document?",
-    object_id="object_id",
-    request_id="123e4567-e89b-12d3-a456-426614174000",
-)
-print(response.bucket_location)
-```
-
 ## Handling errors
 
 When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `lm_raindrop.APIConnectionError` is raised.
@@ -198,8 +192,14 @@ client = Raindrop()
 try:
     client.search.find(
         bucket_locations=[
-            {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-            {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+            {
+                "bucket": {
+                    "application_name": "my-app",
+                    "name": "my-bucket",
+                    "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+                }
+            },
         ],
         input="all my pdfs with images of cats that do not talk about dogs",
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -248,8 +248,14 @@ client = Raindrop(
 # Or, configure per-request:
 client.with_options(max_retries=5).search.find(
     bucket_locations=[
-        {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-        {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+        {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+        {
+            "bucket": {
+                "application_name": "my-app",
+                "name": "my-bucket",
+                "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+            }
+        },
     ],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -278,8 +284,14 @@ client = Raindrop(
 # Override per-request:
 client.with_options(timeout=5.0).search.find(
     bucket_locations=[
-        {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-        {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+        {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+        {
+            "bucket": {
+                "application_name": "my-app",
+                "name": "my-bucket",
+                "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+            }
+        },
     ],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -326,9 +338,13 @@ from lm_raindrop import Raindrop
 client = Raindrop()
 response = client.search.with_raw_response.find(
     bucket_locations=[{
-        "smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"
+        "module_id": "01jtgtrd37acrqf7k24dggg31s"
     }, {
-        "smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"
+        "bucket": {
+            "application_name": "my-app",
+            "name": "my-bucket",
+            "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+        }
     }],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -352,8 +368,14 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 ```python
 with client.search.with_streaming_response.find(
     bucket_locations=[
-        {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
-        {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+        {"module_id": "01jtgtrd37acrqf7k24dggg31s"},
+        {
+            "bucket": {
+                "application_name": "my-app",
+                "name": "my-bucket",
+                "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+            }
+        },
     ],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",

@@ -2,16 +2,23 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing import Union
+from typing_extensions import Required, TypeAlias, TypedDict
 
-__all__ = ["DocumentQueryAskParams", "BucketLocation"]
+__all__ = [
+    "DocumentQueryAskParams",
+    "BucketLocation",
+    "BucketLocationModuleID",
+    "BucketLocationBucket",
+    "BucketLocationBucketBucket",
+]
 
 
 class DocumentQueryAskParams(TypedDict, total=False):
     bucket_location: Required[BucketLocation]
     """The storage bucket location containing the target document.
 
-    Must be an accessible Smart Bucket
+    Can specify either module_id (version-agnostic) or specific bucket details
     """
 
     input: Required[str]
@@ -34,6 +41,24 @@ class DocumentQueryAskParams(TypedDict, total=False):
     """
 
 
-class BucketLocation(TypedDict, total=False):
-    smartbucket_id: Required[str]
-    """Identifier for the smartbucket (moduleId)"""
+class BucketLocationModuleID(TypedDict, total=False):
+    module_id: Required[str]
+    """Version-agnostic identifier for a module"""
+
+
+class BucketLocationBucketBucket(TypedDict, total=False):
+    application_name: Required[str]
+    """Name of the application"""
+
+    name: Required[str]
+    """Name of the bucket"""
+
+    version: Required[str]
+    """Version of the bucket"""
+
+
+class BucketLocationBucket(TypedDict, total=False):
+    bucket: Required[BucketLocationBucketBucket]
+
+
+BucketLocation: TypeAlias = Union[BucketLocationModuleID, BucketLocationBucket]

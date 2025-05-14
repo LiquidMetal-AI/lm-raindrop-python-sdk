@@ -77,8 +77,8 @@ class DocumentQueryResource(SyncAPIResource):
         audio files.
 
         Args:
-          bucket_location: The storage bucket location containing the target document. Must be an
-              accessible Smart Bucket
+          bucket_location: The storage bucket location containing the target document. Can specify either
+              module_id (version-agnostic) or specific bucket details
 
           input: User's input or question about the document. Can be natural language questions,
               commands, or requests
@@ -171,8 +171,8 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
         audio files.
 
         Args:
-          bucket_location: The storage bucket location containing the target document. Must be an
-              accessible Smart Bucket
+          bucket_location: The storage bucket location containing the target document. Can specify either
+              module_id (version-agnostic) or specific bucket details
 
           input: User's input or question about the document. Can be natural language questions,
               commands, or requests
