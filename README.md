@@ -32,7 +32,7 @@ client = Raindrop(
 )
 
 search_response = client.search.find(
-    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+    bucket_locations=[{}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -60,7 +60,7 @@ client = AsyncRaindrop(
 
 async def main() -> None:
     search_response = await client.search.find(
-        bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+        bucket_locations=[{}],
         input="all my pdfs with images of cats that do not talk about dogs",
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     )
@@ -95,6 +95,7 @@ client = Raindrop()
 all_searches = []
 # Automatically fetches more pages as needed.
 for search in client.search.retrieve(
+    bucket_locations=[{}],
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     page=1,
 ):
@@ -116,6 +117,7 @@ async def main() -> None:
     all_searches = []
     # Iterate through items across all pages, issuing requests as needed.
     async for search in client.search.retrieve(
+        bucket_locations=[{}],
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
         page=1,
     ):
@@ -130,6 +132,7 @@ Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get
 
 ```python
 first_page = await client.search.retrieve(
+    bucket_locations=[{}],
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     page=1,
 )
@@ -145,6 +148,7 @@ Or just work directly with the returned data:
 
 ```python
 first_page = await client.search.retrieve(
+    bucket_locations=[{}],
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     page=1,
 )
@@ -173,7 +177,7 @@ client = Raindrop()
 
 try:
     client.search.find(
-        bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+        bucket_locations=[{}],
         input="all my pdfs with images of cats that do not talk about dogs",
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     )
@@ -220,7 +224,7 @@ client = Raindrop(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).search.find(
-    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+    bucket_locations=[{}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -247,7 +251,7 @@ client = Raindrop(
 
 # Override per-request:
 client.with_options(timeout=5.0).search.find(
-    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+    bucket_locations=[{}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -292,7 +296,7 @@ from lm_raindrop import Raindrop
 
 client = Raindrop()
 response = client.search.with_raw_response.find(
-    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+    bucket_locations=[{}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -314,7 +318,7 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.search.with_streaming_response.find(
-    bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+    bucket_locations=[{}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 ) as response:

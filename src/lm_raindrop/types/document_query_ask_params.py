@@ -8,8 +8,8 @@ __all__ = ["DocumentQueryAskParams"]
 
 
 class DocumentQueryAskParams(TypedDict, total=False):
-    bucket: Required[str]
-    """The storage bucket ID containing the target document.
+    bucket_location: Required[object]
+    """The storage bucket containing the target document.
 
     Must be an accessible Smart Bucket
     """

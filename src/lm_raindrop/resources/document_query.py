@@ -44,7 +44,7 @@ class DocumentQueryResource(SyncAPIResource):
     def ask(
         self,
         *,
-        bucket: str,
+        bucket_location: object,
         input: str,
         object_id: str,
         request_id: str,
@@ -77,8 +77,8 @@ class DocumentQueryResource(SyncAPIResource):
         audio files.
 
         Args:
-          bucket: The storage bucket ID containing the target document. Must be an accessible
-              Smart Bucket
+          bucket_location: The storage bucket containing the target document. Must be an accessible Smart
+              Bucket
 
           input: User's input or question about the document. Can be natural language questions,
               commands, or requests
@@ -101,7 +101,7 @@ class DocumentQueryResource(SyncAPIResource):
             "/v1/document_query",
             body=maybe_transform(
                 {
-                    "bucket": bucket,
+                    "bucket_location": bucket_location,
                     "input": input,
                     "object_id": object_id,
                     "request_id": request_id,
@@ -138,7 +138,7 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
     async def ask(
         self,
         *,
-        bucket: str,
+        bucket_location: object,
         input: str,
         object_id: str,
         request_id: str,
@@ -171,8 +171,8 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
         audio files.
 
         Args:
-          bucket: The storage bucket ID containing the target document. Must be an accessible
-              Smart Bucket
+          bucket_location: The storage bucket containing the target document. Must be an accessible Smart
+              Bucket
 
           input: User's input or question about the document. Can be natural language questions,
               commands, or requests
@@ -195,7 +195,7 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
             "/v1/document_query",
             body=await async_maybe_transform(
                 {
-                    "bucket": bucket,
+                    "bucket_location": bucket_location,
                     "input": input,
                     "object_id": object_id,
                     "request_id": request_id,

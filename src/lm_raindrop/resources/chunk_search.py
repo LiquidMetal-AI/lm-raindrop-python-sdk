@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import Iterable
 
 import httpx
 
@@ -46,7 +46,7 @@ class ChunkSearchResource(SyncAPIResource):
     def find(
         self,
         *,
-        bucket_ids: List[str],
+        bucket_locations: Iterable[object],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -66,9 +66,6 @@ class ChunkSearchResource(SyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          bucket_ids: Optional list of specific bucket IDs to search in. If not provided, searches the
-              latest version of all accessible buckets
-
           input: Natural language query or question. Can include complex criteria and
               relationships
 
@@ -87,7 +84,7 @@ class ChunkSearchResource(SyncAPIResource):
             "/v1/chunk_search",
             body=maybe_transform(
                 {
-                    "bucket_ids": bucket_ids,
+                    "bucket_locations": bucket_locations,
                     "input": input,
                     "request_id": request_id,
                 },
@@ -123,7 +120,7 @@ class AsyncChunkSearchResource(AsyncAPIResource):
     async def find(
         self,
         *,
-        bucket_ids: List[str],
+        bucket_locations: Iterable[object],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -143,9 +140,6 @@ class AsyncChunkSearchResource(AsyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          bucket_ids: Optional list of specific bucket IDs to search in. If not provided, searches the
-              latest version of all accessible buckets
-
           input: Natural language query or question. Can include complex criteria and
               relationships
 
@@ -164,7 +158,7 @@ class AsyncChunkSearchResource(AsyncAPIResource):
             "/v1/chunk_search",
             body=await async_maybe_transform(
                 {
-                    "bucket_ids": bucket_ids,
+                    "bucket_locations": bucket_locations,
                     "input": input,
                     "request_id": request_id,
                 },
