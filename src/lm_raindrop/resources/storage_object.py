@@ -64,8 +64,8 @@ class StorageObjectResource(SyncAPIResource):
     ) -> StorageObjectListResponse:
         """List all objects in a SmartBucket or regular bucket.
 
-        The bucket parameter (ID)
-        is used to identify the bucket to list objects from.
+        The bucket parameter
+        (module ID) is used to identify the bucket to list objects from.
 
         Args:
           extra_headers: Send extra headers
@@ -100,9 +100,9 @@ class StorageObjectResource(SyncAPIResource):
     ) -> StorageObjectDeleteResponse:
         """Delete a file from a SmartBucket or regular bucket.
 
-        The bucket parameter (ID) is
-        used to identify the bucket to delete from. The key is the path to the object in
-        the bucket.
+        The bucket parameter (module
+        ID) is used to identify the bucket to delete from. The key is the path to the
+        object in the bucket.
 
         Args:
           extra_headers: Send extra headers
@@ -139,9 +139,9 @@ class StorageObjectResource(SyncAPIResource):
     ) -> BinaryAPIResponse:
         """Download a file from a SmartBucket or regular bucket.
 
-        The bucket parameter (ID)
-        is used to identify the bucket to download from. The key is the path to the
-        object in the bucket.
+        The bucket parameter
+        (module ID) is used to identify the bucket to download from. The key is the path
+        to the object in the bucket.
 
         Args:
           extra_headers: Send extra headers
@@ -180,9 +180,9 @@ class StorageObjectResource(SyncAPIResource):
     ) -> StorageObjectUploadResponse:
         """Upload a file to a SmartBucket or regular bucket.
 
-        The bucket parameter (ID) is
-        used to identify the bucket to upload to. The key is the path to the object in
-        the bucket.
+        The bucket parameter (module
+        ID) is used to identify the bucket to upload to. The key is the path to the
+        object in the bucket.
 
         Args:
           extra_headers: Send extra headers
@@ -240,8 +240,8 @@ class AsyncStorageObjectResource(AsyncAPIResource):
     ) -> StorageObjectListResponse:
         """List all objects in a SmartBucket or regular bucket.
 
-        The bucket parameter (ID)
-        is used to identify the bucket to list objects from.
+        The bucket parameter
+        (module ID) is used to identify the bucket to list objects from.
 
         Args:
           extra_headers: Send extra headers
@@ -276,9 +276,9 @@ class AsyncStorageObjectResource(AsyncAPIResource):
     ) -> StorageObjectDeleteResponse:
         """Delete a file from a SmartBucket or regular bucket.
 
-        The bucket parameter (ID) is
-        used to identify the bucket to delete from. The key is the path to the object in
-        the bucket.
+        The bucket parameter (module
+        ID) is used to identify the bucket to delete from. The key is the path to the
+        object in the bucket.
 
         Args:
           extra_headers: Send extra headers
@@ -315,9 +315,9 @@ class AsyncStorageObjectResource(AsyncAPIResource):
     ) -> AsyncBinaryAPIResponse:
         """Download a file from a SmartBucket or regular bucket.
 
-        The bucket parameter (ID)
-        is used to identify the bucket to download from. The key is the path to the
-        object in the bucket.
+        The bucket parameter
+        (module ID) is used to identify the bucket to download from. The key is the path
+        to the object in the bucket.
 
         Args:
           extra_headers: Send extra headers
@@ -356,9 +356,9 @@ class AsyncStorageObjectResource(AsyncAPIResource):
     ) -> StorageObjectUploadResponse:
         """Upload a file to a SmartBucket or regular bucket.
 
-        The bucket parameter (ID) is
-        used to identify the bucket to upload to. The key is the path to the object in
-        the bucket.
+        The bucket parameter (module
+        ID) is used to identify the bucket to upload to. The key is the path to the
+        object in the bucket.
 
         Args:
           extra_headers: Send extra headers

@@ -138,8 +138,8 @@ class SearchResource(SyncAPIResource):
         - Multi-modal search (text, images, audio)
 
         Args:
-          bucket_locations: Optional list of specific bucket locations to search in. If not provided,
-              searches the latest version of all buckets
+          bucket_locations: List of bucket locations to search in. Can specify either module_id
+              (version-agnostic) or specific bucket details
 
           input: Natural language search query that can include complex criteria
 
@@ -284,8 +284,8 @@ class AsyncSearchResource(AsyncAPIResource):
         - Multi-modal search (text, images, audio)
 
         Args:
-          bucket_locations: Optional list of specific bucket locations to search in. If not provided,
-              searches the latest version of all buckets
+          bucket_locations: List of bucket locations to search in. Can specify either module_id
+              (version-agnostic) or specific bucket details
 
           input: Natural language search query that can include complex criteria
 
