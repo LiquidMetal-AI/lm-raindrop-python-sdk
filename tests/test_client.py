@@ -723,7 +723,10 @@ class TestRaindrop:
                     object,
                     maybe_transform(
                         dict(
-                            bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+                            bucket_locations=[
+                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                            ],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
                         ),
@@ -748,7 +751,10 @@ class TestRaindrop:
                     object,
                     maybe_transform(
                         dict(
-                            bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+                            bucket_locations=[
+                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                            ],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
                         ),
@@ -788,7 +794,10 @@ class TestRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            bucket_locations=[
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -816,7 +825,10 @@ class TestRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            bucket_locations=[
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": Omit()},
@@ -844,7 +856,10 @@ class TestRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            bucket_locations=[
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": "42"},
@@ -1533,7 +1548,10 @@ class TestAsyncRaindrop:
                     object,
                     maybe_transform(
                         dict(
-                            bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+                            bucket_locations=[
+                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                            ],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
                         ),
@@ -1558,7 +1576,10 @@ class TestAsyncRaindrop:
                     object,
                     maybe_transform(
                         dict(
-                            bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
+                            bucket_locations=[
+                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+                            ],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
                         ),
@@ -1599,7 +1620,10 @@ class TestAsyncRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            bucket_locations=[
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -1628,7 +1652,10 @@ class TestAsyncRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            bucket_locations=[
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": Omit()},
@@ -1657,7 +1684,10 @@ class TestAsyncRaindrop:
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
+            bucket_locations=[
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            ],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": "42"},

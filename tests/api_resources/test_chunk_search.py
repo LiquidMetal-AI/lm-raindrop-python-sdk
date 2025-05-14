@@ -21,7 +21,6 @@ class TestChunkSearch:
     @parametrize
     def test_method_find(self, client: Raindrop) -> None:
         chunk_search = client.chunk_search.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
             input="Information on how to raise a dog",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -29,9 +28,21 @@ class TestChunkSearch:
 
     @pytest.mark.skip()
     @parametrize
+    def test_method_find_with_all_params(self, client: Raindrop) -> None:
+        chunk_search = client.chunk_search.find(
+            input="Information on how to raise a dog",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+            bucket_locations=[
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            ],
+        )
+        assert_matches_type(ChunkSearchFindResponse, chunk_search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
     def test_raw_response_find(self, client: Raindrop) -> None:
         response = client.chunk_search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
             input="Information on how to raise a dog",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -45,7 +56,6 @@ class TestChunkSearch:
     @parametrize
     def test_streaming_response_find(self, client: Raindrop) -> None:
         with client.chunk_search.with_streaming_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
             input="Information on how to raise a dog",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
@@ -65,7 +75,6 @@ class TestAsyncChunkSearch:
     @parametrize
     async def test_method_find(self, async_client: AsyncRaindrop) -> None:
         chunk_search = await async_client.chunk_search.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
             input="Information on how to raise a dog",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -73,9 +82,21 @@ class TestAsyncChunkSearch:
 
     @pytest.mark.skip()
     @parametrize
+    async def test_method_find_with_all_params(self, async_client: AsyncRaindrop) -> None:
+        chunk_search = await async_client.chunk_search.find(
+            input="Information on how to raise a dog",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+            bucket_locations=[
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31s"},
+                {"smartbucket_id": "01jtgtrd37acrqf7k24dggg31v"},
+            ],
+        )
+        assert_matches_type(ChunkSearchFindResponse, chunk_search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
     async def test_raw_response_find(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.chunk_search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
             input="Information on how to raise a dog",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -89,7 +110,6 @@ class TestAsyncChunkSearch:
     @parametrize
     async def test_streaming_response_find(self, async_client: AsyncRaindrop) -> None:
         async with async_client.chunk_search.with_streaming_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
             input="Information on how to raise a dog",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
