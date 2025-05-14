@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["DocumentQueryAskParams"]
+__all__ = ["DocumentQueryAskParams", "BucketLocation"]
 
 
 class DocumentQueryAskParams(TypedDict, total=False):
-    bucket: Required[str]
-    """The storage bucket ID containing the target document.
+    bucket_location: Required[BucketLocation]
+    """The storage bucket location containing the target document.
 
     Must be an accessible Smart Bucket
     """
@@ -32,3 +32,8 @@ class DocumentQueryAskParams(TypedDict, total=False):
     Required for maintaining context in follow-up questions. We recommend using a
     UUID or ULID for this value.
     """
+
+
+class BucketLocation(TypedDict, total=False):
+    smartbucket_id: Required[str]
+    """Identifier for the smartbucket (moduleId)"""

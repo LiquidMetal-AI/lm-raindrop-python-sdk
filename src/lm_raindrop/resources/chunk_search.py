@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import Iterable
 
 import httpx
 
@@ -46,9 +46,9 @@ class ChunkSearchResource(SyncAPIResource):
     def find(
         self,
         *,
-        bucket_ids: List[str],
         input: str,
         request_id: str,
+        bucket_locations: Iterable[chunk_search_find_params.BucketLocation] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -66,14 +66,14 @@ class ChunkSearchResource(SyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          bucket_ids: Optional list of specific bucket IDs to search in. If not provided, searches the
-              latest version of all accessible buckets
-
           input: Natural language query or question. Can include complex criteria and
               relationships
 
           request_id: Client-provided search session identifier. We recommend using a UUID or ULID for
               this value.
+
+          bucket_locations: Optional list of specific bucket locations to search in. If not provided,
+              searches the latest version of all accessible buckets
 
           extra_headers: Send extra headers
 
@@ -87,9 +87,9 @@ class ChunkSearchResource(SyncAPIResource):
             "/v1/chunk_search",
             body=maybe_transform(
                 {
-                    "bucket_ids": bucket_ids,
                     "input": input,
                     "request_id": request_id,
+                    "bucket_locations": bucket_locations,
                 },
                 chunk_search_find_params.ChunkSearchFindParams,
             ),
@@ -123,9 +123,9 @@ class AsyncChunkSearchResource(AsyncAPIResource):
     async def find(
         self,
         *,
-        bucket_ids: List[str],
         input: str,
         request_id: str,
+        bucket_locations: Iterable[chunk_search_find_params.BucketLocation] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -143,14 +143,14 @@ class AsyncChunkSearchResource(AsyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          bucket_ids: Optional list of specific bucket IDs to search in. If not provided, searches the
-              latest version of all accessible buckets
-
           input: Natural language query or question. Can include complex criteria and
               relationships
 
           request_id: Client-provided search session identifier. We recommend using a UUID or ULID for
               this value.
+
+          bucket_locations: Optional list of specific bucket locations to search in. If not provided,
+              searches the latest version of all accessible buckets
 
           extra_headers: Send extra headers
 
@@ -164,9 +164,9 @@ class AsyncChunkSearchResource(AsyncAPIResource):
             "/v1/chunk_search",
             body=await async_maybe_transform(
                 {
-                    "bucket_ids": bucket_ids,
                     "input": input,
                     "request_id": request_id,
+                    "bucket_locations": bucket_locations,
                 },
                 chunk_search_find_params.ChunkSearchFindParams,
             ),
