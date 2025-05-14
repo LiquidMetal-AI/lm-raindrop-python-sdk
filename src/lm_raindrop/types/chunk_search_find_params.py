@@ -2,18 +2,14 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import Iterable
 from typing_extensions import Required, TypedDict
 
 __all__ = ["ChunkSearchFindParams"]
 
 
 class ChunkSearchFindParams(TypedDict, total=False):
-    bucket_ids: Required[List[str]]
-    """Optional list of specific bucket IDs to search in.
-
-    If not provided, searches the latest version of all accessible buckets
-    """
+    bucket_locations: Required[Iterable[object]]
 
     input: Required[str]
     """Natural language query or question.
