@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable
+from typing import List
 
 import httpx
 
@@ -103,7 +103,7 @@ class SearchResource(SyncAPIResource):
     def find(
         self,
         *,
-        bucket_locations: Iterable[search_find_params.BucketLocation],
+        bucket_ids: List[str],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -138,8 +138,8 @@ class SearchResource(SyncAPIResource):
         - Multi-modal search (text, images, audio)
 
         Args:
-          bucket_locations: List of bucket locations to search in. Can specify either module_id
-              (version-agnostic) or specific bucket details
+          bucket_ids: Optional list of specific bucket IDs to search in. If not provided, searches the
+              latest version of all buckets
 
           input: Natural language search query that can include complex criteria
 
@@ -158,7 +158,7 @@ class SearchResource(SyncAPIResource):
             "/v1/search",
             body=maybe_transform(
                 {
-                    "bucket_locations": bucket_locations,
+                    "bucket_ids": bucket_ids,
                     "input": input,
                     "request_id": request_id,
                 },
@@ -249,7 +249,7 @@ class AsyncSearchResource(AsyncAPIResource):
     async def find(
         self,
         *,
-        bucket_locations: Iterable[search_find_params.BucketLocation],
+        bucket_ids: List[str],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -284,8 +284,8 @@ class AsyncSearchResource(AsyncAPIResource):
         - Multi-modal search (text, images, audio)
 
         Args:
-          bucket_locations: List of bucket locations to search in. Can specify either module_id
-              (version-agnostic) or specific bucket details
+          bucket_ids: Optional list of specific bucket IDs to search in. If not provided, searches the
+              latest version of all buckets
 
           input: Natural language search query that can include complex criteria
 
@@ -304,7 +304,7 @@ class AsyncSearchResource(AsyncAPIResource):
             "/v1/search",
             body=await async_maybe_transform(
                 {
-                    "bucket_locations": bucket_locations,
+                    "bucket_ids": bucket_ids,
                     "input": input,
                     "request_id": request_id,
                 },
