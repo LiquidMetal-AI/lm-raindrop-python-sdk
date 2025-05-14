@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable
+from typing import List
 
 import httpx
 
@@ -46,7 +46,7 @@ class ChunkSearchResource(SyncAPIResource):
     def find(
         self,
         *,
-        bucket_locations: Iterable[chunk_search_find_params.BucketLocation],
+        bucket_ids: List[str],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -66,8 +66,8 @@ class ChunkSearchResource(SyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          bucket_locations: List of bucket locations to search in. Can specify either module_id
-              (version-agnostic) or specific bucket details
+          bucket_ids: Optional list of specific bucket IDs to search in. If not provided, searches the
+              latest version of all accessible buckets
 
           input: Natural language query or question. Can include complex criteria and
               relationships
@@ -87,7 +87,7 @@ class ChunkSearchResource(SyncAPIResource):
             "/v1/chunk_search",
             body=maybe_transform(
                 {
-                    "bucket_locations": bucket_locations,
+                    "bucket_ids": bucket_ids,
                     "input": input,
                     "request_id": request_id,
                 },
@@ -123,7 +123,7 @@ class AsyncChunkSearchResource(AsyncAPIResource):
     async def find(
         self,
         *,
-        bucket_locations: Iterable[chunk_search_find_params.BucketLocation],
+        bucket_ids: List[str],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -143,8 +143,8 @@ class AsyncChunkSearchResource(AsyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          bucket_locations: List of bucket locations to search in. Can specify either module_id
-              (version-agnostic) or specific bucket details
+          bucket_ids: Optional list of specific bucket IDs to search in. If not provided, searches the
+              latest version of all accessible buckets
 
           input: Natural language query or question. Can include complex criteria and
               relationships
@@ -164,7 +164,7 @@ class AsyncChunkSearchResource(AsyncAPIResource):
             "/v1/chunk_search",
             body=await async_maybe_transform(
                 {
-                    "bucket_locations": bucket_locations,
+                    "bucket_ids": bucket_ids,
                     "input": input,
                     "request_id": request_id,
                 },
