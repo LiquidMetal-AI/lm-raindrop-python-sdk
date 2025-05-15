@@ -21,7 +21,7 @@ class TestDocumentQuery:
     @parametrize
     def test_method_ask(self, client: Raindrop) -> None:
         document_query = client.document_query.ask(
-            bucket_location="01jtgtrd37acrqf7k24dggg31s",
+            bucket_location={"module_id": "01jtgtrd37acrqf7k24dggg31s"},
             input="What is the key points in this document?",
             object_id="object_id",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -32,7 +32,7 @@ class TestDocumentQuery:
     @parametrize
     def test_raw_response_ask(self, client: Raindrop) -> None:
         response = client.document_query.with_raw_response.ask(
-            bucket_location="01jtgtrd37acrqf7k24dggg31s",
+            bucket_location={"module_id": "01jtgtrd37acrqf7k24dggg31s"},
             input="What is the key points in this document?",
             object_id="object_id",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -47,7 +47,7 @@ class TestDocumentQuery:
     @parametrize
     def test_streaming_response_ask(self, client: Raindrop) -> None:
         with client.document_query.with_streaming_response.ask(
-            bucket_location="01jtgtrd37acrqf7k24dggg31s",
+            bucket_location={"module_id": "01jtgtrd37acrqf7k24dggg31s"},
             input="What is the key points in this document?",
             object_id="object_id",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -68,7 +68,7 @@ class TestAsyncDocumentQuery:
     @parametrize
     async def test_method_ask(self, async_client: AsyncRaindrop) -> None:
         document_query = await async_client.document_query.ask(
-            bucket_location="01jtgtrd37acrqf7k24dggg31s",
+            bucket_location={"module_id": "01jtgtrd37acrqf7k24dggg31s"},
             input="What is the key points in this document?",
             object_id="object_id",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -79,7 +79,7 @@ class TestAsyncDocumentQuery:
     @parametrize
     async def test_raw_response_ask(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.document_query.with_raw_response.ask(
-            bucket_location="01jtgtrd37acrqf7k24dggg31s",
+            bucket_location={"module_id": "01jtgtrd37acrqf7k24dggg31s"},
             input="What is the key points in this document?",
             object_id="object_id",
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -94,7 +94,7 @@ class TestAsyncDocumentQuery:
     @parametrize
     async def test_streaming_response_ask(self, async_client: AsyncRaindrop) -> None:
         async with async_client.document_query.with_streaming_response.ask(
-            bucket_location="01jtgtrd37acrqf7k24dggg31s",
+            bucket_location={"module_id": "01jtgtrd37acrqf7k24dggg31s"},
             input="What is the key points in this document?",
             object_id="object_id",
             request_id="123e4567-e89b-12d3-a456-426614174000",
