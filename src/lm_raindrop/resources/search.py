@@ -48,7 +48,6 @@ class SearchResource(SyncAPIResource):
     def retrieve(
         self,
         *,
-        bucket_locations: Iterable[object],
         request_id: str,
         page: int | NotGiven = NOT_GIVEN,
         page_size: int | NotGiven = NOT_GIVEN,
@@ -91,7 +90,6 @@ class SearchResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "bucket_locations": bucket_locations,
                         "request_id": request_id,
                         "page": page,
                         "page_size": page_size,
@@ -105,7 +103,7 @@ class SearchResource(SyncAPIResource):
     def find(
         self,
         *,
-        bucket_locations: Iterable[object],
+        bucket_locations: Iterable[search_find_params.BucketLocation],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -193,7 +191,6 @@ class AsyncSearchResource(AsyncAPIResource):
     def retrieve(
         self,
         *,
-        bucket_locations: Iterable[object],
         request_id: str,
         page: int | NotGiven = NOT_GIVEN,
         page_size: int | NotGiven = NOT_GIVEN,
@@ -236,7 +233,6 @@ class AsyncSearchResource(AsyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "bucket_locations": bucket_locations,
                         "request_id": request_id,
                         "page": page,
                         "page_size": page_size,
@@ -250,7 +246,7 @@ class AsyncSearchResource(AsyncAPIResource):
     async def find(
         self,
         *,
-        bucket_locations: Iterable[object],
+        bucket_locations: Iterable[search_find_params.BucketLocation],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

@@ -46,7 +46,7 @@ class ChunkSearchResource(SyncAPIResource):
     def find(
         self,
         *,
-        bucket_locations: Iterable[object],
+        bucket_locations: Iterable[chunk_search_find_params.BucketLocation],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -120,7 +120,7 @@ class AsyncChunkSearchResource(AsyncAPIResource):
     async def find(
         self,
         *,
-        bucket_locations: Iterable[object],
+        bucket_locations: Iterable[chunk_search_find_params.BucketLocation],
         input: str,
         request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

@@ -22,7 +22,6 @@ class TestSearch:
     @parametrize
     def test_method_retrieve(self, client: Raindrop) -> None:
         search = client.search.retrieve(
-            bucket_locations=[{}],
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
         assert_matches_type(SyncSearchPage[TextResult], search, path=["response"])
@@ -31,7 +30,6 @@ class TestSearch:
     @parametrize
     def test_method_retrieve_with_all_params(self, client: Raindrop) -> None:
         search = client.search.retrieve(
-            bucket_locations=[{}],
             request_id="123e4567-e89b-12d3-a456-426614174000",
             page=2,
             page_size=10,
@@ -42,7 +40,6 @@ class TestSearch:
     @parametrize
     def test_raw_response_retrieve(self, client: Raindrop) -> None:
         response = client.search.with_raw_response.retrieve(
-            bucket_locations=[{}],
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
@@ -55,7 +52,6 @@ class TestSearch:
     @parametrize
     def test_streaming_response_retrieve(self, client: Raindrop) -> None:
         with client.search.with_streaming_response.retrieve(
-            bucket_locations=[{}],
             request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
             assert not response.is_closed
@@ -70,7 +66,7 @@ class TestSearch:
     @parametrize
     def test_method_find(self, client: Raindrop) -> None:
         search = client.search.find(
-            bucket_locations=[{}],
+            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -80,7 +76,7 @@ class TestSearch:
     @parametrize
     def test_raw_response_find(self, client: Raindrop) -> None:
         response = client.search.with_raw_response.find(
-            bucket_locations=[{}],
+            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -94,7 +90,7 @@ class TestSearch:
     @parametrize
     def test_streaming_response_find(self, client: Raindrop) -> None:
         with client.search.with_streaming_response.find(
-            bucket_locations=[{}],
+            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
@@ -114,7 +110,6 @@ class TestAsyncSearch:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncRaindrop) -> None:
         search = await async_client.search.retrieve(
-            bucket_locations=[{}],
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
         assert_matches_type(AsyncSearchPage[TextResult], search, path=["response"])
@@ -123,7 +118,6 @@ class TestAsyncSearch:
     @parametrize
     async def test_method_retrieve_with_all_params(self, async_client: AsyncRaindrop) -> None:
         search = await async_client.search.retrieve(
-            bucket_locations=[{}],
             request_id="123e4567-e89b-12d3-a456-426614174000",
             page=2,
             page_size=10,
@@ -134,7 +128,6 @@ class TestAsyncSearch:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.search.with_raw_response.retrieve(
-            bucket_locations=[{}],
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
@@ -147,7 +140,6 @@ class TestAsyncSearch:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncRaindrop) -> None:
         async with async_client.search.with_streaming_response.retrieve(
-            bucket_locations=[{}],
             request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
             assert not response.is_closed
@@ -162,7 +154,7 @@ class TestAsyncSearch:
     @parametrize
     async def test_method_find(self, async_client: AsyncRaindrop) -> None:
         search = await async_client.search.find(
-            bucket_locations=[{}],
+            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -172,7 +164,7 @@ class TestAsyncSearch:
     @parametrize
     async def test_raw_response_find(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.search.with_raw_response.find(
-            bucket_locations=[{}],
+            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -186,7 +178,7 @@ class TestAsyncSearch:
     @parametrize
     async def test_streaming_response_find(self, async_client: AsyncRaindrop) -> None:
         async with async_client.search.with_streaming_response.find(
-            bucket_locations=[{}],
+            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
             input="Find me all documents with pictures of a cat that do not talk about dogs",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         ) as response:
