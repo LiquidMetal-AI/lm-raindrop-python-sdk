@@ -44,7 +44,7 @@ class DocumentQueryResource(SyncAPIResource):
     def ask(
         self,
         *,
-        bucket_location: object,
+        bucket_location: document_query_ask_params.BucketLocation,
         input: str,
         object_id: str,
         request_id: str,
@@ -138,7 +138,7 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
     async def ask(
         self,
         *,
-        bucket_location: object,
+        bucket_location: document_query_ask_params.BucketLocation,
         input: str,
         object_id: str,
         request_id: str,
