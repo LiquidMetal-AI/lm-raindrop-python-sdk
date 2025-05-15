@@ -2,14 +2,20 @@
 
 from __future__ import annotations
 
-from typing import Iterable
-from typing_extensions import Required, TypedDict
+from typing import Union, Iterable
+from typing_extensions import Required, TypeAlias, TypedDict
 
-__all__ = ["ChunkSearchFindParams"]
+__all__ = [
+    "ChunkSearchFindParams",
+    "BucketLocation",
+    "BucketLocationModuleID",
+    "BucketLocationBucket",
+    "BucketLocationBucketBucket",
+]
 
 
 class ChunkSearchFindParams(TypedDict, total=False):
-    bucket_locations: Required[Iterable[object]]
+    bucket_locations: Required[Iterable[BucketLocation]]
 
     input: Required[str]
     """Natural language query or question.
@@ -22,3 +28,26 @@ class ChunkSearchFindParams(TypedDict, total=False):
 
     We recommend using a UUID or ULID for this value.
     """
+
+
+class BucketLocationModuleID(TypedDict, total=False):
+    module_id: Required[str]
+    """Version-agnostic identifier for a module"""
+
+
+class BucketLocationBucketBucket(TypedDict, total=False):
+    application_name: Required[str]
+    """Name of the application"""
+
+    name: Required[str]
+    """Name of the bucket"""
+
+    version: Required[str]
+    """Version of the bucket"""
+
+
+class BucketLocationBucket(TypedDict, total=False):
+    bucket: Required[BucketLocationBucketBucket]
+
+
+BucketLocation: TypeAlias = Union[BucketLocationModuleID, BucketLocationBucket]
