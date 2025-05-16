@@ -4,7 +4,7 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["ObjectPutObjectResponse", "Bucket"]
+__all__ = ["StorageObjectPutObjectResponse", "Bucket"]
 
 
 class Bucket(BaseModel):
@@ -17,7 +17,7 @@ class Bucket(BaseModel):
     module_id: Optional[str] = None
 
 
-class ObjectPutObjectResponse(BaseModel):
+class StorageObjectPutObjectResponse(BaseModel):
     bucket: Optional[Bucket] = None
     """Information about the bucket where the object was uploaded"""
 

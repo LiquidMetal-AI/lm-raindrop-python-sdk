@@ -5,7 +5,7 @@ from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["ObjectListObjectsResponse", "Object"]
+__all__ = ["StorageObjectListObjectsResponse", "Object"]
 
 
 class Object(BaseModel):
@@ -22,6 +22,6 @@ class Object(BaseModel):
     """Size of the object in bytes"""
 
 
-class ObjectListObjectsResponse(BaseModel):
+class StorageObjectListObjectsResponse(BaseModel):
     objects: Optional[List[Object]] = None
     """List of objects in the bucket with their metadata"""
