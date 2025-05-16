@@ -22,7 +22,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import search, chunk_search, document_query, summarize_page, liquidmetal_v1alpha1_search_agent_service
+from .resources import object
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -44,13 +44,7 @@ __all__ = [
 
 
 class Raindrop(SyncAPIClient):
-    document_query: document_query.DocumentQueryResource
-    chunk_search: chunk_search.ChunkSearchResource
-    summarize_page: summarize_page.SummarizePageResource
-    search: search.SearchResource
-    liquidmetal_v1alpha1_search_agent_service: (
-        liquidmetal_v1alpha1_search_agent_service.LiquidmetalV1alpha1SearchAgentServiceResource
-    )
+    object: object.ObjectResource
     with_raw_response: RaindropWithRawResponse
     with_streaming_response: RaindropWithStreamedResponse
 
@@ -104,13 +98,7 @@ class Raindrop(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.document_query = document_query.DocumentQueryResource(self)
-        self.chunk_search = chunk_search.ChunkSearchResource(self)
-        self.summarize_page = summarize_page.SummarizePageResource(self)
-        self.search = search.SearchResource(self)
-        self.liquidmetal_v1alpha1_search_agent_service = (
-            liquidmetal_v1alpha1_search_agent_service.LiquidmetalV1alpha1SearchAgentServiceResource(self)
-        )
+        self.object = object.ObjectResource(self)
         self.with_raw_response = RaindropWithRawResponse(self)
         self.with_streaming_response = RaindropWithStreamedResponse(self)
 
@@ -233,13 +221,7 @@ class Raindrop(SyncAPIClient):
 
 
 class AsyncRaindrop(AsyncAPIClient):
-    document_query: document_query.AsyncDocumentQueryResource
-    chunk_search: chunk_search.AsyncChunkSearchResource
-    summarize_page: summarize_page.AsyncSummarizePageResource
-    search: search.AsyncSearchResource
-    liquidmetal_v1alpha1_search_agent_service: (
-        liquidmetal_v1alpha1_search_agent_service.AsyncLiquidmetalV1alpha1SearchAgentServiceResource
-    )
+    object: object.AsyncObjectResource
     with_raw_response: AsyncRaindropWithRawResponse
     with_streaming_response: AsyncRaindropWithStreamedResponse
 
@@ -293,13 +275,7 @@ class AsyncRaindrop(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.document_query = document_query.AsyncDocumentQueryResource(self)
-        self.chunk_search = chunk_search.AsyncChunkSearchResource(self)
-        self.summarize_page = summarize_page.AsyncSummarizePageResource(self)
-        self.search = search.AsyncSearchResource(self)
-        self.liquidmetal_v1alpha1_search_agent_service = (
-            liquidmetal_v1alpha1_search_agent_service.AsyncLiquidmetalV1alpha1SearchAgentServiceResource(self)
-        )
+        self.object = object.AsyncObjectResource(self)
         self.with_raw_response = AsyncRaindropWithRawResponse(self)
         self.with_streaming_response = AsyncRaindropWithStreamedResponse(self)
 
@@ -423,50 +399,22 @@ class AsyncRaindrop(AsyncAPIClient):
 
 class RaindropWithRawResponse:
     def __init__(self, client: Raindrop) -> None:
-        self.document_query = document_query.DocumentQueryResourceWithRawResponse(client.document_query)
-        self.chunk_search = chunk_search.ChunkSearchResourceWithRawResponse(client.chunk_search)
-        self.summarize_page = summarize_page.SummarizePageResourceWithRawResponse(client.summarize_page)
-        self.search = search.SearchResourceWithRawResponse(client.search)
-        self.liquidmetal_v1alpha1_search_agent_service = (
-            liquidmetal_v1alpha1_search_agent_service.LiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse(
-                client.liquidmetal_v1alpha1_search_agent_service
-            )
-        )
+        self.object = object.ObjectResourceWithRawResponse(client.object)
 
 
 class AsyncRaindropWithRawResponse:
     def __init__(self, client: AsyncRaindrop) -> None:
-        self.document_query = document_query.AsyncDocumentQueryResourceWithRawResponse(client.document_query)
-        self.chunk_search = chunk_search.AsyncChunkSearchResourceWithRawResponse(client.chunk_search)
-        self.summarize_page = summarize_page.AsyncSummarizePageResourceWithRawResponse(client.summarize_page)
-        self.search = search.AsyncSearchResourceWithRawResponse(client.search)
-        self.liquidmetal_v1alpha1_search_agent_service = (
-            liquidmetal_v1alpha1_search_agent_service.AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse(
-                client.liquidmetal_v1alpha1_search_agent_service
-            )
-        )
+        self.object = object.AsyncObjectResourceWithRawResponse(client.object)
 
 
 class RaindropWithStreamedResponse:
     def __init__(self, client: Raindrop) -> None:
-        self.document_query = document_query.DocumentQueryResourceWithStreamingResponse(client.document_query)
-        self.chunk_search = chunk_search.ChunkSearchResourceWithStreamingResponse(client.chunk_search)
-        self.summarize_page = summarize_page.SummarizePageResourceWithStreamingResponse(client.summarize_page)
-        self.search = search.SearchResourceWithStreamingResponse(client.search)
-        self.liquidmetal_v1alpha1_search_agent_service = liquidmetal_v1alpha1_search_agent_service.LiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse(
-            client.liquidmetal_v1alpha1_search_agent_service
-        )
+        self.object = object.ObjectResourceWithStreamingResponse(client.object)
 
 
 class AsyncRaindropWithStreamedResponse:
     def __init__(self, client: AsyncRaindrop) -> None:
-        self.document_query = document_query.AsyncDocumentQueryResourceWithStreamingResponse(client.document_query)
-        self.chunk_search = chunk_search.AsyncChunkSearchResourceWithStreamingResponse(client.chunk_search)
-        self.summarize_page = summarize_page.AsyncSummarizePageResourceWithStreamingResponse(client.summarize_page)
-        self.search = search.AsyncSearchResourceWithStreamingResponse(client.search)
-        self.liquidmetal_v1alpha1_search_agent_service = liquidmetal_v1alpha1_search_agent_service.AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse(
-            client.liquidmetal_v1alpha1_search_agent_service
-        )
+        self.object = object.AsyncObjectResourceWithStreamingResponse(client.object)
 
 
 Client = Raindrop

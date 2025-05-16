@@ -1,75 +1,19 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .search import (
-    SearchResource,
-    AsyncSearchResource,
-    SearchResourceWithRawResponse,
-    AsyncSearchResourceWithRawResponse,
-    SearchResourceWithStreamingResponse,
-    AsyncSearchResourceWithStreamingResponse,
-)
-from .chunk_search import (
-    ChunkSearchResource,
-    AsyncChunkSearchResource,
-    ChunkSearchResourceWithRawResponse,
-    AsyncChunkSearchResourceWithRawResponse,
-    ChunkSearchResourceWithStreamingResponse,
-    AsyncChunkSearchResourceWithStreamingResponse,
-)
-from .document_query import (
-    DocumentQueryResource,
-    AsyncDocumentQueryResource,
-    DocumentQueryResourceWithRawResponse,
-    AsyncDocumentQueryResourceWithRawResponse,
-    DocumentQueryResourceWithStreamingResponse,
-    AsyncDocumentQueryResourceWithStreamingResponse,
-)
-from .summarize_page import (
-    SummarizePageResource,
-    AsyncSummarizePageResource,
-    SummarizePageResourceWithRawResponse,
-    AsyncSummarizePageResourceWithRawResponse,
-    SummarizePageResourceWithStreamingResponse,
-    AsyncSummarizePageResourceWithStreamingResponse,
-)
-from .liquidmetal_v1alpha1_search_agent_service import (
-    LiquidmetalV1alpha1SearchAgentServiceResource,
-    AsyncLiquidmetalV1alpha1SearchAgentServiceResource,
-    LiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse,
-    AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse,
-    LiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse,
-    AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse,
+from .object import (
+    ObjectResource,
+    AsyncObjectResource,
+    ObjectResourceWithRawResponse,
+    AsyncObjectResourceWithRawResponse,
+    ObjectResourceWithStreamingResponse,
+    AsyncObjectResourceWithStreamingResponse,
 )
 
 __all__ = [
-    "DocumentQueryResource",
-    "AsyncDocumentQueryResource",
-    "DocumentQueryResourceWithRawResponse",
-    "AsyncDocumentQueryResourceWithRawResponse",
-    "DocumentQueryResourceWithStreamingResponse",
-    "AsyncDocumentQueryResourceWithStreamingResponse",
-    "ChunkSearchResource",
-    "AsyncChunkSearchResource",
-    "ChunkSearchResourceWithRawResponse",
-    "AsyncChunkSearchResourceWithRawResponse",
-    "ChunkSearchResourceWithStreamingResponse",
-    "AsyncChunkSearchResourceWithStreamingResponse",
-    "SummarizePageResource",
-    "AsyncSummarizePageResource",
-    "SummarizePageResourceWithRawResponse",
-    "AsyncSummarizePageResourceWithRawResponse",
-    "SummarizePageResourceWithStreamingResponse",
-    "AsyncSummarizePageResourceWithStreamingResponse",
-    "SearchResource",
-    "AsyncSearchResource",
-    "SearchResourceWithRawResponse",
-    "AsyncSearchResourceWithRawResponse",
-    "SearchResourceWithStreamingResponse",
-    "AsyncSearchResourceWithStreamingResponse",
-    "LiquidmetalV1alpha1SearchAgentServiceResource",
-    "AsyncLiquidmetalV1alpha1SearchAgentServiceResource",
-    "LiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse",
-    "AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse",
-    "LiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse",
-    "AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse",
+    "ObjectResource",
+    "AsyncObjectResource",
+    "ObjectResourceWithRawResponse",
+    "AsyncObjectResourceWithRawResponse",
+    "ObjectResourceWithStreamingResponse",
+    "AsyncObjectResourceWithStreamingResponse",
 ]

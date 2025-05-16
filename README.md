@@ -34,8 +34,11 @@ client = Raindrop(
     api_key=os.environ.get("RAINDROP_API_KEY"),  # This is the default and can be omitted
 )
 
-document_query = client.document_query.create()
-print(document_query.answer)
+object = client.object.retrieve(
+    object_key="object_key",
+    bucket_name="bucket_name",
+)
+print(object.bucket)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -58,8 +61,11 @@ client = AsyncRaindrop(
 
 
 async def main() -> None:
-    document_query = await client.document_query.create()
-    print(document_query.answer)
+    object = await client.object.retrieve(
+        object_key="object_key",
+        bucket_name="bucket_name",
+    )
+    print(object.bucket)
 
 
 asyncio.run(main())
@@ -92,7 +98,10 @@ from raindrop import Raindrop
 client = Raindrop()
 
 try:
-    client.document_query.create()
+    client.object.retrieve(
+        object_key="object_key",
+        bucket_name="bucket_name",
+    )
 except raindrop.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -135,7 +144,10 @@ client = Raindrop(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).document_query.create()
+client.with_options(max_retries=5).object.retrieve(
+    object_key="object_key",
+    bucket_name="bucket_name",
+)
 ```
 
 ### Timeouts
@@ -158,7 +170,10 @@ client = Raindrop(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).document_query.create()
+client.with_options(timeout=5.0).object.retrieve(
+    object_key="object_key",
+    bucket_name="bucket_name",
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -199,11 +214,14 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from raindrop import Raindrop
 
 client = Raindrop()
-response = client.document_query.with_raw_response.create()
+response = client.object.with_raw_response.retrieve(
+    object_key="object_key",
+    bucket_name="bucket_name",
+)
 print(response.headers.get('X-My-Header'))
 
-document_query = response.parse()  # get the object that `document_query.create()` would have returned
-print(document_query.answer)
+object_ = response.parse()  # get the object that `object.retrieve()` would have returned
+print(object_.bucket)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/raindrop-python/tree/main/src/raindrop/_response.py) object.
@@ -217,7 +235,10 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.document_query.with_streaming_response.create() as response:
+with client.object.with_streaming_response.retrieve(
+    object_key="object_key",
+    bucket_name="bucket_name",
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
