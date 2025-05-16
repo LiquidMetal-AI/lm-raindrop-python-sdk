@@ -21,19 +21,19 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from lm_raindrop import Raindrop, AsyncRaindrop, APIResponseValidationError
-from lm_raindrop._types import Omit
-from lm_raindrop._utils import maybe_transform
-from lm_raindrop._models import BaseModel, FinalRequestOptions
-from lm_raindrop._constants import RAW_RESPONSE_HEADER
-from lm_raindrop._exceptions import RaindropError, APIStatusError, APITimeoutError, APIResponseValidationError
-from lm_raindrop._base_client import (
+from raindrop import Raindrop, AsyncRaindrop, APIResponseValidationError
+from raindrop._types import Omit
+from raindrop._utils import maybe_transform
+from raindrop._models import BaseModel, FinalRequestOptions
+from raindrop._constants import RAW_RESPONSE_HEADER
+from raindrop._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from raindrop._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
     make_request_options,
 )
-from lm_raindrop.types.search_find_params import SearchFindParams
+from raindrop.types.document_query_ask_params import DocumentQueryAskParams
 
 from .utils import update_env
 
@@ -232,10 +232,10 @@ class TestRaindrop:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "lm_raindrop/_legacy_response.py",
-                        "lm_raindrop/_response.py",
+                        "raindrop/_legacy_response.py",
+                        "raindrop/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "lm_raindrop/_compat.py",
+                        "raindrop/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -335,16 +335,6 @@ class TestRaindrop:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
-
-    def test_validate_headers(self) -> None:
-        client = Raindrop(base_url=base_url, api_key=api_key, _strict_response_validation=True)
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("Authorization") == api_key
-
-        with pytest.raises(RaindropError):
-            with update_env(**{"RAINDROP_API_KEY": Omit()}):
-                client2 = Raindrop(base_url=base_url, api_key=None, _strict_response_validation=True)
-            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Raindrop(
@@ -711,23 +701,24 @@ class TestRaindrop:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/document_query").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/v1/search",
+                "/v1/document_query",
                 body=cast(
                     object,
                     maybe_transform(
                         dict(
-                            bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
-                            input="all my pdfs with images of cats that do not talk about dogs",
-                            request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+                            bucket_location={"bucket": {}},
+                            input="What are the key points in this document?",
+                            object_id="document.pdf",
+                            request_id="123e4567-e89b-12d3-a456-426614174000",
                         ),
-                        SearchFindParams,
+                        DocumentQueryAskParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -736,23 +727,24 @@ class TestRaindrop:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/search").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/document_query").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/v1/search",
+                "/v1/document_query",
                 body=cast(
                     object,
                     maybe_transform(
                         dict(
-                            bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
-                            input="all my pdfs with images of cats that do not talk about dogs",
-                            request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+                            bucket_location={"bucket": {}},
+                            input="What are the key points in this document?",
+                            object_id="document.pdf",
+                            request_id="123e4567-e89b-12d3-a456-426614174000",
                         ),
-                        SearchFindParams,
+                        DocumentQueryAskParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -762,7 +754,7 @@ class TestRaindrop:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
@@ -785,11 +777,12 @@ class TestRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
+        response = client.document_query.with_raw_response.ask(
+            bucket_location={"bucket": {}},
+            input="What are the key points in this document?",
+            object_id="document.pdf",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
@@ -797,7 +790,7 @@ class TestRaindrop:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
         self, client: Raindrop, failures_before_success: int, respx_mock: MockRouter
@@ -813,11 +806,12 @@ class TestRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
+        response = client.document_query.with_raw_response.ask(
+            bucket_location={"bucket": {}},
+            input="What are the key points in this document?",
+            object_id="document.pdf",
             request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": Omit()},
         )
@@ -825,7 +819,7 @@ class TestRaindrop:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
         self, client: Raindrop, failures_before_success: int, respx_mock: MockRouter
@@ -841,11 +835,12 @@ class TestRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
+        response = client.document_query.with_raw_response.ask(
+            bucket_location={"bucket": {}},
+            input="What are the key points in this document?",
+            object_id="document.pdf",
             request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": "42"},
         )
@@ -1028,10 +1023,10 @@ class TestAsyncRaindrop:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "lm_raindrop/_legacy_response.py",
-                        "lm_raindrop/_response.py",
+                        "raindrop/_legacy_response.py",
+                        "raindrop/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "lm_raindrop/_compat.py",
+                        "raindrop/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1131,16 +1126,6 @@ class TestAsyncRaindrop:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
-
-    def test_validate_headers(self) -> None:
-        client = AsyncRaindrop(base_url=base_url, api_key=api_key, _strict_response_validation=True)
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("Authorization") == api_key
-
-        with pytest.raises(RaindropError):
-            with update_env(**{"RAINDROP_API_KEY": Omit()}):
-                client2 = AsyncRaindrop(base_url=base_url, api_key=None, _strict_response_validation=True)
-            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncRaindrop(
@@ -1521,23 +1506,24 @@ class TestAsyncRaindrop:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/document_query").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/v1/search",
+                "/v1/document_query",
                 body=cast(
                     object,
                     maybe_transform(
                         dict(
-                            bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
-                            input="all my pdfs with images of cats that do not talk about dogs",
-                            request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+                            bucket_location={"bucket": {}},
+                            input="What are the key points in this document?",
+                            object_id="document.pdf",
+                            request_id="123e4567-e89b-12d3-a456-426614174000",
                         ),
-                        SearchFindParams,
+                        DocumentQueryAskParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1546,23 +1532,24 @@ class TestAsyncRaindrop:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/search").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/document_query").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/v1/search",
+                "/v1/document_query",
                 body=cast(
                     object,
                     maybe_transform(
                         dict(
-                            bucket_ids=["01jtgtrd37acrqf7k24dggg31s"],
-                            input="all my pdfs with images of cats that do not talk about dogs",
-                            request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+                            bucket_location={"bucket": {}},
+                            input="What are the key points in this document?",
+                            object_id="document.pdf",
+                            request_id="123e4567-e89b-12d3-a456-426614174000",
                         ),
-                        SearchFindParams,
+                        DocumentQueryAskParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1572,7 +1559,7 @@ class TestAsyncRaindrop:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
@@ -1596,11 +1583,12 @@ class TestAsyncRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
+        response = await client.document_query.with_raw_response.ask(
+            bucket_location={"bucket": {}},
+            input="What are the key points in this document?",
+            object_id="document.pdf",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
 
@@ -1608,7 +1596,7 @@ class TestAsyncRaindrop:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
@@ -1625,11 +1613,12 @@ class TestAsyncRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
+        response = await client.document_query.with_raw_response.ask(
+            bucket_location={"bucket": {}},
+            input="What are the key points in this document?",
+            object_id="document.pdf",
             request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": Omit()},
         )
@@ -1637,7 +1626,7 @@ class TestAsyncRaindrop:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("lm_raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
@@ -1654,11 +1643,12 @@ class TestAsyncRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.find(
-            bucket_ids=["01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
+        response = await client.document_query.with_raw_response.ask(
+            bucket_location={"bucket": {}},
+            input="What are the key points in this document?",
+            object_id="document.pdf",
             request_id="123e4567-e89b-12d3-a456-426614174000",
             extra_headers={"x-stainless-retry-count": "42"},
         )
@@ -1676,8 +1666,8 @@ class TestAsyncRaindrop:
         import nest_asyncio
         import threading
 
-        from lm_raindrop._utils import asyncify
-        from lm_raindrop._base_client import get_platform
+        from raindrop._utils import asyncify
+        from raindrop._base_client import get_platform
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()
