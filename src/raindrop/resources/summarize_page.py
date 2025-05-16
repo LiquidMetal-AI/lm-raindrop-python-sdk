@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import summarize_page_create_summary_params
+from ..types import summarize_page_sumarize_page_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -16,7 +16,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.summarize_page_create_summary_response import SummarizePageCreateSummaryResponse
+from ..types.summarize_page_sumarize_page_response import SummarizePageSumarizePageResponse
 
 __all__ = ["SummarizePageResource", "AsyncSummarizePageResource"]
 
@@ -41,7 +41,7 @@ class SummarizePageResource(SyncAPIResource):
         """
         return SummarizePageResourceWithStreamingResponse(self)
 
-    def create_summary(
+    def sumarize_page(
         self,
         *,
         page: int,
@@ -53,7 +53,7 @@ class SummarizePageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SummarizePageCreateSummaryResponse:
+    ) -> SummarizePageSumarizePageResponse:
         """
         Generates intelligent summaries of search result pages, helping users quickly
         understand large result sets without reading through every document. The system
@@ -98,12 +98,12 @@ class SummarizePageResource(SyncAPIResource):
                     "page_size": page_size,
                     "request_id": request_id,
                 },
-                summarize_page_create_summary_params.SummarizePageCreateSummaryParams,
+                summarize_page_sumarize_page_params.SummarizePageSumarizePageParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SummarizePageCreateSummaryResponse,
+            cast_to=SummarizePageSumarizePageResponse,
         )
 
 
@@ -127,7 +127,7 @@ class AsyncSummarizePageResource(AsyncAPIResource):
         """
         return AsyncSummarizePageResourceWithStreamingResponse(self)
 
-    async def create_summary(
+    async def sumarize_page(
         self,
         *,
         page: int,
@@ -139,7 +139,7 @@ class AsyncSummarizePageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SummarizePageCreateSummaryResponse:
+    ) -> SummarizePageSumarizePageResponse:
         """
         Generates intelligent summaries of search result pages, helping users quickly
         understand large result sets without reading through every document. The system
@@ -184,12 +184,12 @@ class AsyncSummarizePageResource(AsyncAPIResource):
                     "page_size": page_size,
                     "request_id": request_id,
                 },
-                summarize_page_create_summary_params.SummarizePageCreateSummaryParams,
+                summarize_page_sumarize_page_params.SummarizePageSumarizePageParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SummarizePageCreateSummaryResponse,
+            cast_to=SummarizePageSumarizePageResponse,
         )
 
 
@@ -197,8 +197,8 @@ class SummarizePageResourceWithRawResponse:
     def __init__(self, summarize_page: SummarizePageResource) -> None:
         self._summarize_page = summarize_page
 
-        self.create_summary = to_raw_response_wrapper(
-            summarize_page.create_summary,
+        self.sumarize_page = to_raw_response_wrapper(
+            summarize_page.sumarize_page,
         )
 
 
@@ -206,8 +206,8 @@ class AsyncSummarizePageResourceWithRawResponse:
     def __init__(self, summarize_page: AsyncSummarizePageResource) -> None:
         self._summarize_page = summarize_page
 
-        self.create_summary = async_to_raw_response_wrapper(
-            summarize_page.create_summary,
+        self.sumarize_page = async_to_raw_response_wrapper(
+            summarize_page.sumarize_page,
         )
 
 
@@ -215,8 +215,8 @@ class SummarizePageResourceWithStreamingResponse:
     def __init__(self, summarize_page: SummarizePageResource) -> None:
         self._summarize_page = summarize_page
 
-        self.create_summary = to_streamed_response_wrapper(
-            summarize_page.create_summary,
+        self.sumarize_page = to_streamed_response_wrapper(
+            summarize_page.sumarize_page,
         )
 
 
@@ -224,6 +224,6 @@ class AsyncSummarizePageResourceWithStreamingResponse:
     def __init__(self, summarize_page: AsyncSummarizePageResource) -> None:
         self._summarize_page = summarize_page
 
-        self.create_summary = async_to_streamed_response_wrapper(
-            summarize_page.create_summary,
+        self.sumarize_page = async_to_streamed_response_wrapper(
+            summarize_page.sumarize_page,
         )

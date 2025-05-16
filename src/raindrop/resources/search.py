@@ -6,7 +6,7 @@ from typing import Iterable
 
 import httpx
 
-from ..types import search_run_params
+from ..types import search_find_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,8 +18,8 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.search_run_response import SearchRunResponse
 from ..types.bucket_locator_param import BucketLocatorParam
+from ..types.search_find_response import SearchFindResponse
 
 __all__ = ["SearchResource", "AsyncSearchResource"]
 
@@ -44,7 +44,7 @@ class SearchResource(SyncAPIResource):
         """
         return SearchResourceWithStreamingResponse(self)
 
-    def run(
+    def find(
         self,
         *,
         bucket_locations: Iterable[BucketLocatorParam],
@@ -56,7 +56,7 @@ class SearchResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SearchRunResponse:
+    ) -> SearchFindResponse:
         """
         Primary search endpoint that provides advanced search capabilities across all
         document types stored in SmartBuckets.
@@ -108,12 +108,12 @@ class SearchResource(SyncAPIResource):
                     "input": input,
                     "request_id": request_id,
                 },
-                search_run_params.SearchRunParams,
+                search_find_params.SearchFindParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SearchRunResponse,
+            cast_to=SearchFindResponse,
         )
 
 
@@ -137,7 +137,7 @@ class AsyncSearchResource(AsyncAPIResource):
         """
         return AsyncSearchResourceWithStreamingResponse(self)
 
-    async def run(
+    async def find(
         self,
         *,
         bucket_locations: Iterable[BucketLocatorParam],
@@ -149,7 +149,7 @@ class AsyncSearchResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SearchRunResponse:
+    ) -> SearchFindResponse:
         """
         Primary search endpoint that provides advanced search capabilities across all
         document types stored in SmartBuckets.
@@ -201,12 +201,12 @@ class AsyncSearchResource(AsyncAPIResource):
                     "input": input,
                     "request_id": request_id,
                 },
-                search_run_params.SearchRunParams,
+                search_find_params.SearchFindParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SearchRunResponse,
+            cast_to=SearchFindResponse,
         )
 
 
@@ -214,8 +214,8 @@ class SearchResourceWithRawResponse:
     def __init__(self, search: SearchResource) -> None:
         self._search = search
 
-        self.run = to_raw_response_wrapper(
-            search.run,
+        self.find = to_raw_response_wrapper(
+            search.find,
         )
 
 
@@ -223,8 +223,8 @@ class AsyncSearchResourceWithRawResponse:
     def __init__(self, search: AsyncSearchResource) -> None:
         self._search = search
 
-        self.run = async_to_raw_response_wrapper(
-            search.run,
+        self.find = async_to_raw_response_wrapper(
+            search.find,
         )
 
 
@@ -232,8 +232,8 @@ class SearchResourceWithStreamingResponse:
     def __init__(self, search: SearchResource) -> None:
         self._search = search
 
-        self.run = to_streamed_response_wrapper(
-            search.run,
+        self.find = to_streamed_response_wrapper(
+            search.find,
         )
 
 
@@ -241,6 +241,6 @@ class AsyncSearchResourceWithStreamingResponse:
     def __init__(self, search: AsyncSearchResource) -> None:
         self._search = search
 
-        self.run = async_to_streamed_response_wrapper(
-            search.run,
+        self.find = async_to_streamed_response_wrapper(
+            search.find,
         )

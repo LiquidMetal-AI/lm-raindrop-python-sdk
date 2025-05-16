@@ -5,10 +5,10 @@ from typing import List, Optional
 from .._models import BaseModel
 from .text_result import TextResult
 
-__all__ = ["ChunkSearchExecuteResponse"]
+__all__ = ["ChunkSearchFindResponse"]
 
 
-class ChunkSearchExecuteResponse(BaseModel):
+class ChunkSearchFindResponse(BaseModel):
     results: Optional[List[TextResult]] = None
     """Ordered list of relevant text segments.
 

@@ -5,7 +5,7 @@ from typing import List, Optional
 from .._models import BaseModel
 from .text_result import TextResult
 
-__all__ = ["SearchRunResponse", "Pagination"]
+__all__ = ["SearchFindResponse", "Pagination"]
 
 
 class Pagination(BaseModel):
@@ -25,7 +25,7 @@ class Pagination(BaseModel):
     """Total available pages. Calculated as ceil(total/page_size)"""
 
 
-class SearchRunResponse(BaseModel):
+class SearchFindResponse(BaseModel):
     pagination: Optional[Pagination] = None
     """Pagination details for result navigation"""
 
