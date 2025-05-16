@@ -31,6 +31,7 @@ client = Raindrop(
 )
 
 response = client.search.find(
+    bucket_locations=[{"bucket": {}}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -52,6 +53,7 @@ client = AsyncRaindrop(
 
 async def main() -> None:
     response = await client.search.find(
+        bucket_locations=[{"bucket": {}}],
         input="all my pdfs with images of cats that do not talk about dogs",
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     )
@@ -91,6 +93,7 @@ client = Raindrop(
 
 try:
     client.search.find(
+        bucket_locations=[{"bucket": {}}],
         input="all my pdfs with images of cats that do not talk about dogs",
         request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
     )
@@ -138,6 +141,7 @@ client = Raindrop(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).search.find(
+    bucket_locations=[{"bucket": {}}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -166,6 +170,7 @@ client = Raindrop(
 
 # Override per-request:
 client.with_options(timeout=5.0).search.find(
+    bucket_locations=[{"bucket": {}}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -212,6 +217,9 @@ client = Raindrop(
     api_key="My API Key",
 )
 response = client.search.with_raw_response.find(
+    bucket_locations=[{
+        "bucket": {}
+    }],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 )
@@ -233,6 +241,7 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.search.with_streaming_response.find(
+    bucket_locations=[{"bucket": {}}],
     input="all my pdfs with images of cats that do not talk about dogs",
     request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
 ) as response:

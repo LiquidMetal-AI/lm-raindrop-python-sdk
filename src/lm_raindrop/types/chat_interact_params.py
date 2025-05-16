@@ -15,28 +15,28 @@ __all__ = [
 
 
 class ChatInteractParams(TypedDict, total=False):
-    bucket_location: BucketLocation
+    bucket_location: Required[BucketLocation]
     """The storage bucket containing the target document.
 
     Must be a valid, registered Smart Bucket. Used to identify which bucket to query
     against
     """
 
-    input: str
+    input: Required[str]
     """User's input or question about the document.
 
     Can be natural language questions, commands, or requests. The system will
     process this against the document content
     """
 
-    object_id: str
+    object_id: Required[str]
     """Document identifier within the bucket.
 
     Typically matches the storage path or key. Used to identify which document to
     chat with
     """
 
-    request_id: str
+    request_id: Required[str]
     """Client-provided conversation session identifier.
 
     Required for maintaining context in follow-up questions. We recommend using a
