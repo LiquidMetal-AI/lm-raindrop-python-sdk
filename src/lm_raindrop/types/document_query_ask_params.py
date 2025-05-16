@@ -2,16 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
-from typing_extensions import Required, TypeAlias, TypedDict
+from typing import Optional
+from typing_extensions import Required, TypedDict
 
-__all__ = [
-    "DocumentQueryAskParams",
-    "BucketLocation",
-    "BucketLocationBucket",
-    "BucketLocationBucketBucket",
-    "BucketLocationModuleID",
-]
+__all__ = ["DocumentQueryAskParams", "BucketLocation", "BucketLocationBucket"]
 
 
 class DocumentQueryAskParams(TypedDict, total=False):
@@ -44,7 +38,7 @@ class DocumentQueryAskParams(TypedDict, total=False):
     """
 
 
-class BucketLocationBucketBucket(TypedDict, total=False):
+class BucketLocationBucket(TypedDict, total=False):
     application_name: Optional[str]
     """Optional Application"""
 
@@ -55,13 +49,6 @@ class BucketLocationBucketBucket(TypedDict, total=False):
     """Optional version of the bucket"""
 
 
-class BucketLocationBucket(TypedDict, total=False):
-    bucket: Required[BucketLocationBucketBucket]
+class BucketLocation(TypedDict, total=False):
+    bucket: Required[BucketLocationBucket]
     """BucketName represents a bucket name with an optional version"""
-
-
-class BucketLocationModuleID(TypedDict, total=False):
-    module_id: Required[str]
-
-
-BucketLocation: TypeAlias = Union[BucketLocationBucket, BucketLocationModuleID]

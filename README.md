@@ -75,6 +75,30 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
+## Nested params
+
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
+
+```python
+from lm_raindrop import Raindrop
+
+client = Raindrop()
+
+response = client.document_query.ask(
+    bucket_location={
+        "bucket": {
+            "application_name": "my-app",
+            "name": "my-bucket",
+            "version": "01jtgtraw3b5qbahrhvrj3ygbb",
+        }
+    },
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
+)
+print(response.bucket_location)
+```
+
 ## Handling errors
 
 When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `lm_raindrop.APIConnectionError` is raised.
