@@ -1,6 +1,6 @@
 # Raindrop Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/lm-raindrop.svg)](https://pypi.org/project/lm-raindrop/)
+[![PyPI version](https://img.shields.io/pypi/v/raindrop.svg)](https://pypi.org/project/raindrop/)
 
 The Raindrop Python library provides convenient access to the Raindrop REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -15,25 +15,29 @@ The full API of this library can be found in [api.md](api.md).
 ## Installation
 
 ```sh
-# install from PyPI
-pip install lm-raindrop
+# install from this staging repo
+pip install git+ssh://git@github.com/stainless-sdks/raindrop-python.git
 ```
+
+> [!NOTE]
+> Once this package is [published to PyPI](https://app.stainless.com/docs/guides/publish), this will become: `pip install raindrop`
 
 ## Usage
 
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-from lm_raindrop import Raindrop
+from raindrop import Raindrop
 
 client = Raindrop()
 
-response = client.search.find(
-    bucket_locations=[{"bucket": {}}],
-    input="all my pdfs with images of cats that do not talk about dogs",
-    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+document_query = client.document_query.create(
+    bucket_location={"bucket": {}},
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 )
-print(response.pagination)
+print(document_query.answer)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -47,18 +51,19 @@ Simply import `AsyncRaindrop` instead of `Raindrop` and use `await` with each AP
 
 ```python
 import asyncio
-from lm_raindrop import AsyncRaindrop
+from raindrop import AsyncRaindrop
 
 client = AsyncRaindrop()
 
 
 async def main() -> None:
-    response = await client.search.find(
-        bucket_locations=[{"bucket": {}}],
-        input="all my pdfs with images of cats that do not talk about dogs",
-        request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+    document_query = await client.document_query.create(
+        bucket_location={"bucket": {}},
+        input="What are the key points in this document?",
+        object_id="document.pdf",
+        request_id="123e4567-e89b-12d3-a456-426614174000",
     )
-    print(response.pagination)
+    print(document_query.answer)
 
 
 asyncio.run(main())
@@ -75,57 +80,34 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
-## Nested params
-
-Nested parameters are dictionaries, typed using `TypedDict`, for example:
-
-```python
-from lm_raindrop import Raindrop
-
-client = Raindrop()
-
-response = client.document_query.ask(
-    bucket_location={
-        "bucket": {
-            "application_name": "my-app",
-            "name": "my-bucket",
-            "version": "01jtgtraw3b5qbahrhvrj3ygbb",
-        }
-    },
-    input="What are the key points in this document?",
-    object_id="document.pdf",
-    request_id="123e4567-e89b-12d3-a456-426614174000",
-)
-print(response.bucket_location)
-```
-
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `lm_raindrop.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `raindrop.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `lm_raindrop.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `raindrop.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `lm_raindrop.APIError`.
+All errors inherit from `raindrop.APIError`.
 
 ```python
-import lm_raindrop
-from lm_raindrop import Raindrop
+import raindrop
+from raindrop import Raindrop
 
 client = Raindrop()
 
 try:
-    client.search.find(
-        bucket_locations=[{"bucket": {}}],
-        input="all my pdfs with images of cats that do not talk about dogs",
-        request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+    client.document_query.create(
+        bucket_location={"bucket": {}},
+        input="What are the key points in this document?",
+        object_id="document.pdf",
+        request_id="123e4567-e89b-12d3-a456-426614174000",
     )
-except lm_raindrop.APIConnectionError as e:
+except raindrop.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except lm_raindrop.RateLimitError as e:
+except raindrop.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except lm_raindrop.APIStatusError as e:
+except raindrop.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -153,7 +135,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from lm_raindrop import Raindrop
+from raindrop import Raindrop
 
 # Configure the default for all requests:
 client = Raindrop(
@@ -162,10 +144,11 @@ client = Raindrop(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).search.find(
-    bucket_locations=[{"bucket": {}}],
-    input="all my pdfs with images of cats that do not talk about dogs",
-    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+client.with_options(max_retries=5).document_query.create(
+    bucket_location={"bucket": {}},
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 )
 ```
 
@@ -175,7 +158,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from lm_raindrop import Raindrop
+from raindrop import Raindrop
 
 # Configure the default for all requests:
 client = Raindrop(
@@ -189,10 +172,11 @@ client = Raindrop(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).search.find(
-    bucket_locations=[{"bucket": {}}],
-    input="all my pdfs with images of cats that do not talk about dogs",
-    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+client.with_options(timeout=5.0).document_query.create(
+    bucket_location={"bucket": {}},
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 )
 ```
 
@@ -231,25 +215,26 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from lm_raindrop import Raindrop
+from raindrop import Raindrop
 
 client = Raindrop()
-response = client.search.with_raw_response.find(
-    bucket_locations=[{
+response = client.document_query.with_raw_response.create(
+    bucket_location={
         "bucket": {}
-    }],
-    input="all my pdfs with images of cats that do not talk about dogs",
-    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+    },
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 )
 print(response.headers.get('X-My-Header'))
 
-search = response.parse()  # get the object that `search.find()` would have returned
-print(search.pagination)
+document_query = response.parse()  # get the object that `document_query.create()` would have returned
+print(document_query.answer)
 ```
 
-These methods return an [`APIResponse`](https://github.com/LiquidMetal-AI/lm-raindrop-python-sdk/tree/main/src/lm_raindrop/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/stainless-sdks/raindrop-python/tree/main/src/raindrop/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/LiquidMetal-AI/lm-raindrop-python-sdk/tree/main/src/lm_raindrop/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/raindrop-python/tree/main/src/raindrop/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -258,10 +243,11 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.search.with_streaming_response.find(
-    bucket_locations=[{"bucket": {}}],
-    input="all my pdfs with images of cats that do not talk about dogs",
-    request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
+with client.document_query.with_streaming_response.create(
+    bucket_location={"bucket": {}},
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
@@ -315,7 +301,7 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from lm_raindrop import Raindrop, DefaultHttpxClient
+from raindrop import Raindrop, DefaultHttpxClient
 
 client = Raindrop(
     # Or use the `RAINDROP_BASE_URL` env var
@@ -338,7 +324,7 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from lm_raindrop import Raindrop
+from raindrop import Raindrop
 
 with Raindrop() as client:
   # make requests here
@@ -357,7 +343,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/raindrop-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 
@@ -366,8 +352,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import lm_raindrop
-print(lm_raindrop.__version__)
+import raindrop
+print(raindrop.__version__)
 ```
 
 ## Requirements
