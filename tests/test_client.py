@@ -774,14 +774,7 @@ class TestRaindrop:
 
         respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
-        response = client.object.with_raw_response.retrieve(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
-        )
+        response = client.object.with_raw_response.retrieve(object_key="object_key", bucket_name="bucket_name")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -806,13 +799,7 @@ class TestRaindrop:
         respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
         response = client.object.with_raw_response.retrieve(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
-            extra_headers={"x-stainless-retry-count": Omit()},
+            object_key="object_key", bucket_name="bucket_name", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -837,13 +824,7 @@ class TestRaindrop:
         respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
         response = client.object.with_raw_response.retrieve(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
-            extra_headers={"x-stainless-retry-count": "42"},
+            object_key="object_key", bucket_name="bucket_name", extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
@@ -1583,14 +1564,7 @@ class TestAsyncRaindrop:
 
         respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
-        response = await client.object.with_raw_response.retrieve(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
-        )
+        response = await client.object.with_raw_response.retrieve(object_key="object_key", bucket_name="bucket_name")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1616,13 +1590,7 @@ class TestAsyncRaindrop:
         respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
         response = await client.object.with_raw_response.retrieve(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
-            extra_headers={"x-stainless-retry-count": Omit()},
+            object_key="object_key", bucket_name="bucket_name", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1648,13 +1616,7 @@ class TestAsyncRaindrop:
         respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
         response = await client.object.with_raw_response.retrieve(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
-            extra_headers={"x-stainless-retry-count": "42"},
+            object_key="object_key", bucket_name="bucket_name", extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
