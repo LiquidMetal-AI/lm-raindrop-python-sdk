@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable, Optional
+from typing import Union, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 __all__ = [
-    "ChunkSearchFindParams",
+    "ChatInteractParams",
     "BucketLocation",
     "BucketLocationBucket",
     "BucketLocationBucketBucket",
@@ -14,25 +14,33 @@ __all__ = [
 ]
 
 
-class ChunkSearchFindParams(TypedDict, total=False):
-    bucket_locations: Iterable[BucketLocation]
-    """The buckets to search.
+class ChatInteractParams(TypedDict, total=False):
+    bucket_location: BucketLocation
+    """The storage bucket containing the target document.
 
-    If provided, the search will only return results from these buckets
+    Must be a valid, registered Smart Bucket. Used to identify which bucket to query
+    against
     """
 
     input: str
-    """Natural language query or question.
+    """User's input or question about the document.
 
-    Can include complex criteria and relationships. The system will optimize the
-    search strategy based on this input
+    Can be natural language questions, commands, or requests. The system will
+    process this against the document content
+    """
+
+    object_id: str
+    """Document identifier within the bucket.
+
+    Typically matches the storage path or key. Used to identify which document to
+    chat with
     """
 
     request_id: str
-    """Client-provided search session identifier.
+    """Client-provided conversation session identifier.
 
-    Required for pagination and result tracking. We recommend using a UUID or ULID
-    for this value
+    Required for maintaining context in follow-up questions. We recommend using a
+    UUID or ULID for this value
     """
 
 

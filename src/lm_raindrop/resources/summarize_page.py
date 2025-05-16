@@ -44,9 +44,9 @@ class SummarizePageResource(SyncAPIResource):
     def create(
         self,
         *,
-        request_id: str,
         page: int | NotGiven = NOT_GIVEN,
         page_size: int | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -66,13 +66,21 @@ class SummarizePageResource(SyncAPIResource):
         - Extracts important findings
         - Highlights document relationships
         - Provides content type distribution
+        - Summarizes metadata patterns
+
+        This is particularly valuable when dealing with:
+
+        - Large document collections
+        - Mixed content types
+        - Technical documentation
+        - Research materials
 
         Args:
-          request_id: Client-provided search session identifier from the original search
-
           page: Target page number (1-based)
 
-          page_size: Results per page. Affects how many documents are included in the summary
+          page_size: Results per page. Affects summary granularity
+
+          request_id: Original search session identifier from the initial search
 
           extra_headers: Send extra headers
 
@@ -86,9 +94,9 @@ class SummarizePageResource(SyncAPIResource):
             "/v1/summarize_page",
             body=maybe_transform(
                 {
-                    "request_id": request_id,
                     "page": page,
                     "page_size": page_size,
+                    "request_id": request_id,
                 },
                 summarize_page_create_params.SummarizePageCreateParams,
             ),
@@ -122,9 +130,9 @@ class AsyncSummarizePageResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        request_id: str,
         page: int | NotGiven = NOT_GIVEN,
         page_size: int | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -144,13 +152,21 @@ class AsyncSummarizePageResource(AsyncAPIResource):
         - Extracts important findings
         - Highlights document relationships
         - Provides content type distribution
+        - Summarizes metadata patterns
+
+        This is particularly valuable when dealing with:
+
+        - Large document collections
+        - Mixed content types
+        - Technical documentation
+        - Research materials
 
         Args:
-          request_id: Client-provided search session identifier from the original search
-
           page: Target page number (1-based)
 
-          page_size: Results per page. Affects how many documents are included in the summary
+          page_size: Results per page. Affects summary granularity
+
+          request_id: Original search session identifier from the initial search
 
           extra_headers: Send extra headers
 
@@ -164,9 +180,9 @@ class AsyncSummarizePageResource(AsyncAPIResource):
             "/v1/summarize_page",
             body=await async_maybe_transform(
                 {
-                    "request_id": request_id,
                     "page": page,
                     "page_size": page_size,
+                    "request_id": request_id,
                 },
                 summarize_page_create_params.SummarizePageCreateParams,
             ),

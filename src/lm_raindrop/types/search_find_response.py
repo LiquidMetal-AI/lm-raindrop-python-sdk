@@ -4,7 +4,24 @@ from typing import List, Optional
 
 from .._models import BaseModel
 
-__all__ = ["ChunkSearchFindResponse", "Result", "ResultSource", "ResultSourceBucket"]
+__all__ = ["SearchFindResponse", "Pagination", "Result", "ResultSource", "ResultSourceBucket"]
+
+
+class Pagination(BaseModel):
+    has_more: Optional[bool] = None
+    """Indicates more results available. Used for infinite scroll implementation"""
+
+    page: Optional[int] = None
+    """Current page number (1-based)"""
+
+    page_size: Optional[int] = None
+    """Results per page. May be adjusted for performance"""
+
+    total: Optional[int] = None
+    """Total number of available results"""
+
+    total_pages: Optional[int] = None
+    """Total available pages. Calculated as ceil(total/page_size)"""
 
 
 class ResultSourceBucket(BaseModel):
@@ -54,9 +71,9 @@ class Result(BaseModel):
     """Content MIME type. Helps with proper result rendering"""
 
 
-class ChunkSearchFindResponse(BaseModel):
-    results: Optional[List[Result]] = None
-    """Ordered list of relevant text segments.
+class SearchFindResponse(BaseModel):
+    pagination: Optional[Pagination] = None
+    """Pagination details for result navigation"""
 
-    Each result includes full context and metadata
-    """
+    results: Optional[List[Result]] = None
+    """Matched results with metadata"""

@@ -46,9 +46,9 @@ class ChunkSearchResource(SyncAPIResource):
     def find(
         self,
         *,
-        bucket_locations: Iterable[chunk_search_find_params.BucketLocation],
-        input: str,
-        request_id: str,
+        bucket_locations: Iterable[chunk_search_find_params.BucketLocation] | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -66,11 +66,14 @@ class ChunkSearchResource(SyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          input: Natural language query or question. Can include complex criteria and
-              relationships
+          bucket_locations: The buckets to search. If provided, the search will only return results from
+              these buckets
 
-          request_id: Client-provided search session identifier. We recommend using a UUID or ULID for
-              this value.
+          input: Natural language query or question. Can include complex criteria and
+              relationships. The system will optimize the search strategy based on this input
+
+          request_id: Client-provided search session identifier. Required for pagination and result
+              tracking. We recommend using a UUID or ULID for this value
 
           extra_headers: Send extra headers
 
@@ -120,9 +123,9 @@ class AsyncChunkSearchResource(AsyncAPIResource):
     async def find(
         self,
         *,
-        bucket_locations: Iterable[chunk_search_find_params.BucketLocation],
-        input: str,
-        request_id: str,
+        bucket_locations: Iterable[chunk_search_find_params.BucketLocation] | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -140,11 +143,14 @@ class AsyncChunkSearchResource(AsyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          input: Natural language query or question. Can include complex criteria and
-              relationships
+          bucket_locations: The buckets to search. If provided, the search will only return results from
+              these buckets
 
-          request_id: Client-provided search session identifier. We recommend using a UUID or ULID for
-              this value.
+          input: Natural language query or question. Can include complex criteria and
+              relationships. The system will optimize the search strategy based on this input
+
+          request_id: Client-provided search session identifier. Required for pagination and result
+              tracking. We recommend using a UUID or ULID for this value
 
           extra_headers: Send extra headers
 

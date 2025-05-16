@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import search, chunk_search, document_query, storage_object, summarize_page
+from .resources import chat, object, search, chunk_search, summarize_page
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import RaindropError, APIStatusError
 from ._base_client import (
@@ -44,10 +44,10 @@ __all__ = [
 
 class Raindrop(SyncAPIClient):
     search: search.SearchResource
-    document_query: document_query.DocumentQueryResource
     chunk_search: chunk_search.ChunkSearchResource
     summarize_page: summarize_page.SummarizePageResource
-    storage_object: storage_object.StorageObjectResource
+    chat: chat.ChatResource
+    object: object.ObjectResource
     with_raw_response: RaindropWithRawResponse
     with_streaming_response: RaindropWithStreamedResponse
 
@@ -106,10 +106,10 @@ class Raindrop(SyncAPIClient):
         )
 
         self.search = search.SearchResource(self)
-        self.document_query = document_query.DocumentQueryResource(self)
         self.chunk_search = chunk_search.ChunkSearchResource(self)
         self.summarize_page = summarize_page.SummarizePageResource(self)
-        self.storage_object = storage_object.StorageObjectResource(self)
+        self.chat = chat.ChatResource(self)
+        self.object = object.ObjectResource(self)
         self.with_raw_response = RaindropWithRawResponse(self)
         self.with_streaming_response = RaindropWithStreamedResponse(self)
 
@@ -117,12 +117,6 @@ class Raindrop(SyncAPIClient):
     @override
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
-
-    @property
-    @override
-    def auth_headers(self) -> dict[str, str]:
-        api_key = self.api_key
-        return {"Authorization": api_key}
 
     @property
     @override
@@ -220,10 +214,10 @@ class Raindrop(SyncAPIClient):
 
 class AsyncRaindrop(AsyncAPIClient):
     search: search.AsyncSearchResource
-    document_query: document_query.AsyncDocumentQueryResource
     chunk_search: chunk_search.AsyncChunkSearchResource
     summarize_page: summarize_page.AsyncSummarizePageResource
-    storage_object: storage_object.AsyncStorageObjectResource
+    chat: chat.AsyncChatResource
+    object: object.AsyncObjectResource
     with_raw_response: AsyncRaindropWithRawResponse
     with_streaming_response: AsyncRaindropWithStreamedResponse
 
@@ -282,10 +276,10 @@ class AsyncRaindrop(AsyncAPIClient):
         )
 
         self.search = search.AsyncSearchResource(self)
-        self.document_query = document_query.AsyncDocumentQueryResource(self)
         self.chunk_search = chunk_search.AsyncChunkSearchResource(self)
         self.summarize_page = summarize_page.AsyncSummarizePageResource(self)
-        self.storage_object = storage_object.AsyncStorageObjectResource(self)
+        self.chat = chat.AsyncChatResource(self)
+        self.object = object.AsyncObjectResource(self)
         self.with_raw_response = AsyncRaindropWithRawResponse(self)
         self.with_streaming_response = AsyncRaindropWithStreamedResponse(self)
 
@@ -293,12 +287,6 @@ class AsyncRaindrop(AsyncAPIClient):
     @override
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
-
-    @property
-    @override
-    def auth_headers(self) -> dict[str, str]:
-        api_key = self.api_key
-        return {"Authorization": api_key}
 
     @property
     @override
@@ -397,37 +385,37 @@ class AsyncRaindrop(AsyncAPIClient):
 class RaindropWithRawResponse:
     def __init__(self, client: Raindrop) -> None:
         self.search = search.SearchResourceWithRawResponse(client.search)
-        self.document_query = document_query.DocumentQueryResourceWithRawResponse(client.document_query)
         self.chunk_search = chunk_search.ChunkSearchResourceWithRawResponse(client.chunk_search)
         self.summarize_page = summarize_page.SummarizePageResourceWithRawResponse(client.summarize_page)
-        self.storage_object = storage_object.StorageObjectResourceWithRawResponse(client.storage_object)
+        self.chat = chat.ChatResourceWithRawResponse(client.chat)
+        self.object = object.ObjectResourceWithRawResponse(client.object)
 
 
 class AsyncRaindropWithRawResponse:
     def __init__(self, client: AsyncRaindrop) -> None:
         self.search = search.AsyncSearchResourceWithRawResponse(client.search)
-        self.document_query = document_query.AsyncDocumentQueryResourceWithRawResponse(client.document_query)
         self.chunk_search = chunk_search.AsyncChunkSearchResourceWithRawResponse(client.chunk_search)
         self.summarize_page = summarize_page.AsyncSummarizePageResourceWithRawResponse(client.summarize_page)
-        self.storage_object = storage_object.AsyncStorageObjectResourceWithRawResponse(client.storage_object)
+        self.chat = chat.AsyncChatResourceWithRawResponse(client.chat)
+        self.object = object.AsyncObjectResourceWithRawResponse(client.object)
 
 
 class RaindropWithStreamedResponse:
     def __init__(self, client: Raindrop) -> None:
         self.search = search.SearchResourceWithStreamingResponse(client.search)
-        self.document_query = document_query.DocumentQueryResourceWithStreamingResponse(client.document_query)
         self.chunk_search = chunk_search.ChunkSearchResourceWithStreamingResponse(client.chunk_search)
         self.summarize_page = summarize_page.SummarizePageResourceWithStreamingResponse(client.summarize_page)
-        self.storage_object = storage_object.StorageObjectResourceWithStreamingResponse(client.storage_object)
+        self.chat = chat.ChatResourceWithStreamingResponse(client.chat)
+        self.object = object.ObjectResourceWithStreamingResponse(client.object)
 
 
 class AsyncRaindropWithStreamedResponse:
     def __init__(self, client: AsyncRaindrop) -> None:
         self.search = search.AsyncSearchResourceWithStreamingResponse(client.search)
-        self.document_query = document_query.AsyncDocumentQueryResourceWithStreamingResponse(client.document_query)
         self.chunk_search = chunk_search.AsyncChunkSearchResourceWithStreamingResponse(client.chunk_search)
         self.summarize_page = summarize_page.AsyncSummarizePageResourceWithStreamingResponse(client.summarize_page)
-        self.storage_object = storage_object.AsyncStorageObjectResourceWithStreamingResponse(client.storage_object)
+        self.chat = chat.AsyncChatResourceWithStreamingResponse(client.chat)
+        self.object = object.AsyncObjectResourceWithStreamingResponse(client.object)
 
 
 Client = Raindrop

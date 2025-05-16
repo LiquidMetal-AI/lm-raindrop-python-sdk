@@ -26,7 +26,7 @@ from lm_raindrop._types import Omit
 from lm_raindrop._utils import maybe_transform
 from lm_raindrop._models import BaseModel, FinalRequestOptions
 from lm_raindrop._constants import RAW_RESPONSE_HEADER
-from lm_raindrop._exceptions import RaindropError, APIStatusError, APITimeoutError, APIResponseValidationError
+from lm_raindrop._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
 from lm_raindrop._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -335,16 +335,6 @@ class TestRaindrop:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
-
-    def test_validate_headers(self) -> None:
-        client = Raindrop(base_url=base_url, api_key=api_key, _strict_response_validation=True)
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("Authorization") == api_key
-
-        with pytest.raises(RaindropError):
-            with update_env(**{"RAINDROP_API_KEY": Omit()}):
-                client2 = Raindrop(base_url=base_url, api_key=None, _strict_response_validation=True)
-            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Raindrop(
@@ -723,7 +713,6 @@ class TestRaindrop:
                     object,
                     maybe_transform(
                         dict(
-                            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
                         ),
@@ -748,7 +737,6 @@ class TestRaindrop:
                     object,
                     maybe_transform(
                         dict(
-                            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
                         ),
@@ -787,11 +775,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.find(
-            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = client.search.with_raw_response.find()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -815,12 +799,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.find(
-            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-            extra_headers={"x-stainless-retry-count": Omit()},
-        )
+        response = client.search.with_raw_response.find(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -843,12 +822,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.find(
-            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-            extra_headers={"x-stainless-retry-count": "42"},
-        )
+        response = client.search.with_raw_response.find(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1131,16 +1105,6 @@ class TestAsyncRaindrop:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
-
-    def test_validate_headers(self) -> None:
-        client = AsyncRaindrop(base_url=base_url, api_key=api_key, _strict_response_validation=True)
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("Authorization") == api_key
-
-        with pytest.raises(RaindropError):
-            with update_env(**{"RAINDROP_API_KEY": Omit()}):
-                client2 = AsyncRaindrop(base_url=base_url, api_key=None, _strict_response_validation=True)
-            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncRaindrop(
@@ -1533,7 +1497,6 @@ class TestAsyncRaindrop:
                     object,
                     maybe_transform(
                         dict(
-                            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
                         ),
@@ -1558,7 +1521,6 @@ class TestAsyncRaindrop:
                     object,
                     maybe_transform(
                         dict(
-                            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
                             input="all my pdfs with images of cats that do not talk about dogs",
                             request_id="c523cb44-9b59-4bf5-a840-01891d735b57",
                         ),
@@ -1598,11 +1560,7 @@ class TestAsyncRaindrop:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.find(
-            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = await client.search.with_raw_response.find()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1627,12 +1585,7 @@ class TestAsyncRaindrop:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.find(
-            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-            extra_headers={"x-stainless-retry-count": Omit()},
-        )
+        response = await client.search.with_raw_response.find(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1656,12 +1609,7 @@ class TestAsyncRaindrop:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.find(
-            bucket_locations=[{"module_id": "01jtgtrd37acrqf7k24dggg31s"}],
-            input="Find me all documents with pictures of a cat that do not talk about dogs",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-            extra_headers={"x-stainless-retry-count": "42"},
-        )
+        response = await client.search.with_raw_response.find(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
