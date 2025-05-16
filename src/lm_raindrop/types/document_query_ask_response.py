@@ -4,10 +4,10 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["ChatInteractResponse"]
+__all__ = ["DocumentQueryAskResponse"]
 
 
-class ChatInteractResponse(BaseModel):
+class DocumentQueryAskResponse(BaseModel):
     answer: Optional[str] = None
     """
     AI-generated response that may include direct document quotes, content

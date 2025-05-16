@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 from .search_find_params import SearchFindParams as SearchFindParams
-from .chat_interact_params import ChatInteractParams as ChatInteractParams
 from .search_find_response import SearchFindResponse as SearchFindResponse
-from .chat_interact_response import ChatInteractResponse as ChatInteractResponse
 from .chunk_search_find_params import ChunkSearchFindParams as ChunkSearchFindParams
 from .object_put_object_params import ObjectPutObjectParams as ObjectPutObjectParams
+from .document_query_ask_params import DocumentQueryAskParams as DocumentQueryAskParams
 from .chunk_search_find_response import ChunkSearchFindResponse as ChunkSearchFindResponse
 from .object_list_objects_params import ObjectListObjectsParams as ObjectListObjectsParams
 from .object_put_object_response import ObjectPutObjectResponse as ObjectPutObjectResponse
+from .document_query_ask_response import DocumentQueryAskResponse as DocumentQueryAskResponse
 from .object_list_objects_response import ObjectListObjectsResponse as ObjectListObjectsResponse
 from .summarize_page_create_params import SummarizePageCreateParams as SummarizePageCreateParams
 from .object_retrieve_object_params import ObjectRetrieveObjectParams as ObjectRetrieveObjectParams

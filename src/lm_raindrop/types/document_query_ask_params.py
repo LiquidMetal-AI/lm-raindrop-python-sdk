@@ -6,7 +6,7 @@ from typing import Union, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 __all__ = [
-    "ChatInteractParams",
+    "DocumentQueryAskParams",
     "BucketLocation",
     "BucketLocationBucket",
     "BucketLocationBucketBucket",
@@ -14,7 +14,7 @@ __all__ = [
 ]
 
 
-class ChatInteractParams(TypedDict, total=False):
+class DocumentQueryAskParams(TypedDict, total=False):
     bucket_location: Required[BucketLocation]
     """The storage bucket containing the target document.
 
