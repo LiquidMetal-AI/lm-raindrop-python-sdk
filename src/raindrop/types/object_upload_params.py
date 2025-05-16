@@ -14,6 +14,24 @@ __all__ = ["ObjectUploadParams"]
 class ObjectUploadParams(TypedDict, total=False):
     bucket_name: Required[str]
 
+    query_key: Required[Annotated[str, PropertyInfo(alias="key")]]
+    """
+    **DESCRIPTION** Object key/path in the bucket **REQUIRED** true **EXAMPLE**
+    "my-key"
+    """
+
+    query_module_id: Required[Annotated[str, PropertyInfo(alias="module_id")]]
+    """
+    **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
+    "01jtgtrd37acrqf7k24dggg31s"
+    """
+
+    query_organization_id: Required[Annotated[str, PropertyInfo(alias="organization_id")]]
+    """**DESCRIPTION** Organization ID for access control **REQUIRED** true"""
+
+    query_user_id: Required[Annotated[str, PropertyInfo(alias="user_id")]]
+    """**DESCRIPTION** User ID for access control **REQUIRED** true"""
+
     content: Annotated[Union[str, Base64FileInput], PropertyInfo(format="base64")]
     """**DESCRIPTION** Binary content of the object **REQUIRED** true"""
 
@@ -23,20 +41,20 @@ class ObjectUploadParams(TypedDict, total=False):
     "application/pdf"
     """
 
-    key: str
+    body_key: Annotated[str, PropertyInfo(alias="key")]
     """
     **DESCRIPTION** Object key/path in the bucket **REQUIRED** true **EXAMPLE**
     "my-key"
     """
 
-    module_id: str
+    body_module_id: Annotated[str, PropertyInfo(alias="module_id")]
     """
     **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
     "01jtgtrd37acrqf7k24dggg31s"
     """
 
-    organization_id: str
+    body_organization_id: Annotated[str, PropertyInfo(alias="organization_id")]
     """**DESCRIPTION** Organization ID for access control **REQUIRED** true"""
 
-    user_id: str
+    body_user_id: Annotated[str, PropertyInfo(alias="user_id")]
     """**DESCRIPTION** User ID for access control **REQUIRED** true"""
