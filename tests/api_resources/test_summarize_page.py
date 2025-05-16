@@ -9,7 +9,7 @@ import pytest
 
 from raindrop import Raindrop, AsyncRaindrop
 from tests.utils import assert_matches_type
-from raindrop.types import SummarizePageCreateSummaryResponse
+from raindrop.types import SummarizePageSumarizePageResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -19,18 +19,18 @@ class TestSummarizePage:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_create_summary(self, client: Raindrop) -> None:
-        summarize_page = client.summarize_page.create_summary(
+    def test_method_sumarize_page(self, client: Raindrop) -> None:
+        summarize_page = client.summarize_page.sumarize_page(
             page=1,
             page_size=10,
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
-        assert_matches_type(SummarizePageCreateSummaryResponse, summarize_page, path=["response"])
+        assert_matches_type(SummarizePageSumarizePageResponse, summarize_page, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_create_summary(self, client: Raindrop) -> None:
-        response = client.summarize_page.with_raw_response.create_summary(
+    def test_raw_response_sumarize_page(self, client: Raindrop) -> None:
+        response = client.summarize_page.with_raw_response.sumarize_page(
             page=1,
             page_size=10,
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -39,12 +39,12 @@ class TestSummarizePage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         summarize_page = response.parse()
-        assert_matches_type(SummarizePageCreateSummaryResponse, summarize_page, path=["response"])
+        assert_matches_type(SummarizePageSumarizePageResponse, summarize_page, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_create_summary(self, client: Raindrop) -> None:
-        with client.summarize_page.with_streaming_response.create_summary(
+    def test_streaming_response_sumarize_page(self, client: Raindrop) -> None:
+        with client.summarize_page.with_streaming_response.sumarize_page(
             page=1,
             page_size=10,
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -53,7 +53,7 @@ class TestSummarizePage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             summarize_page = response.parse()
-            assert_matches_type(SummarizePageCreateSummaryResponse, summarize_page, path=["response"])
+            assert_matches_type(SummarizePageSumarizePageResponse, summarize_page, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -63,18 +63,18 @@ class TestAsyncSummarizePage:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_create_summary(self, async_client: AsyncRaindrop) -> None:
-        summarize_page = await async_client.summarize_page.create_summary(
+    async def test_method_sumarize_page(self, async_client: AsyncRaindrop) -> None:
+        summarize_page = await async_client.summarize_page.sumarize_page(
             page=1,
             page_size=10,
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
-        assert_matches_type(SummarizePageCreateSummaryResponse, summarize_page, path=["response"])
+        assert_matches_type(SummarizePageSumarizePageResponse, summarize_page, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_create_summary(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.summarize_page.with_raw_response.create_summary(
+    async def test_raw_response_sumarize_page(self, async_client: AsyncRaindrop) -> None:
+        response = await async_client.summarize_page.with_raw_response.sumarize_page(
             page=1,
             page_size=10,
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -83,12 +83,12 @@ class TestAsyncSummarizePage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         summarize_page = await response.parse()
-        assert_matches_type(SummarizePageCreateSummaryResponse, summarize_page, path=["response"])
+        assert_matches_type(SummarizePageSumarizePageResponse, summarize_page, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_create_summary(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.summarize_page.with_streaming_response.create_summary(
+    async def test_streaming_response_sumarize_page(self, async_client: AsyncRaindrop) -> None:
+        async with async_client.summarize_page.with_streaming_response.sumarize_page(
             page=1,
             page_size=10,
             request_id="123e4567-e89b-12d3-a456-426614174000",
@@ -97,6 +97,6 @@ class TestAsyncSummarizePage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             summarize_page = await response.parse()
-            assert_matches_type(SummarizePageCreateSummaryResponse, summarize_page, path=["response"])
+            assert_matches_type(SummarizePageSumarizePageResponse, summarize_page, path=["response"])
 
         assert cast(Any, response.is_closed) is True

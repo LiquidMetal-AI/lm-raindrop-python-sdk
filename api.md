@@ -3,45 +3,45 @@
 Types:
 
 ```python
-from raindrop.types import BucketLocator, DocumentQueryCreateResponse
+from raindrop.types import BucketLocator, DocumentQueryAskResponse
 ```
 
 Methods:
 
-- <code title="post /v1/document_query">client.document_query.<a href="./src/raindrop/resources/document_query.py">create</a>(\*\*<a href="src/raindrop/types/document_query_create_params.py">params</a>) -> <a href="./src/raindrop/types/document_query_create_response.py">DocumentQueryCreateResponse</a></code>
+- <code title="post /v1/document_query">client.document_query.<a href="./src/raindrop/resources/document_query.py">ask</a>(\*\*<a href="src/raindrop/types/document_query_ask_params.py">params</a>) -> <a href="./src/raindrop/types/document_query_ask_response.py">DocumentQueryAskResponse</a></code>
 
 # ChunkSearch
 
 Types:
 
 ```python
-from raindrop.types import TextResult, ChunkSearchExecuteResponse
+from raindrop.types import TextResult, ChunkSearchFindResponse
 ```
 
 Methods:
 
-- <code title="post /v1/chunk_search">client.chunk_search.<a href="./src/raindrop/resources/chunk_search.py">execute</a>(\*\*<a href="src/raindrop/types/chunk_search_execute_params.py">params</a>) -> <a href="./src/raindrop/types/chunk_search_execute_response.py">ChunkSearchExecuteResponse</a></code>
+- <code title="post /v1/chunk_search">client.chunk_search.<a href="./src/raindrop/resources/chunk_search.py">find</a>(\*\*<a href="src/raindrop/types/chunk_search_find_params.py">params</a>) -> <a href="./src/raindrop/types/chunk_search_find_response.py">ChunkSearchFindResponse</a></code>
 
 # SummarizePage
 
 Types:
 
 ```python
-from raindrop.types import SummarizePageCreateSummaryResponse
+from raindrop.types import SummarizePageSumarizePageResponse
 ```
 
 Methods:
 
-- <code title="post /v1/summarize_page">client.summarize_page.<a href="./src/raindrop/resources/summarize_page.py">create_summary</a>(\*\*<a href="src/raindrop/types/summarize_page_create_summary_params.py">params</a>) -> <a href="./src/raindrop/types/summarize_page_create_summary_response.py">SummarizePageCreateSummaryResponse</a></code>
+- <code title="post /v1/summarize_page">client.summarize_page.<a href="./src/raindrop/resources/summarize_page.py">sumarize_page</a>(\*\*<a href="src/raindrop/types/summarize_page_sumarize_page_params.py">params</a>) -> <a href="./src/raindrop/types/summarize_page_sumarize_page_response.py">SummarizePageSumarizePageResponse</a></code>
 
 # Search
 
 Types:
 
 ```python
-from raindrop.types import SearchRunResponse
+from raindrop.types import SearchFindResponse
 ```
 
 Methods:
 
-- <code title="post /v1/search">client.search.<a href="./src/raindrop/resources/search.py">run</a>(\*\*<a href="src/raindrop/types/search_run_params.py">params</a>) -> <a href="./src/raindrop/types/search_run_response.py">SearchRunResponse</a></code>
+- <code title="post /v1/search">client.search.<a href="./src/raindrop/resources/search.py">find</a>(\*\*<a href="src/raindrop/types/search_find_params.py">params</a>) -> <a href="./src/raindrop/types/search_find_response.py">SearchFindResponse</a></code>

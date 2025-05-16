@@ -33,7 +33,7 @@ from raindrop._base_client import (
     BaseClient,
     make_request_options,
 )
-from raindrop.types.document_query_create_params import DocumentQueryCreateParams
+from raindrop.types.document_query_ask_params import DocumentQueryAskParams
 
 from .utils import update_env
 
@@ -718,7 +718,7 @@ class TestRaindrop:
                             object_id="document.pdf",
                             request_id="123e4567-e89b-12d3-a456-426614174000",
                         ),
-                        DocumentQueryCreateParams,
+                        DocumentQueryAskParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -744,7 +744,7 @@ class TestRaindrop:
                             object_id="document.pdf",
                             request_id="123e4567-e89b-12d3-a456-426614174000",
                         ),
-                        DocumentQueryCreateParams,
+                        DocumentQueryAskParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -779,7 +779,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create(
+        response = client.document_query.with_raw_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -808,7 +808,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create(
+        response = client.document_query.with_raw_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -837,7 +837,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create(
+        response = client.document_query.with_raw_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -1523,7 +1523,7 @@ class TestAsyncRaindrop:
                             object_id="document.pdf",
                             request_id="123e4567-e89b-12d3-a456-426614174000",
                         ),
-                        DocumentQueryCreateParams,
+                        DocumentQueryAskParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1549,7 +1549,7 @@ class TestAsyncRaindrop:
                             object_id="document.pdf",
                             request_id="123e4567-e89b-12d3-a456-426614174000",
                         ),
-                        DocumentQueryCreateParams,
+                        DocumentQueryAskParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1585,7 +1585,7 @@ class TestAsyncRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = await client.document_query.with_raw_response.create(
+        response = await client.document_query.with_raw_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -1615,7 +1615,7 @@ class TestAsyncRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = await client.document_query.with_raw_response.create(
+        response = await client.document_query.with_raw_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -1645,7 +1645,7 @@ class TestAsyncRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = await client.document_query.with_raw_response.create(
+        response = await client.document_query.with_raw_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",

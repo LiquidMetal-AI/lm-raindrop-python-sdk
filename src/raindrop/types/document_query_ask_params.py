@@ -6,10 +6,10 @@ from typing_extensions import Required, TypedDict
 
 from .bucket_locator_param import BucketLocatorParam
 
-__all__ = ["DocumentQueryCreateParams"]
+__all__ = ["DocumentQueryAskParams"]
 
 
-class DocumentQueryCreateParams(TypedDict, total=False):
+class DocumentQueryAskParams(TypedDict, total=False):
     bucket_location: Required[BucketLocatorParam]
     """The storage bucket containing the target document.
 

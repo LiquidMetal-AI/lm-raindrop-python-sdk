@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["SummarizePageCreateSummaryParams"]
+__all__ = ["SummarizePageSumarizePageParams"]
 
 
-class SummarizePageCreateSummaryParams(TypedDict, total=False):
+class SummarizePageSumarizePageParams(TypedDict, total=False):
     page: Required[int]
     """Target page number (1-based)"""
 

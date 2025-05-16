@@ -4,10 +4,10 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["SummarizePageCreateSummaryResponse"]
+__all__ = ["SummarizePageSumarizePageResponse"]
 
 
-class SummarizePageCreateSummaryResponse(BaseModel):
+class SummarizePageSumarizePageResponse(BaseModel):
     summary: Optional[str] = None
     """
     AI-generated summary including key themes and topics, content type distribution,

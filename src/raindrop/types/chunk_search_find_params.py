@@ -7,10 +7,10 @@ from typing_extensions import Required, TypedDict
 
 from .bucket_locator_param import BucketLocatorParam
 
-__all__ = ["SearchRunParams"]
+__all__ = ["ChunkSearchFindParams"]
 
 
-class SearchRunParams(TypedDict, total=False):
+class ChunkSearchFindParams(TypedDict, total=False):
     bucket_locations: Required[Iterable[BucketLocatorParam]]
     """The buckets to search.
 
@@ -18,10 +18,10 @@ class SearchRunParams(TypedDict, total=False):
     """
 
     input: Required[str]
-    """Natural language search query that can include complex criteria.
+    """Natural language query or question.
 
-    Supports queries like finding documents with specific content types, PII, or
-    semantic meaning
+    Can include complex criteria and relationships. The system will optimize the
+    search strategy based on this input
     """
 
     request_id: Required[str]

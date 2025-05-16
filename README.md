@@ -31,13 +31,13 @@ from raindrop import Raindrop
 
 client = Raindrop()
 
-document_query = client.document_query.create(
+response = client.document_query.ask(
     bucket_location={"bucket": {}},
     input="What are the key points in this document?",
     object_id="document.pdf",
     request_id="123e4567-e89b-12d3-a456-426614174000",
 )
-print(document_query.answer)
+print(response.answer)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -57,13 +57,13 @@ client = AsyncRaindrop()
 
 
 async def main() -> None:
-    document_query = await client.document_query.create(
+    response = await client.document_query.ask(
         bucket_location={"bucket": {}},
         input="What are the key points in this document?",
         object_id="document.pdf",
         request_id="123e4567-e89b-12d3-a456-426614174000",
     )
-    print(document_query.answer)
+    print(response.answer)
 
 
 asyncio.run(main())
@@ -96,7 +96,7 @@ from raindrop import Raindrop
 client = Raindrop()
 
 try:
-    client.document_query.create(
+    client.document_query.ask(
         bucket_location={"bucket": {}},
         input="What are the key points in this document?",
         object_id="document.pdf",
@@ -144,7 +144,7 @@ client = Raindrop(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).document_query.create(
+client.with_options(max_retries=5).document_query.ask(
     bucket_location={"bucket": {}},
     input="What are the key points in this document?",
     object_id="document.pdf",
@@ -172,7 +172,7 @@ client = Raindrop(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).document_query.create(
+client.with_options(timeout=5.0).document_query.ask(
     bucket_location={"bucket": {}},
     input="What are the key points in this document?",
     object_id="document.pdf",
@@ -218,7 +218,7 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from raindrop import Raindrop
 
 client = Raindrop()
-response = client.document_query.with_raw_response.create(
+response = client.document_query.with_raw_response.ask(
     bucket_location={
         "bucket": {}
     },
@@ -228,7 +228,7 @@ response = client.document_query.with_raw_response.create(
 )
 print(response.headers.get('X-My-Header'))
 
-document_query = response.parse()  # get the object that `document_query.create()` would have returned
+document_query = response.parse()  # get the object that `document_query.ask()` would have returned
 print(document_query.answer)
 ```
 
@@ -243,7 +243,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.document_query.with_streaming_response.create(
+with client.document_query.with_streaming_response.ask(
     bucket_location={"bucket": {}},
     input="What are the key points in this document?",
     object_id="document.pdf",
