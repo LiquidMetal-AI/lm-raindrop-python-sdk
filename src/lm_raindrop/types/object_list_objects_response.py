@@ -1,11 +1,11 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import List, Union, Optional
 from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["StorageObjectListResponse", "Object"]
+__all__ = ["ObjectListObjectsResponse", "Object"]
 
 
 class Object(BaseModel):
@@ -18,9 +18,10 @@ class Object(BaseModel):
     last_modified: Optional[datetime] = None
     """Last modification timestamp"""
 
-    size: Optional[str] = None
-    """Size of the object in bytes (as string due to potential BigInt values)"""
+    size: Union[int, str, None] = None
+    """Size of the object in bytes"""
 
 
-class StorageObjectListResponse(BaseModel):
+class ObjectListObjectsResponse(BaseModel):
     objects: Optional[List[Object]] = None
+    """List of objects in the bucket with their metadata"""

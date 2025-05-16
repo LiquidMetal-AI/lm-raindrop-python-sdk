@@ -20,27 +20,23 @@ class TestSummarizePage:
     @pytest.mark.skip()
     @parametrize
     def test_method_create(self, client: Raindrop) -> None:
-        summarize_page = client.summarize_page.create(
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        summarize_page = client.summarize_page.create()
         assert_matches_type(SummarizePageCreateResponse, summarize_page, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_method_create_with_all_params(self, client: Raindrop) -> None:
         summarize_page = client.summarize_page.create(
-            request_id="123e4567-e89b-12d3-a456-426614174000",
             page=1,
             page_size=10,
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
         assert_matches_type(SummarizePageCreateResponse, summarize_page, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_create(self, client: Raindrop) -> None:
-        response = client.summarize_page.with_raw_response.create(
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = client.summarize_page.with_raw_response.create()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -50,9 +46,7 @@ class TestSummarizePage:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create(self, client: Raindrop) -> None:
-        with client.summarize_page.with_streaming_response.create(
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        ) as response:
+        with client.summarize_page.with_streaming_response.create() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -68,27 +62,23 @@ class TestAsyncSummarizePage:
     @pytest.mark.skip()
     @parametrize
     async def test_method_create(self, async_client: AsyncRaindrop) -> None:
-        summarize_page = await async_client.summarize_page.create(
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        summarize_page = await async_client.summarize_page.create()
         assert_matches_type(SummarizePageCreateResponse, summarize_page, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncRaindrop) -> None:
         summarize_page = await async_client.summarize_page.create(
-            request_id="123e4567-e89b-12d3-a456-426614174000",
             page=1,
             page_size=10,
+            request_id="123e4567-e89b-12d3-a456-426614174000",
         )
         assert_matches_type(SummarizePageCreateResponse, summarize_page, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.summarize_page.with_raw_response.create(
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = await async_client.summarize_page.with_raw_response.create()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -98,9 +88,7 @@ class TestAsyncSummarizePage:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.summarize_page.with_streaming_response.create(
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        ) as response:
+        async with async_client.summarize_page.with_streaming_response.create() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

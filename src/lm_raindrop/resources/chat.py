@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import document_query_ask_params
+from ..types import chat_interact_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -16,45 +16,45 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.document_query_ask_response import DocumentQueryAskResponse
+from ..types.chat_interact_response import ChatInteractResponse
 
-__all__ = ["DocumentQueryResource", "AsyncDocumentQueryResource"]
+__all__ = ["ChatResource", "AsyncChatResource"]
 
 
-class DocumentQueryResource(SyncAPIResource):
+class ChatResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> DocumentQueryResourceWithRawResponse:
+    def with_raw_response(self) -> ChatResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
-        return DocumentQueryResourceWithRawResponse(self)
+        return ChatResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> DocumentQueryResourceWithStreamingResponse:
+    def with_streaming_response(self) -> ChatResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
-        return DocumentQueryResourceWithStreamingResponse(self)
+        return ChatResourceWithStreamingResponse(self)
 
-    def ask(
+    def interact(
         self,
         *,
-        bucket_location: document_query_ask_params.BucketLocation,
-        input: str,
-        object_id: str,
-        request_id: str,
+        bucket_location: chat_interact_params.BucketLocation | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        object_id: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentQueryAskResponse:
+    ) -> ChatInteractResponse:
         """
         Enables natural conversational interactions with documents stored in
         SmartBuckets. This endpoint allows users to ask questions, request summaries,
@@ -62,14 +62,14 @@ class DocumentQueryResource(SyncAPIResource):
         system understands context and can handle complex queries about document
         contents.
 
-        The query system maintains conversation context throught the `request_id`,
+        The query system maintains conversation context throught the request_id,
         enabling follow-up questions and deep exploration of document content. It works
         across all supported file types and automatically handles multi-page documents,
         making complex file interaction as simple as having a conversation.
 
         The system will:
 
-        - Maintain conversation history for context when using the same `request_id`
+        - Maintain conversation history for context when using the same request_id
         - Process questions against file content
         - Generate contextual, relevant responses
 
@@ -77,17 +77,17 @@ class DocumentQueryResource(SyncAPIResource):
         audio files.
 
         Args:
-          bucket_location: The storage bucket containing the target document. Must be an accessible Smart
-              Bucket
+          bucket_location: The storage bucket containing the target document. Must be a valid, registered
+              Smart Bucket. Used to identify which bucket to query against
 
           input: User's input or question about the document. Can be natural language questions,
-              commands, or requests
+              commands, or requests. The system will process this against the document content
 
-          object_id: Document identifier within the bucket. Typically matches the storage path or key
+          object_id: Document identifier within the bucket. Typically matches the storage path or
+              key. Used to identify which document to chat with
 
           request_id: Client-provided conversation session identifier. Required for maintaining
-              context in follow-up questions. We recommend using a UUID or ULID for this
-              value.
+              context in follow-up questions. We recommend using a UUID or ULID for this value
 
           extra_headers: Send extra headers
 
@@ -98,7 +98,7 @@ class DocumentQueryResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/document_query",
+            "/v1/chat",
             body=maybe_transform(
                 {
                     "bucket_location": bucket_location,
@@ -106,49 +106,49 @@ class DocumentQueryResource(SyncAPIResource):
                     "object_id": object_id,
                     "request_id": request_id,
                 },
-                document_query_ask_params.DocumentQueryAskParams,
+                chat_interact_params.ChatInteractParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentQueryAskResponse,
+            cast_to=ChatInteractResponse,
         )
 
 
-class AsyncDocumentQueryResource(AsyncAPIResource):
+class AsyncChatResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncDocumentQueryResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncChatResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
-        return AsyncDocumentQueryResourceWithRawResponse(self)
+        return AsyncChatResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncDocumentQueryResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncChatResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
-        return AsyncDocumentQueryResourceWithStreamingResponse(self)
+        return AsyncChatResourceWithStreamingResponse(self)
 
-    async def ask(
+    async def interact(
         self,
         *,
-        bucket_location: document_query_ask_params.BucketLocation,
-        input: str,
-        object_id: str,
-        request_id: str,
+        bucket_location: chat_interact_params.BucketLocation | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        object_id: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentQueryAskResponse:
+    ) -> ChatInteractResponse:
         """
         Enables natural conversational interactions with documents stored in
         SmartBuckets. This endpoint allows users to ask questions, request summaries,
@@ -156,14 +156,14 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
         system understands context and can handle complex queries about document
         contents.
 
-        The query system maintains conversation context throught the `request_id`,
+        The query system maintains conversation context throught the request_id,
         enabling follow-up questions and deep exploration of document content. It works
         across all supported file types and automatically handles multi-page documents,
         making complex file interaction as simple as having a conversation.
 
         The system will:
 
-        - Maintain conversation history for context when using the same `request_id`
+        - Maintain conversation history for context when using the same request_id
         - Process questions against file content
         - Generate contextual, relevant responses
 
@@ -171,17 +171,17 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
         audio files.
 
         Args:
-          bucket_location: The storage bucket containing the target document. Must be an accessible Smart
-              Bucket
+          bucket_location: The storage bucket containing the target document. Must be a valid, registered
+              Smart Bucket. Used to identify which bucket to query against
 
           input: User's input or question about the document. Can be natural language questions,
-              commands, or requests
+              commands, or requests. The system will process this against the document content
 
-          object_id: Document identifier within the bucket. Typically matches the storage path or key
+          object_id: Document identifier within the bucket. Typically matches the storage path or
+              key. Used to identify which document to chat with
 
           request_id: Client-provided conversation session identifier. Required for maintaining
-              context in follow-up questions. We recommend using a UUID or ULID for this
-              value.
+              context in follow-up questions. We recommend using a UUID or ULID for this value
 
           extra_headers: Send extra headers
 
@@ -192,7 +192,7 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/document_query",
+            "/v1/chat",
             body=await async_maybe_transform(
                 {
                     "bucket_location": bucket_location,
@@ -200,46 +200,46 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
                     "object_id": object_id,
                     "request_id": request_id,
                 },
-                document_query_ask_params.DocumentQueryAskParams,
+                chat_interact_params.ChatInteractParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentQueryAskResponse,
+            cast_to=ChatInteractResponse,
         )
 
 
-class DocumentQueryResourceWithRawResponse:
-    def __init__(self, document_query: DocumentQueryResource) -> None:
-        self._document_query = document_query
+class ChatResourceWithRawResponse:
+    def __init__(self, chat: ChatResource) -> None:
+        self._chat = chat
 
-        self.ask = to_raw_response_wrapper(
-            document_query.ask,
+        self.interact = to_raw_response_wrapper(
+            chat.interact,
         )
 
 
-class AsyncDocumentQueryResourceWithRawResponse:
-    def __init__(self, document_query: AsyncDocumentQueryResource) -> None:
-        self._document_query = document_query
+class AsyncChatResourceWithRawResponse:
+    def __init__(self, chat: AsyncChatResource) -> None:
+        self._chat = chat
 
-        self.ask = async_to_raw_response_wrapper(
-            document_query.ask,
+        self.interact = async_to_raw_response_wrapper(
+            chat.interact,
         )
 
 
-class DocumentQueryResourceWithStreamingResponse:
-    def __init__(self, document_query: DocumentQueryResource) -> None:
-        self._document_query = document_query
+class ChatResourceWithStreamingResponse:
+    def __init__(self, chat: ChatResource) -> None:
+        self._chat = chat
 
-        self.ask = to_streamed_response_wrapper(
-            document_query.ask,
+        self.interact = to_streamed_response_wrapper(
+            chat.interact,
         )
 
 
-class AsyncDocumentQueryResourceWithStreamingResponse:
-    def __init__(self, document_query: AsyncDocumentQueryResource) -> None:
-        self._document_query = document_query
+class AsyncChatResourceWithStreamingResponse:
+    def __init__(self, chat: AsyncChatResource) -> None:
+        self._chat = chat
 
-        self.ask = async_to_streamed_response_wrapper(
-            document_query.ask,
+        self.interact = async_to_streamed_response_wrapper(
+            chat.interact,
         )

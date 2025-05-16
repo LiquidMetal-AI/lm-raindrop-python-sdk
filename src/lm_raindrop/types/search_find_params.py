@@ -2,50 +2,58 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable
+from typing import Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 __all__ = [
     "SearchFindParams",
     "BucketLocation",
-    "BucketLocationModuleID",
     "BucketLocationBucket",
     "BucketLocationBucketBucket",
+    "BucketLocationModuleID",
 ]
 
 
 class SearchFindParams(TypedDict, total=False):
-    bucket_locations: Required[Iterable[BucketLocation]]
+    bucket_locations: Iterable[BucketLocation]
+    """The buckets to search.
 
-    input: Required[str]
-    """Natural language search query that can include complex criteria"""
+    If provided, the search will only return results from these buckets
+    """
 
-    request_id: Required[str]
+    input: str
+    """Natural language search query that can include complex criteria.
+
+    Supports queries like finding documents with specific content types, PII, or
+    semantic meaning
+    """
+
+    request_id: str
     """Client-provided search session identifier.
 
     Required for pagination and result tracking. We recommend using a UUID or ULID
-    for this value.
+    for this value
     """
 
 
-class BucketLocationModuleID(TypedDict, total=False):
-    module_id: Required[str]
-    """Version-agnostic identifier for a module"""
-
-
 class BucketLocationBucketBucket(TypedDict, total=False):
-    application_name: Required[str]
-    """Name of the application"""
+    application_name: Optional[str]
+    """Optional Application"""
 
-    name: Required[str]
-    """Name of the bucket"""
+    name: str
+    """The name of the bucket"""
 
-    version: Required[str]
-    """Version of the bucket"""
+    version: Optional[str]
+    """Optional version of the bucket"""
 
 
 class BucketLocationBucket(TypedDict, total=False):
     bucket: Required[BucketLocationBucketBucket]
+    """BucketName represents a bucket name with an optional version"""
 
 
-BucketLocation: TypeAlias = Union[BucketLocationModuleID, BucketLocationBucket]
+class BucketLocationModuleID(TypedDict, total=False):
+    module_id: Required[str]
+
+
+BucketLocation: TypeAlias = Union[BucketLocationBucket, BucketLocationModuleID]
