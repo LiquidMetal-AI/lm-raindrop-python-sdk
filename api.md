@@ -39,17 +39,21 @@ Methods:
 Types:
 
 ```python
-from raindrop.types import SearchRunResponse
+from raindrop.types import PaginationInfo, SearchRunResponse
 ```
 
 Methods:
 
 - <code title="post /v1/search">client.search.<a href="./src/raindrop/resources/search.py">run</a>(\*\*<a href="src/raindrop/types/search_run_params.py">params</a>) -> <a href="./src/raindrop/types/search_run_response.py">SearchRunResponse</a></code>
 
-# Object
+# LiquidmetalV1alpha1SearchAgentService
 
 Types:
 
 ```python
-from raindrop.types import BucketResponse
+from raindrop.types import LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsResponse
 ```
+
+Methods:
+
+- <code title="post /liquidmetal.v1alpha1.SearchAgentService/GetPaginatedResults">client.liquidmetal_v1alpha1_search_agent_service.<a href="./src/raindrop/resources/liquidmetal_v1alpha1_search_agent_service.py">get_paginated_results</a>(\*\*<a href="src/raindrop/types/liquidmetal_v1alpha1_search_agent_service_get_paginated_results_params.py">params</a>) -> <a href="./src/raindrop/types/liquidmetal_v1alpha1_search_agent_service_get_paginated_results_response.py">LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsResponse</a></code>

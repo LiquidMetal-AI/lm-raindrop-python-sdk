@@ -32,6 +32,14 @@ from .summarize_page import (
     SummarizePageResourceWithStreamingResponse,
     AsyncSummarizePageResourceWithStreamingResponse,
 )
+from .liquidmetal_v1alpha1_search_agent_service import (
+    LiquidmetalV1alpha1SearchAgentServiceResource,
+    AsyncLiquidmetalV1alpha1SearchAgentServiceResource,
+    LiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse,
+    AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse,
+    LiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse,
+    AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse,
+)
 
 __all__ = [
     "DocumentQueryResource",
@@ -58,4 +66,10 @@ __all__ = [
     "AsyncSearchResourceWithRawResponse",
     "SearchResourceWithStreamingResponse",
     "AsyncSearchResourceWithStreamingResponse",
+    "LiquidmetalV1alpha1SearchAgentServiceResource",
+    "AsyncLiquidmetalV1alpha1SearchAgentServiceResource",
+    "LiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse",
+    "AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse",
+    "LiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse",
+    "AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse",
 ]
