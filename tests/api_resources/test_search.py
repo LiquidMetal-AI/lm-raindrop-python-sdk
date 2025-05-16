@@ -20,22 +20,8 @@ class TestSearch:
     @pytest.mark.skip()
     @parametrize
     def test_method_find(self, client: Raindrop) -> None:
-        search = client.search.find()
-        assert_matches_type(SearchFindResponse, search, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_find_with_all_params(self, client: Raindrop) -> None:
         search = client.search.find(
-            bucket_locations=[
-                {
-                    "bucket": {
-                        "application_name": "my-app",
-                        "name": "my-bucket",
-                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
-                    }
-                }
-            ],
+            bucket_locations=[{"bucket": {}}],
             input="Show me documents containing credit card numbers or social security numbers",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -44,7 +30,11 @@ class TestSearch:
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_find(self, client: Raindrop) -> None:
-        response = client.search.with_raw_response.find()
+        response = client.search.with_raw_response.find(
+            bucket_locations=[{"bucket": {}}],
+            input="Show me documents containing credit card numbers or social security numbers",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -54,7 +44,11 @@ class TestSearch:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_find(self, client: Raindrop) -> None:
-        with client.search.with_streaming_response.find() as response:
+        with client.search.with_streaming_response.find(
+            bucket_locations=[{"bucket": {}}],
+            input="Show me documents containing credit card numbers or social security numbers",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -70,22 +64,8 @@ class TestAsyncSearch:
     @pytest.mark.skip()
     @parametrize
     async def test_method_find(self, async_client: AsyncRaindrop) -> None:
-        search = await async_client.search.find()
-        assert_matches_type(SearchFindResponse, search, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_find_with_all_params(self, async_client: AsyncRaindrop) -> None:
         search = await async_client.search.find(
-            bucket_locations=[
-                {
-                    "bucket": {
-                        "application_name": "my-app",
-                        "name": "my-bucket",
-                        "version": "01jtgtraw3b5qbahrhvrj3ygbb",
-                    }
-                }
-            ],
+            bucket_locations=[{"bucket": {}}],
             input="Show me documents containing credit card numbers or social security numbers",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
@@ -94,7 +74,11 @@ class TestAsyncSearch:
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_find(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.search.with_raw_response.find()
+        response = await async_client.search.with_raw_response.find(
+            bucket_locations=[{"bucket": {}}],
+            input="Show me documents containing credit card numbers or social security numbers",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -104,7 +88,11 @@ class TestAsyncSearch:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_find(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.search.with_streaming_response.find() as response:
+        async with async_client.search.with_streaming_response.find(
+            bucket_locations=[{"bucket": {}}],
+            input="Show me documents containing credit card numbers or social security numbers",
+            request_id="123e4567-e89b-12d3-a456-426614174000",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

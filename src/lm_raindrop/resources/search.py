@@ -46,9 +46,9 @@ class SearchResource(SyncAPIResource):
     def find(
         self,
         *,
-        bucket_locations: Iterable[search_find_params.BucketLocation] | NotGiven = NOT_GIVEN,
-        input: str | NotGiven = NOT_GIVEN,
-        request_id: str | NotGiven = NOT_GIVEN,
+        bucket_locations: Iterable[search_find_params.BucketLocation],
+        input: str,
+        request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -139,9 +139,9 @@ class AsyncSearchResource(AsyncAPIResource):
     async def find(
         self,
         *,
-        bucket_locations: Iterable[search_find_params.BucketLocation] | NotGiven = NOT_GIVEN,
-        input: str | NotGiven = NOT_GIVEN,
-        request_id: str | NotGiven = NOT_GIVEN,
+        bucket_locations: Iterable[search_find_params.BucketLocation],
+        input: str,
+        request_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

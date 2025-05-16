@@ -15,20 +15,20 @@ __all__ = [
 
 
 class ChunkSearchFindParams(TypedDict, total=False):
-    bucket_locations: Iterable[BucketLocation]
+    bucket_locations: Required[Iterable[BucketLocation]]
     """The buckets to search.
 
     If provided, the search will only return results from these buckets
     """
 
-    input: str
+    input: Required[str]
     """Natural language query or question.
 
     Can include complex criteria and relationships. The system will optimize the
     search strategy based on this input
     """
 
-    request_id: str
+    request_id: Required[str]
     """Client-provided search session identifier.
 
     Required for pagination and result tracking. We recommend using a UUID or ULID

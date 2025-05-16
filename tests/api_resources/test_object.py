@@ -78,6 +78,7 @@ class TestObject:
         object_ = client.object.put_object(
             object_key="object_key",
             bucket_name="bucket_name",
+            content="U3RhaW5sZXNzIHJvY2tz",
         )
         assert_matches_type(ObjectPutObjectResponse, object_, path=["response"])
 
@@ -100,6 +101,7 @@ class TestObject:
         response = client.object.with_raw_response.put_object(
             object_key="object_key",
             bucket_name="bucket_name",
+            content="U3RhaW5sZXNzIHJvY2tz",
         )
 
         assert response.is_closed is True
@@ -113,6 +115,7 @@ class TestObject:
         with client.object.with_streaming_response.put_object(
             object_key="object_key",
             bucket_name="bucket_name",
+            content="U3RhaW5sZXNzIHJvY2tz",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -129,12 +132,14 @@ class TestObject:
             client.object.with_raw_response.put_object(
                 object_key="object_key",
                 bucket_name="",
+                content="U3RhaW5sZXNzIHJvY2tz",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `object_key` but received ''"):
             client.object.with_raw_response.put_object(
                 object_key="",
                 bucket_name="bucket_name",
+                content="U3RhaW5sZXNzIHJvY2tz",
             )
 
     @pytest.mark.skip()
@@ -261,6 +266,7 @@ class TestAsyncObject:
         object_ = await async_client.object.put_object(
             object_key="object_key",
             bucket_name="bucket_name",
+            content="U3RhaW5sZXNzIHJvY2tz",
         )
         assert_matches_type(ObjectPutObjectResponse, object_, path=["response"])
 
@@ -283,6 +289,7 @@ class TestAsyncObject:
         response = await async_client.object.with_raw_response.put_object(
             object_key="object_key",
             bucket_name="bucket_name",
+            content="U3RhaW5sZXNzIHJvY2tz",
         )
 
         assert response.is_closed is True
@@ -296,6 +303,7 @@ class TestAsyncObject:
         async with async_client.object.with_streaming_response.put_object(
             object_key="object_key",
             bucket_name="bucket_name",
+            content="U3RhaW5sZXNzIHJvY2tz",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -312,12 +320,14 @@ class TestAsyncObject:
             await async_client.object.with_raw_response.put_object(
                 object_key="object_key",
                 bucket_name="",
+                content="U3RhaW5sZXNzIHJvY2tz",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `object_key` but received ''"):
             await async_client.object.with_raw_response.put_object(
                 object_key="",
                 bucket_name="bucket_name",
+                content="U3RhaW5sZXNzIHJvY2tz",
             )
 
     @pytest.mark.skip()

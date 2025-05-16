@@ -14,7 +14,7 @@ __all__ = ["ObjectPutObjectParams"]
 class ObjectPutObjectParams(TypedDict, total=False):
     bucket_name: Required[str]
 
-    content: Annotated[Union[str, Base64FileInput], PropertyInfo(format="base64")]
+    content: Required[Annotated[Union[str, Base64FileInput], PropertyInfo(format="base64")]]
     """Binary content of the object"""
 
     content_type: str
