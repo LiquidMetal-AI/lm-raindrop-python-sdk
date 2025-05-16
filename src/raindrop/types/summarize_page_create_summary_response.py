@@ -10,6 +10,7 @@ __all__ = ["SummarizePageCreateSummaryResponse"]
 class SummarizePageCreateSummaryResponse(BaseModel):
     summary: Optional[str] = None
     """
-    AI-generated summary including key themes and topics, content type distribution,
-    important findings, and document relationships
+    **DESCRIPTION** AI-generated summary including key themes and topics, content
+    type distribution, important findings, and document relationships **EXAMPLE**
+    "The search results contain information about..."
     """

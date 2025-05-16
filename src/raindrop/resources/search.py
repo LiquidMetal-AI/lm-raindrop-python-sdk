@@ -47,9 +47,11 @@ class SearchResource(SyncAPIResource):
     def run(
         self,
         *,
-        bucket_locations: Iterable[BucketLocatorParam],
-        input: str,
-        request_id: str,
+        bucket_locations: Iterable[BucketLocatorParam] | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        organization_id: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
+        user_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -82,15 +84,19 @@ class SearchResource(SyncAPIResource):
         - Multi-modal search (text, images, audio)
 
         Args:
-          bucket_locations: The buckets to search. If provided, the search will only return results from
-              these buckets
+          bucket_locations: **DESCRIPTION** The buckets to search. If provided, the search will only return
+              results from these buckets **EXAMPLE** [{"bucket": {"name": "my-bucket",
+              "version": "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}}]
+              **REQUIRED** TRUE
 
-          input: Natural language search query that can include complex criteria. Supports
-              queries like finding documents with specific content types, PII, or semantic
-              meaning
+          input: **DESCRIPTION** Natural language search query that can include complex criteria.
+              Supports queries like finding documents with specific content types, PII, or
+              semantic meaning **EXAMPLE** "Show me documents containing credit card numbers
+              or social security numbers" **REQUIRED** TRUE
 
-          request_id: Client-provided search session identifier. Required for pagination and result
-              tracking. We recommend using a UUID or ULID for this value
+          request_id: **DESCRIPTION** Client-provided search session identifier. Required for
+              pagination and result tracking. We recommend using a UUID or ULID for this value
+              **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
 
           extra_headers: Send extra headers
 
@@ -106,7 +112,9 @@ class SearchResource(SyncAPIResource):
                 {
                     "bucket_locations": bucket_locations,
                     "input": input,
+                    "organization_id": organization_id,
                     "request_id": request_id,
+                    "user_id": user_id,
                 },
                 search_run_params.SearchRunParams,
             ),
@@ -140,9 +148,11 @@ class AsyncSearchResource(AsyncAPIResource):
     async def run(
         self,
         *,
-        bucket_locations: Iterable[BucketLocatorParam],
-        input: str,
-        request_id: str,
+        bucket_locations: Iterable[BucketLocatorParam] | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        organization_id: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
+        user_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -175,15 +185,19 @@ class AsyncSearchResource(AsyncAPIResource):
         - Multi-modal search (text, images, audio)
 
         Args:
-          bucket_locations: The buckets to search. If provided, the search will only return results from
-              these buckets
+          bucket_locations: **DESCRIPTION** The buckets to search. If provided, the search will only return
+              results from these buckets **EXAMPLE** [{"bucket": {"name": "my-bucket",
+              "version": "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}}]
+              **REQUIRED** TRUE
 
-          input: Natural language search query that can include complex criteria. Supports
-              queries like finding documents with specific content types, PII, or semantic
-              meaning
+          input: **DESCRIPTION** Natural language search query that can include complex criteria.
+              Supports queries like finding documents with specific content types, PII, or
+              semantic meaning **EXAMPLE** "Show me documents containing credit card numbers
+              or social security numbers" **REQUIRED** TRUE
 
-          request_id: Client-provided search session identifier. Required for pagination and result
-              tracking. We recommend using a UUID or ULID for this value
+          request_id: **DESCRIPTION** Client-provided search session identifier. Required for
+              pagination and result tracking. We recommend using a UUID or ULID for this value
+              **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
 
           extra_headers: Send extra headers
 
@@ -199,7 +213,9 @@ class AsyncSearchResource(AsyncAPIResource):
                 {
                     "bucket_locations": bucket_locations,
                     "input": input,
+                    "organization_id": organization_id,
                     "request_id": request_id,
+                    "user_id": user_id,
                 },
                 search_run_params.SearchRunParams,
             ),

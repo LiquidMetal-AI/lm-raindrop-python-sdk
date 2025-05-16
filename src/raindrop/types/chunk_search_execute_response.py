@@ -10,7 +10,8 @@ __all__ = ["ChunkSearchExecuteResponse"]
 
 class ChunkSearchExecuteResponse(BaseModel):
     results: Optional[List[TextResult]] = None
-    """Ordered list of relevant text segments.
+    """**DESCRIPTION** Ordered list of relevant text segments.
 
-    Each result includes full context and metadata
+    Each result includes full context and metadata **EXAMPLE** [{"chunk_signature":
+    "chunk_123abc", "text": "Sample text", "score": 0.95}]
     """

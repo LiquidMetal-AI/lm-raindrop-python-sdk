@@ -20,21 +20,33 @@ class TestSearch:
     @pytest.mark.skip()
     @parametrize
     def test_method_run(self, client: Raindrop) -> None:
+        search = client.search.run()
+        assert_matches_type(SearchRunResponse, search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_run_with_all_params(self, client: Raindrop) -> None:
         search = client.search.run(
-            bucket_locations=[{"bucket": {}}],
-            input="Show me documents containing credit card numbers or social security numbers",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
+            bucket_locations=[
+                {
+                    "bucket": {
+                        "application_name": "application_name",
+                        "name": "name",
+                        "version": "version",
+                    }
+                }
+            ],
+            input="input",
+            organization_id="organization_id",
+            request_id="request_id",
+            user_id="user_id",
         )
         assert_matches_type(SearchRunResponse, search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_run(self, client: Raindrop) -> None:
-        response = client.search.with_raw_response.run(
-            bucket_locations=[{"bucket": {}}],
-            input="Show me documents containing credit card numbers or social security numbers",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = client.search.with_raw_response.run()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -44,11 +56,7 @@ class TestSearch:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_run(self, client: Raindrop) -> None:
-        with client.search.with_streaming_response.run(
-            bucket_locations=[{"bucket": {}}],
-            input="Show me documents containing credit card numbers or social security numbers",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        ) as response:
+        with client.search.with_streaming_response.run() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -64,21 +72,33 @@ class TestAsyncSearch:
     @pytest.mark.skip()
     @parametrize
     async def test_method_run(self, async_client: AsyncRaindrop) -> None:
+        search = await async_client.search.run()
+        assert_matches_type(SearchRunResponse, search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_run_with_all_params(self, async_client: AsyncRaindrop) -> None:
         search = await async_client.search.run(
-            bucket_locations=[{"bucket": {}}],
-            input="Show me documents containing credit card numbers or social security numbers",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
+            bucket_locations=[
+                {
+                    "bucket": {
+                        "application_name": "application_name",
+                        "name": "name",
+                        "version": "version",
+                    }
+                }
+            ],
+            input="input",
+            organization_id="organization_id",
+            request_id="request_id",
+            user_id="user_id",
         )
         assert_matches_type(SearchRunResponse, search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_run(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.search.with_raw_response.run(
-            bucket_locations=[{"bucket": {}}],
-            input="Show me documents containing credit card numbers or social security numbers",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = await async_client.search.with_raw_response.run()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -88,11 +108,7 @@ class TestAsyncSearch:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_run(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.search.with_streaming_response.run(
-            bucket_locations=[{"bucket": {}}],
-            input="Show me documents containing credit card numbers or social security numbers",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        ) as response:
+        async with async_client.search.with_streaming_response.run() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

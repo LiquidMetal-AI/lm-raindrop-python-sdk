@@ -10,24 +10,39 @@ __all__ = ["SearchRunResponse", "Pagination"]
 
 class Pagination(BaseModel):
     has_more: Optional[bool] = None
-    """Indicates more results available. Used for infinite scroll implementation"""
+    """**DESCRIPTION** Indicates more results available.
+
+    Used for infinite scroll implementation **EXAMPLE** true
+    """
 
     page: Optional[int] = None
-    """Current page number (1-based)"""
+    """**DESCRIPTION** Current page number (1-based) **EXAMPLE** 1"""
 
     page_size: Optional[int] = None
-    """Results per page. May be adjusted for performance"""
+    """**DESCRIPTION** Results per page.
+
+    May be adjusted for performance **EXAMPLE** 15
+    """
 
     total: Optional[int] = None
-    """Total number of available results"""
+    """**DESCRIPTION** Total number of available results **EXAMPLE** 1020"""
 
     total_pages: Optional[int] = None
-    """Total available pages. Calculated as ceil(total/page_size)"""
+    """**DESCRIPTION** Total available pages.
+
+    Calculated as ceil(total/page_size) **EXAMPLE** 68
+    """
 
 
 class SearchRunResponse(BaseModel):
     pagination: Optional[Pagination] = None
-    """Pagination details for result navigation"""
+    """
+    **DESCRIPTION** Pagination details for result navigation **EXAMPLE** {"total":
+    100, "page": 1, "page_size": 10, "total_pages": 10, "has_more": true}
+    """
 
     results: Optional[List[TextResult]] = None
-    """Matched results with metadata"""
+    """
+    **DESCRIPTION** Matched results with metadata **EXAMPLE** [{"chunk_signature":
+    "chunk_123abc", "text": "Sample text", "score": 0.95}]
+    """

@@ -45,10 +45,12 @@ class DocumentQueryResource(SyncAPIResource):
     def create(
         self,
         *,
-        bucket_location: BucketLocatorParam,
-        input: str,
-        object_id: str,
-        request_id: str,
+        bucket_location: BucketLocatorParam | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        object_id: str | NotGiven = NOT_GIVEN,
+        organization_id: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
+        user_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -78,17 +80,24 @@ class DocumentQueryResource(SyncAPIResource):
         audio files.
 
         Args:
-          bucket_location: The storage bucket containing the target document. Must be a valid, registered
-              Smart Bucket. Used to identify which bucket to query against
+          bucket_location: **DESCRIPTION** The storage bucket containing the target document. Must be a
+              valid, registered Smart Bucket. Used to identify which bucket to query against
+              **EXAMPLE** {"bucket": {"name": "my-bucket", "version":
+              "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}} **REQUIRED** TRUE
 
-          input: User's input or question about the document. Can be natural language questions,
-              commands, or requests. The system will process this against the document content
+          input: **DESCRIPTION** User's input or question about the document. Can be natural
+              language questions, commands, or requests. The system will process this against
+              the document content **EXAMPLE** "What are the key points in this document?"
+              **REQUIRED** TRUE
 
-          object_id: Document identifier within the bucket. Typically matches the storage path or
-              key. Used to identify which document to chat with
+          object_id: **DESCRIPTION** Document identifier within the bucket. Typically matches the
+              storage path or key. Used to identify which document to chat with **EXAMPLE**
+              "document.pdf" **REQUIRED** TRUE
 
-          request_id: Client-provided conversation session identifier. Required for maintaining
-              context in follow-up questions. We recommend using a UUID or ULID for this value
+          request_id: **DESCRIPTION** Client-provided conversation session identifier. Required for
+              maintaining context in follow-up questions. We recommend using a UUID or ULID
+              for this value **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED**
+              TRUE
 
           extra_headers: Send extra headers
 
@@ -105,7 +114,9 @@ class DocumentQueryResource(SyncAPIResource):
                     "bucket_location": bucket_location,
                     "input": input,
                     "object_id": object_id,
+                    "organization_id": organization_id,
                     "request_id": request_id,
+                    "user_id": user_id,
                 },
                 document_query_create_params.DocumentQueryCreateParams,
             ),
@@ -139,10 +150,12 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        bucket_location: BucketLocatorParam,
-        input: str,
-        object_id: str,
-        request_id: str,
+        bucket_location: BucketLocatorParam | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        object_id: str | NotGiven = NOT_GIVEN,
+        organization_id: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
+        user_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -172,17 +185,24 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
         audio files.
 
         Args:
-          bucket_location: The storage bucket containing the target document. Must be a valid, registered
-              Smart Bucket. Used to identify which bucket to query against
+          bucket_location: **DESCRIPTION** The storage bucket containing the target document. Must be a
+              valid, registered Smart Bucket. Used to identify which bucket to query against
+              **EXAMPLE** {"bucket": {"name": "my-bucket", "version":
+              "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}} **REQUIRED** TRUE
 
-          input: User's input or question about the document. Can be natural language questions,
-              commands, or requests. The system will process this against the document content
+          input: **DESCRIPTION** User's input or question about the document. Can be natural
+              language questions, commands, or requests. The system will process this against
+              the document content **EXAMPLE** "What are the key points in this document?"
+              **REQUIRED** TRUE
 
-          object_id: Document identifier within the bucket. Typically matches the storage path or
-              key. Used to identify which document to chat with
+          object_id: **DESCRIPTION** Document identifier within the bucket. Typically matches the
+              storage path or key. Used to identify which document to chat with **EXAMPLE**
+              "document.pdf" **REQUIRED** TRUE
 
-          request_id: Client-provided conversation session identifier. Required for maintaining
-              context in follow-up questions. We recommend using a UUID or ULID for this value
+          request_id: **DESCRIPTION** Client-provided conversation session identifier. Required for
+              maintaining context in follow-up questions. We recommend using a UUID or ULID
+              for this value **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED**
+              TRUE
 
           extra_headers: Send extra headers
 
@@ -199,7 +219,9 @@ class AsyncDocumentQueryResource(AsyncAPIResource):
                     "bucket_location": bucket_location,
                     "input": input,
                     "object_id": object_id,
+                    "organization_id": organization_id,
                     "request_id": request_id,
+                    "user_id": user_id,
                 },
                 document_query_create_params.DocumentQueryCreateParams,
             ),
