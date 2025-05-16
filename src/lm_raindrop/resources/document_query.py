@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import chat_interact_params
+from ..types import document_query_ask_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -16,35 +16,35 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.chat_interact_response import ChatInteractResponse
+from ..types.document_query_ask_response import DocumentQueryAskResponse
 
-__all__ = ["ChatResource", "AsyncChatResource"]
+__all__ = ["DocumentQueryResource", "AsyncDocumentQueryResource"]
 
 
-class ChatResource(SyncAPIResource):
+class DocumentQueryResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ChatResourceWithRawResponse:
+    def with_raw_response(self) -> DocumentQueryResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
-        return ChatResourceWithRawResponse(self)
+        return DocumentQueryResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ChatResourceWithStreamingResponse:
+    def with_streaming_response(self) -> DocumentQueryResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
-        return ChatResourceWithStreamingResponse(self)
+        return DocumentQueryResourceWithStreamingResponse(self)
 
-    def interact(
+    def ask(
         self,
         *,
-        bucket_location: chat_interact_params.BucketLocation,
+        bucket_location: document_query_ask_params.BucketLocation,
         input: str,
         object_id: str,
         request_id: str,
@@ -54,7 +54,7 @@ class ChatResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ChatInteractResponse:
+    ) -> DocumentQueryAskResponse:
         """
         Enables natural conversational interactions with documents stored in
         SmartBuckets. This endpoint allows users to ask questions, request summaries,
@@ -98,7 +98,7 @@ class ChatResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/chat",
+            "/v1/document_query",
             body=maybe_transform(
                 {
                     "bucket_location": bucket_location,
@@ -106,39 +106,39 @@ class ChatResource(SyncAPIResource):
                     "object_id": object_id,
                     "request_id": request_id,
                 },
-                chat_interact_params.ChatInteractParams,
+                document_query_ask_params.DocumentQueryAskParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ChatInteractResponse,
+            cast_to=DocumentQueryAskResponse,
         )
 
 
-class AsyncChatResource(AsyncAPIResource):
+class AsyncDocumentQueryResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncChatResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncDocumentQueryResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#accessing-raw-response-data-eg-headers
         """
-        return AsyncChatResourceWithRawResponse(self)
+        return AsyncDocumentQueryResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncChatResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncDocumentQueryResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/LiquidMetal-AI/lm-raindrop-python-sdk#with_streaming_response
         """
-        return AsyncChatResourceWithStreamingResponse(self)
+        return AsyncDocumentQueryResourceWithStreamingResponse(self)
 
-    async def interact(
+    async def ask(
         self,
         *,
-        bucket_location: chat_interact_params.BucketLocation,
+        bucket_location: document_query_ask_params.BucketLocation,
         input: str,
         object_id: str,
         request_id: str,
@@ -148,7 +148,7 @@ class AsyncChatResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ChatInteractResponse:
+    ) -> DocumentQueryAskResponse:
         """
         Enables natural conversational interactions with documents stored in
         SmartBuckets. This endpoint allows users to ask questions, request summaries,
@@ -192,7 +192,7 @@ class AsyncChatResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/chat",
+            "/v1/document_query",
             body=await async_maybe_transform(
                 {
                     "bucket_location": bucket_location,
@@ -200,46 +200,46 @@ class AsyncChatResource(AsyncAPIResource):
                     "object_id": object_id,
                     "request_id": request_id,
                 },
-                chat_interact_params.ChatInteractParams,
+                document_query_ask_params.DocumentQueryAskParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ChatInteractResponse,
+            cast_to=DocumentQueryAskResponse,
         )
 
 
-class ChatResourceWithRawResponse:
-    def __init__(self, chat: ChatResource) -> None:
-        self._chat = chat
+class DocumentQueryResourceWithRawResponse:
+    def __init__(self, document_query: DocumentQueryResource) -> None:
+        self._document_query = document_query
 
-        self.interact = to_raw_response_wrapper(
-            chat.interact,
+        self.ask = to_raw_response_wrapper(
+            document_query.ask,
         )
 
 
-class AsyncChatResourceWithRawResponse:
-    def __init__(self, chat: AsyncChatResource) -> None:
-        self._chat = chat
+class AsyncDocumentQueryResourceWithRawResponse:
+    def __init__(self, document_query: AsyncDocumentQueryResource) -> None:
+        self._document_query = document_query
 
-        self.interact = async_to_raw_response_wrapper(
-            chat.interact,
+        self.ask = async_to_raw_response_wrapper(
+            document_query.ask,
         )
 
 
-class ChatResourceWithStreamingResponse:
-    def __init__(self, chat: ChatResource) -> None:
-        self._chat = chat
+class DocumentQueryResourceWithStreamingResponse:
+    def __init__(self, document_query: DocumentQueryResource) -> None:
+        self._document_query = document_query
 
-        self.interact = to_streamed_response_wrapper(
-            chat.interact,
+        self.ask = to_streamed_response_wrapper(
+            document_query.ask,
         )
 
 
-class AsyncChatResourceWithStreamingResponse:
-    def __init__(self, chat: AsyncChatResource) -> None:
-        self._chat = chat
+class AsyncDocumentQueryResourceWithStreamingResponse:
+    def __init__(self, document_query: AsyncDocumentQueryResource) -> None:
+        self._document_query = document_query
 
-        self.interact = async_to_streamed_response_wrapper(
-            chat.interact,
+        self.ask = async_to_streamed_response_wrapper(
+            document_query.ask,
         )

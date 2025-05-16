@@ -9,29 +9,29 @@ import pytest
 
 from lm_raindrop import Raindrop, AsyncRaindrop
 from tests.utils import assert_matches_type
-from lm_raindrop.types import ChatInteractResponse
+from lm_raindrop.types import DocumentQueryAskResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestChat:
+class TestDocumentQuery:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_interact(self, client: Raindrop) -> None:
-        chat = client.chat.interact(
+    def test_method_ask(self, client: Raindrop) -> None:
+        document_query = client.document_query.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
-        assert_matches_type(ChatInteractResponse, chat, path=["response"])
+        assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_interact(self, client: Raindrop) -> None:
-        response = client.chat.with_raw_response.interact(
+    def test_raw_response_ask(self, client: Raindrop) -> None:
+        response = client.document_query.with_raw_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -40,13 +40,13 @@ class TestChat:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        chat = response.parse()
-        assert_matches_type(ChatInteractResponse, chat, path=["response"])
+        document_query = response.parse()
+        assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_interact(self, client: Raindrop) -> None:
-        with client.chat.with_streaming_response.interact(
+    def test_streaming_response_ask(self, client: Raindrop) -> None:
+        with client.document_query.with_streaming_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -55,30 +55,30 @@ class TestChat:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            chat = response.parse()
-            assert_matches_type(ChatInteractResponse, chat, path=["response"])
+            document_query = response.parse()
+            assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
 
-class TestAsyncChat:
+class TestAsyncDocumentQuery:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_interact(self, async_client: AsyncRaindrop) -> None:
-        chat = await async_client.chat.interact(
+    async def test_method_ask(self, async_client: AsyncRaindrop) -> None:
+        document_query = await async_client.document_query.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
             request_id="123e4567-e89b-12d3-a456-426614174000",
         )
-        assert_matches_type(ChatInteractResponse, chat, path=["response"])
+        assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_interact(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.chat.with_raw_response.interact(
+    async def test_raw_response_ask(self, async_client: AsyncRaindrop) -> None:
+        response = await async_client.document_query.with_raw_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -87,13 +87,13 @@ class TestAsyncChat:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        chat = await response.parse()
-        assert_matches_type(ChatInteractResponse, chat, path=["response"])
+        document_query = await response.parse()
+        assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_interact(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.chat.with_streaming_response.interact(
+    async def test_streaming_response_ask(self, async_client: AsyncRaindrop) -> None:
+        async with async_client.document_query.with_streaming_response.ask(
             bucket_location={"bucket": {}},
             input="What are the key points in this document?",
             object_id="document.pdf",
@@ -102,7 +102,7 @@ class TestAsyncChat:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            chat = await response.parse()
-            assert_matches_type(ChatInteractResponse, chat, path=["response"])
+            document_query = await response.parse()
+            assert_matches_type(DocumentQueryAskResponse, document_query, path=["response"])
 
         assert cast(Any, response.is_closed) is True

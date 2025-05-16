@@ -10,6 +10,18 @@ Methods:
 
 - <code title="post /v1/search">client.search.<a href="./src/lm_raindrop/resources/search.py">find</a>(\*\*<a href="src/lm_raindrop/types/search_find_params.py">params</a>) -> <a href="./src/lm_raindrop/types/search_find_response.py">SearchFindResponse</a></code>
 
+# DocumentQuery
+
+Types:
+
+```python
+from lm_raindrop.types import DocumentQueryAskResponse
+```
+
+Methods:
+
+- <code title="post /v1/document_query">client.document_query.<a href="./src/lm_raindrop/resources/document_query.py">ask</a>(\*\*<a href="src/lm_raindrop/types/document_query_ask_params.py">params</a>) -> <a href="./src/lm_raindrop/types/document_query_ask_response.py">DocumentQueryAskResponse</a></code>
+
 # ChunkSearch
 
 Types:
@@ -33,18 +45,6 @@ from lm_raindrop.types import SummarizePageCreateResponse
 Methods:
 
 - <code title="post /v1/summarize_page">client.summarize_page.<a href="./src/lm_raindrop/resources/summarize_page.py">create</a>(\*\*<a href="src/lm_raindrop/types/summarize_page_create_params.py">params</a>) -> <a href="./src/lm_raindrop/types/summarize_page_create_response.py">SummarizePageCreateResponse</a></code>
-
-# Chat
-
-Types:
-
-```python
-from lm_raindrop.types import ChatInteractResponse
-```
-
-Methods:
-
-- <code title="post /v1/chat">client.chat.<a href="./src/lm_raindrop/resources/chat.py">interact</a>(\*\*<a href="src/lm_raindrop/types/chat_interact_params.py">params</a>) -> <a href="./src/lm_raindrop/types/chat_interact_response.py">ChatInteractResponse</a></code>
 
 # Object
 
