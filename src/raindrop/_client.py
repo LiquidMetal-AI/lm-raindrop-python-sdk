@@ -13,7 +13,6 @@ from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
     Omit,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -22,9 +21,9 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import object
+from .resources import search, chunk_search, document_query, summarize_page
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError
+from ._exceptions import RaindropError, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -44,12 +43,15 @@ __all__ = [
 
 
 class Raindrop(SyncAPIClient):
-    object: object.ObjectResource
+    document_query: document_query.DocumentQueryResource
+    chunk_search: chunk_search.ChunkSearchResource
+    summarize_page: summarize_page.SummarizePageResource
+    search: search.SearchResource
     with_raw_response: RaindropWithRawResponse
     with_streaming_response: RaindropWithStreamedResponse
 
     # client options
-    api_key: str | None
+    api_key: str
 
     def __init__(
         self,
@@ -80,6 +82,10 @@ class Raindrop(SyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("RAINDROP_API_KEY")
+        if api_key is None:
+            raise RaindropError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the RAINDROP_API_KEY environment variable"
+            )
         self.api_key = api_key
 
         if base_url is None:
@@ -98,7 +104,10 @@ class Raindrop(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.object = object.ObjectResource(self)
+        self.document_query = document_query.DocumentQueryResource(self)
+        self.chunk_search = chunk_search.ChunkSearchResource(self)
+        self.summarize_page = summarize_page.SummarizePageResource(self)
+        self.search = search.SearchResource(self)
         self.with_raw_response = RaindropWithRawResponse(self)
         self.with_streaming_response = RaindropWithStreamedResponse(self)
 
@@ -111,9 +120,7 @@ class Raindrop(SyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        if api_key is None:
-            return {}
-        return {"Authorization": f"Bearer {api_key}"}
+        return {"Authorization": api_key}
 
     @property
     @override
@@ -123,17 +130,6 @@ class Raindrop(SyncAPIClient):
             "X-Stainless-Async": "false",
             **self._custom_headers,
         }
-
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.api_key and headers.get("Authorization"):
-            return
-        if isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
 
     def copy(
         self,
@@ -221,12 +217,15 @@ class Raindrop(SyncAPIClient):
 
 
 class AsyncRaindrop(AsyncAPIClient):
-    object: object.AsyncObjectResource
+    document_query: document_query.AsyncDocumentQueryResource
+    chunk_search: chunk_search.AsyncChunkSearchResource
+    summarize_page: summarize_page.AsyncSummarizePageResource
+    search: search.AsyncSearchResource
     with_raw_response: AsyncRaindropWithRawResponse
     with_streaming_response: AsyncRaindropWithStreamedResponse
 
     # client options
-    api_key: str | None
+    api_key: str
 
     def __init__(
         self,
@@ -257,6 +256,10 @@ class AsyncRaindrop(AsyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("RAINDROP_API_KEY")
+        if api_key is None:
+            raise RaindropError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the RAINDROP_API_KEY environment variable"
+            )
         self.api_key = api_key
 
         if base_url is None:
@@ -275,7 +278,10 @@ class AsyncRaindrop(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.object = object.AsyncObjectResource(self)
+        self.document_query = document_query.AsyncDocumentQueryResource(self)
+        self.chunk_search = chunk_search.AsyncChunkSearchResource(self)
+        self.summarize_page = summarize_page.AsyncSummarizePageResource(self)
+        self.search = search.AsyncSearchResource(self)
         self.with_raw_response = AsyncRaindropWithRawResponse(self)
         self.with_streaming_response = AsyncRaindropWithStreamedResponse(self)
 
@@ -288,9 +294,7 @@ class AsyncRaindrop(AsyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        if api_key is None:
-            return {}
-        return {"Authorization": f"Bearer {api_key}"}
+        return {"Authorization": api_key}
 
     @property
     @override
@@ -300,17 +304,6 @@ class AsyncRaindrop(AsyncAPIClient):
             "X-Stainless-Async": f"async:{get_async_library()}",
             **self._custom_headers,
         }
-
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.api_key and headers.get("Authorization"):
-            return
-        if isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
 
     def copy(
         self,
@@ -399,22 +392,34 @@ class AsyncRaindrop(AsyncAPIClient):
 
 class RaindropWithRawResponse:
     def __init__(self, client: Raindrop) -> None:
-        self.object = object.ObjectResourceWithRawResponse(client.object)
+        self.document_query = document_query.DocumentQueryResourceWithRawResponse(client.document_query)
+        self.chunk_search = chunk_search.ChunkSearchResourceWithRawResponse(client.chunk_search)
+        self.summarize_page = summarize_page.SummarizePageResourceWithRawResponse(client.summarize_page)
+        self.search = search.SearchResourceWithRawResponse(client.search)
 
 
 class AsyncRaindropWithRawResponse:
     def __init__(self, client: AsyncRaindrop) -> None:
-        self.object = object.AsyncObjectResourceWithRawResponse(client.object)
+        self.document_query = document_query.AsyncDocumentQueryResourceWithRawResponse(client.document_query)
+        self.chunk_search = chunk_search.AsyncChunkSearchResourceWithRawResponse(client.chunk_search)
+        self.summarize_page = summarize_page.AsyncSummarizePageResourceWithRawResponse(client.summarize_page)
+        self.search = search.AsyncSearchResourceWithRawResponse(client.search)
 
 
 class RaindropWithStreamedResponse:
     def __init__(self, client: Raindrop) -> None:
-        self.object = object.ObjectResourceWithStreamingResponse(client.object)
+        self.document_query = document_query.DocumentQueryResourceWithStreamingResponse(client.document_query)
+        self.chunk_search = chunk_search.ChunkSearchResourceWithStreamingResponse(client.chunk_search)
+        self.summarize_page = summarize_page.SummarizePageResourceWithStreamingResponse(client.summarize_page)
+        self.search = search.SearchResourceWithStreamingResponse(client.search)
 
 
 class AsyncRaindropWithStreamedResponse:
     def __init__(self, client: AsyncRaindrop) -> None:
-        self.object = object.AsyncObjectResourceWithStreamingResponse(client.object)
+        self.document_query = document_query.AsyncDocumentQueryResourceWithStreamingResponse(client.document_query)
+        self.chunk_search = chunk_search.AsyncChunkSearchResourceWithStreamingResponse(client.chunk_search)
+        self.summarize_page = summarize_page.AsyncSummarizePageResourceWithStreamingResponse(client.summarize_page)
+        self.search = search.AsyncSearchResourceWithStreamingResponse(client.search)
 
 
 Client = Raindrop

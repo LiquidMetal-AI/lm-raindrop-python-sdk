@@ -27,18 +27,17 @@ pip install git+ssh://git@github.com/stainless-sdks/raindrop-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from raindrop import Raindrop
 
-client = Raindrop(
-    api_key=os.environ.get("RAINDROP_API_KEY"),  # This is the default and can be omitted
-)
+client = Raindrop()
 
-object = client.object.retrieve(
-    object_key="object_key",
-    bucket_name="bucket_name",
+document_query = client.document_query.create(
+    bucket_location={"bucket": {}},
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 )
-print(object.bucket)
+print(document_query.answer)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -51,21 +50,20 @@ so that your API Key is not stored in source control.
 Simply import `AsyncRaindrop` instead of `Raindrop` and use `await` with each API call:
 
 ```python
-import os
 import asyncio
 from raindrop import AsyncRaindrop
 
-client = AsyncRaindrop(
-    api_key=os.environ.get("RAINDROP_API_KEY"),  # This is the default and can be omitted
-)
+client = AsyncRaindrop()
 
 
 async def main() -> None:
-    object = await client.object.retrieve(
-        object_key="object_key",
-        bucket_name="bucket_name",
+    document_query = await client.document_query.create(
+        bucket_location={"bucket": {}},
+        input="What are the key points in this document?",
+        object_id="document.pdf",
+        request_id="123e4567-e89b-12d3-a456-426614174000",
     )
-    print(object.bucket)
+    print(document_query.answer)
 
 
 asyncio.run(main())
@@ -98,9 +96,11 @@ from raindrop import Raindrop
 client = Raindrop()
 
 try:
-    client.object.retrieve(
-        object_key="object_key",
-        bucket_name="bucket_name",
+    client.document_query.create(
+        bucket_location={"bucket": {}},
+        input="What are the key points in this document?",
+        object_id="document.pdf",
+        request_id="123e4567-e89b-12d3-a456-426614174000",
     )
 except raindrop.APIConnectionError as e:
     print("The server could not be reached")
@@ -144,9 +144,11 @@ client = Raindrop(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).object.retrieve(
-    object_key="object_key",
-    bucket_name="bucket_name",
+client.with_options(max_retries=5).document_query.create(
+    bucket_location={"bucket": {}},
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 )
 ```
 
@@ -170,9 +172,11 @@ client = Raindrop(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).object.retrieve(
-    object_key="object_key",
-    bucket_name="bucket_name",
+client.with_options(timeout=5.0).document_query.create(
+    bucket_location={"bucket": {}},
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 )
 ```
 
@@ -214,14 +218,18 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from raindrop import Raindrop
 
 client = Raindrop()
-response = client.object.with_raw_response.retrieve(
-    object_key="object_key",
-    bucket_name="bucket_name",
+response = client.document_query.with_raw_response.create(
+    bucket_location={
+        "bucket": {}
+    },
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 )
 print(response.headers.get('X-My-Header'))
 
-object_ = response.parse()  # get the object that `object.retrieve()` would have returned
-print(object_.bucket)
+document_query = response.parse()  # get the object that `document_query.create()` would have returned
+print(document_query.answer)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/raindrop-python/tree/main/src/raindrop/_response.py) object.
@@ -235,9 +243,11 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.object.with_streaming_response.retrieve(
-    object_key="object_key",
-    bucket_name="bucket_name",
+with client.document_query.with_streaming_response.create(
+    bucket_location={"bucket": {}},
+    input="What are the key points in this document?",
+    object_id="document.pdf",
+    request_id="123e4567-e89b-12d3-a456-426614174000",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
