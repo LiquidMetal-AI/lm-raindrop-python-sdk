@@ -8,10 +8,10 @@ from typing_extensions import Required, Annotated, TypedDict
 from .._types import Base64FileInput
 from .._utils import PropertyInfo
 
-__all__ = ["ObjectPutObjectParams"]
+__all__ = ["StorageObjectPutObjectParams"]
 
 
-class ObjectPutObjectParams(TypedDict, total=False):
+class StorageObjectPutObjectParams(TypedDict, total=False):
     bucket_name: Required[str]
 
     content: Required[Annotated[Union[str, Base64FileInput], PropertyInfo(format="base64")]]

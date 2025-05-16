@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["ObjectRetrieveObjectParams"]
+__all__ = ["StorageObjectRetrieveObjectParams"]
 
 
-class ObjectRetrieveObjectParams(TypedDict, total=False):
+class StorageObjectRetrieveObjectParams(TypedDict, total=False):
     bucket_name: Required[str]
 
     key: str

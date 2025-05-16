@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import TypedDict
 
-__all__ = ["ObjectListObjectsParams"]
+__all__ = ["StorageObjectListObjectsParams"]
 
 
-class ObjectListObjectsParams(TypedDict, total=False):
+class StorageObjectListObjectsParams(TypedDict, total=False):
     module_id: str
     """Module ID identifying the bucket"""

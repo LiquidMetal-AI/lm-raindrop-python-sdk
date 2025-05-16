@@ -5,7 +5,7 @@ from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["ObjectRetrieveObjectResponse", "Bucket"]
+__all__ = ["StorageObjectRetrieveObjectResponse", "Bucket"]
 
 
 class Bucket(BaseModel):
@@ -18,7 +18,7 @@ class Bucket(BaseModel):
     module_id: Optional[str] = None
 
 
-class ObjectRetrieveObjectResponse(BaseModel):
+class StorageObjectRetrieveObjectResponse(BaseModel):
     bucket: Optional[Bucket] = None
     """Information about the bucket where the object is stored"""
 
