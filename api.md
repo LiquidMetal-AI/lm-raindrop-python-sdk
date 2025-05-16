@@ -3,7 +3,7 @@
 Types:
 
 ```python
-from lm_raindrop.types import SearchFindResponse
+from lm_raindrop.types import TextResult, SearchFindResponse
 ```
 
 Methods:

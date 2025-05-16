@@ -3,59 +3,13 @@
 from typing import List, Optional
 
 from .._models import BaseModel
+from .text_result import TextResult
 
-__all__ = ["ChunkSearchFindResponse", "Result", "ResultSource", "ResultSourceBucket"]
-
-
-class ResultSourceBucket(BaseModel):
-    application_name: Optional[str] = None
-
-    application_version_id: Optional[str] = None
-
-    bucket_name: Optional[str] = None
-
-    module_id: Optional[str] = None
-
-
-class ResultSource(BaseModel):
-    bucket: Optional[ResultSourceBucket] = None
-    """The bucket information containing this result"""
-
-    object: Optional[str] = None
-    """The object key within the bucket"""
-
-
-class Result(BaseModel):
-    chunk_signature: Optional[str] = None
-    """Unique identifier for this text segment.
-
-    Used for deduplication and result tracking
-    """
-
-    embed: Optional[str] = None
-    """Vector representation for similarity matching.
-
-    Used in semantic search operations
-    """
-
-    payload_signature: Optional[str] = None
-    """Parent document identifier. Links related content chunks together"""
-
-    score: Optional[float] = None
-    """Relevance score (0.0 to 1.0). Higher scores indicate better matches"""
-
-    source: Optional[ResultSource] = None
-    """Source document references. Contains bucket and object information"""
-
-    text: Optional[str] = None
-    """The actual content of the result. May be a document excerpt or full content"""
-
-    type: Optional[str] = None
-    """Content MIME type. Helps with proper result rendering"""
+__all__ = ["ChunkSearchFindResponse"]
 
 
 class ChunkSearchFindResponse(BaseModel):
-    results: Optional[List[Result]] = None
+    results: Optional[List[TextResult]] = None
     """Ordered list of relevant text segments.
 
     Each result includes full context and metadata

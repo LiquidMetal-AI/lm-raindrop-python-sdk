@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from .text_result import TextResult as TextResult
 from .search_find_params import SearchFindParams as SearchFindParams
 from .search_find_response import SearchFindResponse as SearchFindResponse
 from .chunk_search_find_params import ChunkSearchFindParams as ChunkSearchFindParams
