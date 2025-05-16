@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .object import (
-    ObjectResource,
-    AsyncObjectResource,
-    ObjectResourceWithRawResponse,
-    AsyncObjectResourceWithRawResponse,
-    ObjectResourceWithStreamingResponse,
-    AsyncObjectResourceWithStreamingResponse,
-)
 from .search import (
     SearchResource,
     AsyncSearchResource,
@@ -66,10 +58,4 @@ __all__ = [
     "AsyncSearchResourceWithRawResponse",
     "SearchResourceWithStreamingResponse",
     "AsyncSearchResourceWithStreamingResponse",
-    "ObjectResource",
-    "AsyncObjectResource",
-    "ObjectResourceWithRawResponse",
-    "AsyncObjectResourceWithRawResponse",
-    "ObjectResourceWithStreamingResponse",
-    "AsyncObjectResourceWithStreamingResponse",
 ]

@@ -47,9 +47,11 @@ class ChunkSearchResource(SyncAPIResource):
     def execute(
         self,
         *,
-        bucket_locations: Iterable[BucketLocatorParam],
-        input: str,
-        request_id: str,
+        bucket_locations: Iterable[BucketLocatorParam] | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        organization_id: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
+        user_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -67,14 +69,18 @@ class ChunkSearchResource(SyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          bucket_locations: The buckets to search. If provided, the search will only return results from
-              these buckets
+          bucket_locations: **DESCRIPTION** The buckets to search. If provided, the search will only return
+              results from these buckets **EXAMPLE** [{"bucket": {"name": "my-bucket",
+              "version": "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}}]
+              **REQUIRED** TRUE
 
-          input: Natural language query or question. Can include complex criteria and
-              relationships. The system will optimize the search strategy based on this input
+          input: **DESCRIPTION** Natural language query or question. Can include complex criteria
+              and relationships. The system will optimize the search strategy based on this
+              input **EXAMPLE** "Find documents about revenue in Q4 2023" **REQUIRED** TRUE
 
-          request_id: Client-provided search session identifier. Required for pagination and result
-              tracking. We recommend using a UUID or ULID for this value
+          request_id: **DESCRIPTION** Client-provided search session identifier. Required for
+              pagination and result tracking. We recommend using a UUID or ULID for this value
+              **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
 
           extra_headers: Send extra headers
 
@@ -90,7 +96,9 @@ class ChunkSearchResource(SyncAPIResource):
                 {
                     "bucket_locations": bucket_locations,
                     "input": input,
+                    "organization_id": organization_id,
                     "request_id": request_id,
+                    "user_id": user_id,
                 },
                 chunk_search_execute_params.ChunkSearchExecuteParams,
             ),
@@ -124,9 +132,11 @@ class AsyncChunkSearchResource(AsyncAPIResource):
     async def execute(
         self,
         *,
-        bucket_locations: Iterable[BucketLocatorParam],
-        input: str,
-        request_id: str,
+        bucket_locations: Iterable[BucketLocatorParam] | NotGiven = NOT_GIVEN,
+        input: str | NotGiven = NOT_GIVEN,
+        organization_id: str | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
+        user_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -144,14 +154,18 @@ class AsyncChunkSearchResource(AsyncAPIResource):
         data ranked by relevance on the input query.
 
         Args:
-          bucket_locations: The buckets to search. If provided, the search will only return results from
-              these buckets
+          bucket_locations: **DESCRIPTION** The buckets to search. If provided, the search will only return
+              results from these buckets **EXAMPLE** [{"bucket": {"name": "my-bucket",
+              "version": "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}}]
+              **REQUIRED** TRUE
 
-          input: Natural language query or question. Can include complex criteria and
-              relationships. The system will optimize the search strategy based on this input
+          input: **DESCRIPTION** Natural language query or question. Can include complex criteria
+              and relationships. The system will optimize the search strategy based on this
+              input **EXAMPLE** "Find documents about revenue in Q4 2023" **REQUIRED** TRUE
 
-          request_id: Client-provided search session identifier. Required for pagination and result
-              tracking. We recommend using a UUID or ULID for this value
+          request_id: **DESCRIPTION** Client-provided search session identifier. Required for
+              pagination and result tracking. We recommend using a UUID or ULID for this value
+              **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
 
           extra_headers: Send extra headers
 
@@ -167,7 +181,9 @@ class AsyncChunkSearchResource(AsyncAPIResource):
                 {
                     "bucket_locations": bucket_locations,
                     "input": input,
+                    "organization_id": organization_id,
                     "request_id": request_id,
+                    "user_id": user_id,
                 },
                 chunk_search_execute_params.ChunkSearchExecuteParams,
             ),

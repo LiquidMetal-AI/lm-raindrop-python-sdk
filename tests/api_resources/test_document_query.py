@@ -20,23 +20,32 @@ class TestDocumentQuery:
     @pytest.mark.skip()
     @parametrize
     def test_method_create(self, client: Raindrop) -> None:
+        document_query = client.document_query.create()
+        assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_create_with_all_params(self, client: Raindrop) -> None:
         document_query = client.document_query.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
+            bucket_location={
+                "bucket": {
+                    "application_name": "application_name",
+                    "name": "name",
+                    "version": "version",
+                }
+            },
+            input="input",
+            object_id="object_id",
+            organization_id="organization_id",
+            request_id="request_id",
+            user_id="user_id",
         )
         assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_create(self, client: Raindrop) -> None:
-        response = client.document_query.with_raw_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = client.document_query.with_raw_response.create()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -46,12 +55,7 @@ class TestDocumentQuery:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create(self, client: Raindrop) -> None:
-        with client.document_query.with_streaming_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        ) as response:
+        with client.document_query.with_streaming_response.create() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -67,23 +71,32 @@ class TestAsyncDocumentQuery:
     @pytest.mark.skip()
     @parametrize
     async def test_method_create(self, async_client: AsyncRaindrop) -> None:
+        document_query = await async_client.document_query.create()
+        assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncRaindrop) -> None:
         document_query = await async_client.document_query.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
+            bucket_location={
+                "bucket": {
+                    "application_name": "application_name",
+                    "name": "name",
+                    "version": "version",
+                }
+            },
+            input="input",
+            object_id="object_id",
+            organization_id="organization_id",
+            request_id="request_id",
+            user_id="user_id",
         )
         assert_matches_type(DocumentQueryCreateResponse, document_query, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.document_query.with_raw_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = await async_client.document_query.with_raw_response.create()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -93,12 +106,7 @@ class TestAsyncDocumentQuery:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.document_query.with_streaming_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        ) as response:
+        async with async_client.document_query.with_streaming_response.create() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

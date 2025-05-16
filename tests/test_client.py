@@ -709,18 +709,7 @@ class TestRaindrop:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/v1/document_query",
-                body=cast(
-                    object,
-                    maybe_transform(
-                        dict(
-                            bucket_location={"bucket": {}},
-                            input="What are the key points in this document?",
-                            object_id="document.pdf",
-                            request_id="123e4567-e89b-12d3-a456-426614174000",
-                        ),
-                        DocumentQueryCreateParams,
-                    ),
-                ),
+                body=cast(object, maybe_transform({}, DocumentQueryCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -735,18 +724,7 @@ class TestRaindrop:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/v1/document_query",
-                body=cast(
-                    object,
-                    maybe_transform(
-                        dict(
-                            bucket_location={"bucket": {}},
-                            input="What are the key points in this document?",
-                            object_id="document.pdf",
-                            request_id="123e4567-e89b-12d3-a456-426614174000",
-                        ),
-                        DocumentQueryCreateParams,
-                    ),
-                ),
+                body=cast(object, maybe_transform({}, DocumentQueryCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -779,12 +757,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = client.document_query.with_raw_response.create()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -808,13 +781,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-            extra_headers={"x-stainless-retry-count": Omit()},
-        )
+        response = client.document_query.with_raw_response.create(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -837,13 +804,7 @@ class TestRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-            extra_headers={"x-stainless-retry-count": "42"},
-        )
+        response = client.document_query.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1514,18 +1475,7 @@ class TestAsyncRaindrop:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/v1/document_query",
-                body=cast(
-                    object,
-                    maybe_transform(
-                        dict(
-                            bucket_location={"bucket": {}},
-                            input="What are the key points in this document?",
-                            object_id="document.pdf",
-                            request_id="123e4567-e89b-12d3-a456-426614174000",
-                        ),
-                        DocumentQueryCreateParams,
-                    ),
-                ),
+                body=cast(object, maybe_transform({}, DocumentQueryCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1540,18 +1490,7 @@ class TestAsyncRaindrop:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/v1/document_query",
-                body=cast(
-                    object,
-                    maybe_transform(
-                        dict(
-                            bucket_location={"bucket": {}},
-                            input="What are the key points in this document?",
-                            object_id="document.pdf",
-                            request_id="123e4567-e89b-12d3-a456-426614174000",
-                        ),
-                        DocumentQueryCreateParams,
-                    ),
-                ),
+                body=cast(object, maybe_transform({}, DocumentQueryCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1585,12 +1524,7 @@ class TestAsyncRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = await client.document_query.with_raw_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = await client.document_query.with_raw_response.create()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1616,11 +1550,7 @@ class TestAsyncRaindrop:
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
         response = await client.document_query.with_raw_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-            extra_headers={"x-stainless-retry-count": Omit()},
+            extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1645,13 +1575,7 @@ class TestAsyncRaindrop:
 
         respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
 
-        response = await client.document_query.with_raw_response.create(
-            bucket_location={"bucket": {}},
-            input="What are the key points in this document?",
-            object_id="document.pdf",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-            extra_headers={"x-stainless-retry-count": "42"},
-        )
+        response = await client.document_query.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 

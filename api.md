@@ -51,16 +51,5 @@ Methods:
 Types:
 
 ```python
-from raindrop.types import (
-    BucketResponse,
-    ObjectListObjectsResponse,
-    ObjectPutObjectResponse,
-    ObjectRetrieveObjectResponse,
-)
+from raindrop.types import BucketResponse
 ```
-
-Methods:
-
-- <code title="get /v1/object/{bucket_name}">client.object.<a href="./src/raindrop/resources/object.py">list_objects</a>(bucket_name, \*\*<a href="src/raindrop/types/object_list_objects_params.py">params</a>) -> <a href="./src/raindrop/types/object_list_objects_response.py">ObjectListObjectsResponse</a></code>
-- <code title="post /v1/object/{bucket_name}/{object_key}">client.object.<a href="./src/raindrop/resources/object.py">put_object</a>(object_key, \*, bucket_name, \*\*<a href="src/raindrop/types/object_put_object_params.py">params</a>) -> <a href="./src/raindrop/types/object_put_object_response.py">ObjectPutObjectResponse</a></code>
-- <code title="get /v1/object/{bucket_name}/{object_key}">client.object.<a href="./src/raindrop/resources/object.py">retrieve_object</a>(object_key, \*, bucket_name, \*\*<a href="src/raindrop/types/object_retrieve_object_params.py">params</a>) -> <a href="./src/raindrop/types/object_retrieve_object_response.py">ObjectRetrieveObjectResponse</a></code>

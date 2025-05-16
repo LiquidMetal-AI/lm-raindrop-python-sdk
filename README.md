@@ -29,21 +29,13 @@ The full API of this library can be found in [api.md](api.md).
 ```python
 from raindrop import Raindrop
 
-client = Raindrop()
-
-document_query = client.document_query.create(
-    bucket_location={"bucket": {}},
-    input="What are the key points in this document?",
-    object_id="document.pdf",
-    request_id="123e4567-e89b-12d3-a456-426614174000",
+client = Raindrop(
+    api_key="My API Key",
 )
+
+document_query = client.document_query.create()
 print(document_query.answer)
 ```
-
-While you can provide an `api_key` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `RAINDROP_API_KEY="My API Key"` to your `.env` file
-so that your API Key is not stored in source control.
 
 ## Async usage
 
@@ -53,16 +45,13 @@ Simply import `AsyncRaindrop` instead of `Raindrop` and use `await` with each AP
 import asyncio
 from raindrop import AsyncRaindrop
 
-client = AsyncRaindrop()
+client = AsyncRaindrop(
+    api_key="My API Key",
+)
 
 
 async def main() -> None:
-    document_query = await client.document_query.create(
-        bucket_location={"bucket": {}},
-        input="What are the key points in this document?",
-        object_id="document.pdf",
-        request_id="123e4567-e89b-12d3-a456-426614174000",
-    )
+    document_query = await client.document_query.create()
     print(document_query.answer)
 
 
@@ -93,15 +82,12 @@ All errors inherit from `raindrop.APIError`.
 import raindrop
 from raindrop import Raindrop
 
-client = Raindrop()
+client = Raindrop(
+    api_key="My API Key",
+)
 
 try:
-    client.document_query.create(
-        bucket_location={"bucket": {}},
-        input="What are the key points in this document?",
-        object_id="document.pdf",
-        request_id="123e4567-e89b-12d3-a456-426614174000",
-    )
+    client.document_query.create()
 except raindrop.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -139,17 +125,13 @@ from raindrop import Raindrop
 
 # Configure the default for all requests:
 client = Raindrop(
+    api_key="My API Key",
     # default is 2
     max_retries=0,
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).document_query.create(
-    bucket_location={"bucket": {}},
-    input="What are the key points in this document?",
-    object_id="document.pdf",
-    request_id="123e4567-e89b-12d3-a456-426614174000",
-)
+client.with_options(max_retries=5).document_query.create()
 ```
 
 ### Timeouts
@@ -162,22 +144,19 @@ from raindrop import Raindrop
 
 # Configure the default for all requests:
 client = Raindrop(
+    api_key="My API Key",
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
 client = Raindrop(
+    api_key="My API Key",
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).document_query.create(
-    bucket_location={"bucket": {}},
-    input="What are the key points in this document?",
-    object_id="document.pdf",
-    request_id="123e4567-e89b-12d3-a456-426614174000",
-)
+client.with_options(timeout=5.0).document_query.create()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -217,15 +196,10 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 ```py
 from raindrop import Raindrop
 
-client = Raindrop()
-response = client.document_query.with_raw_response.create(
-    bucket_location={
-        "bucket": {}
-    },
-    input="What are the key points in this document?",
-    object_id="document.pdf",
-    request_id="123e4567-e89b-12d3-a456-426614174000",
+client = Raindrop(
+    api_key="My API Key",
 )
+response = client.document_query.with_raw_response.create()
 print(response.headers.get('X-My-Header'))
 
 document_query = response.parse()  # get the object that `document_query.create()` would have returned
@@ -243,12 +217,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.document_query.with_streaming_response.create(
-    bucket_location={"bucket": {}},
-    input="What are the key points in this document?",
-    object_id="document.pdf",
-    request_id="123e4567-e89b-12d3-a456-426614174000",
-) as response:
+with client.document_query.with_streaming_response.create() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
@@ -304,6 +273,7 @@ import httpx
 from raindrop import Raindrop, DefaultHttpxClient
 
 client = Raindrop(
+    api_key="My API Key",
     # Or use the `RAINDROP_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
@@ -326,7 +296,9 @@ By default the library closes underlying HTTP connections whenever the client is
 ```py
 from raindrop import Raindrop
 
-with Raindrop() as client:
+with Raindrop(
+    api_key="My API Key",
+) as client:
   # make requests here
   ...
 

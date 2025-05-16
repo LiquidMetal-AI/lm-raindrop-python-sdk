@@ -44,9 +44,11 @@ class SummarizePageResource(SyncAPIResource):
     def create_summary(
         self,
         *,
-        page: int,
-        page_size: int,
-        request_id: str,
+        organization_id: str | NotGiven = NOT_GIVEN,
+        page: int | NotGiven = NOT_GIVEN,
+        page_size: int | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
+        user_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -76,11 +78,13 @@ class SummarizePageResource(SyncAPIResource):
         - Research materials
 
         Args:
-          page: Target page number (1-based)
+          page: **DESCRIPTION** Target page number (1-based) **EXAMPLE** 1 **REQUIRED** TRUE
 
-          page_size: Results per page. Affects summary granularity
+          page_size: **DESCRIPTION** Results per page. Affects summary granularity **EXAMPLE** 10
+              **REQUIRED** TRUE
 
-          request_id: Original search session identifier from the initial search
+          request_id: **DESCRIPTION** Original search session identifier from the initial search
+              **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
 
           extra_headers: Send extra headers
 
@@ -94,9 +98,11 @@ class SummarizePageResource(SyncAPIResource):
             "/v1/summarize_page",
             body=maybe_transform(
                 {
+                    "organization_id": organization_id,
                     "page": page,
                     "page_size": page_size,
                     "request_id": request_id,
+                    "user_id": user_id,
                 },
                 summarize_page_create_summary_params.SummarizePageCreateSummaryParams,
             ),
@@ -130,9 +136,11 @@ class AsyncSummarizePageResource(AsyncAPIResource):
     async def create_summary(
         self,
         *,
-        page: int,
-        page_size: int,
-        request_id: str,
+        organization_id: str | NotGiven = NOT_GIVEN,
+        page: int | NotGiven = NOT_GIVEN,
+        page_size: int | NotGiven = NOT_GIVEN,
+        request_id: str | NotGiven = NOT_GIVEN,
+        user_id: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -162,11 +170,13 @@ class AsyncSummarizePageResource(AsyncAPIResource):
         - Research materials
 
         Args:
-          page: Target page number (1-based)
+          page: **DESCRIPTION** Target page number (1-based) **EXAMPLE** 1 **REQUIRED** TRUE
 
-          page_size: Results per page. Affects summary granularity
+          page_size: **DESCRIPTION** Results per page. Affects summary granularity **EXAMPLE** 10
+              **REQUIRED** TRUE
 
-          request_id: Original search session identifier from the initial search
+          request_id: **DESCRIPTION** Original search session identifier from the initial search
+              **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
 
           extra_headers: Send extra headers
 
@@ -180,9 +190,11 @@ class AsyncSummarizePageResource(AsyncAPIResource):
             "/v1/summarize_page",
             body=await async_maybe_transform(
                 {
+                    "organization_id": organization_id,
                     "page": page,
                     "page_size": page_size,
                     "request_id": request_id,
+                    "user_id": user_id,
                 },
                 summarize_page_create_summary_params.SummarizePageCreateSummaryParams,
             ),

@@ -20,21 +20,33 @@ class TestChunkSearch:
     @pytest.mark.skip()
     @parametrize
     def test_method_execute(self, client: Raindrop) -> None:
+        chunk_search = client.chunk_search.execute()
+        assert_matches_type(ChunkSearchExecuteResponse, chunk_search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_execute_with_all_params(self, client: Raindrop) -> None:
         chunk_search = client.chunk_search.execute(
-            bucket_locations=[{"bucket": {}}],
-            input="Find documents about revenue in Q4 2023",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
+            bucket_locations=[
+                {
+                    "bucket": {
+                        "application_name": "application_name",
+                        "name": "name",
+                        "version": "version",
+                    }
+                }
+            ],
+            input="input",
+            organization_id="organization_id",
+            request_id="request_id",
+            user_id="user_id",
         )
         assert_matches_type(ChunkSearchExecuteResponse, chunk_search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_execute(self, client: Raindrop) -> None:
-        response = client.chunk_search.with_raw_response.execute(
-            bucket_locations=[{"bucket": {}}],
-            input="Find documents about revenue in Q4 2023",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = client.chunk_search.with_raw_response.execute()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -44,11 +56,7 @@ class TestChunkSearch:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_execute(self, client: Raindrop) -> None:
-        with client.chunk_search.with_streaming_response.execute(
-            bucket_locations=[{"bucket": {}}],
-            input="Find documents about revenue in Q4 2023",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        ) as response:
+        with client.chunk_search.with_streaming_response.execute() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -64,21 +72,33 @@ class TestAsyncChunkSearch:
     @pytest.mark.skip()
     @parametrize
     async def test_method_execute(self, async_client: AsyncRaindrop) -> None:
+        chunk_search = await async_client.chunk_search.execute()
+        assert_matches_type(ChunkSearchExecuteResponse, chunk_search, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_execute_with_all_params(self, async_client: AsyncRaindrop) -> None:
         chunk_search = await async_client.chunk_search.execute(
-            bucket_locations=[{"bucket": {}}],
-            input="Find documents about revenue in Q4 2023",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
+            bucket_locations=[
+                {
+                    "bucket": {
+                        "application_name": "application_name",
+                        "name": "name",
+                        "version": "version",
+                    }
+                }
+            ],
+            input="input",
+            organization_id="organization_id",
+            request_id="request_id",
+            user_id="user_id",
         )
         assert_matches_type(ChunkSearchExecuteResponse, chunk_search, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_execute(self, async_client: AsyncRaindrop) -> None:
-        response = await async_client.chunk_search.with_raw_response.execute(
-            bucket_locations=[{"bucket": {}}],
-            input="Find documents about revenue in Q4 2023",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        )
+        response = await async_client.chunk_search.with_raw_response.execute()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -88,11 +108,7 @@ class TestAsyncChunkSearch:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_execute(self, async_client: AsyncRaindrop) -> None:
-        async with async_client.chunk_search.with_streaming_response.execute(
-            bucket_locations=[{"bucket": {}}],
-            input="Find documents about revenue in Q4 2023",
-            request_id="123e4567-e89b-12d3-a456-426614174000",
-        ) as response:
+        async with async_client.chunk_search.with_streaming_response.execute() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
