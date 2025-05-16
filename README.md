@@ -37,10 +37,6 @@ client = Raindrop(
 object = client.object.retrieve(
     object_key="object_key",
     bucket_name="bucket_name",
-    key="key",
-    module_id="module_id",
-    organization_id="organization_id",
-    user_id="user_id",
 )
 print(object.bucket)
 ```
@@ -68,10 +64,6 @@ async def main() -> None:
     object = await client.object.retrieve(
         object_key="object_key",
         bucket_name="bucket_name",
-        key="key",
-        module_id="module_id",
-        organization_id="organization_id",
-        user_id="user_id",
     )
     print(object.bucket)
 
@@ -109,10 +101,6 @@ try:
     client.object.retrieve(
         object_key="object_key",
         bucket_name="bucket_name",
-        key="key",
-        module_id="module_id",
-        organization_id="organization_id",
-        user_id="user_id",
     )
 except raindrop.APIConnectionError as e:
     print("The server could not be reached")
@@ -159,10 +147,6 @@ client = Raindrop(
 client.with_options(max_retries=5).object.retrieve(
     object_key="object_key",
     bucket_name="bucket_name",
-    key="key",
-    module_id="module_id",
-    organization_id="organization_id",
-    user_id="user_id",
 )
 ```
 
@@ -189,10 +173,6 @@ client = Raindrop(
 client.with_options(timeout=5.0).object.retrieve(
     object_key="object_key",
     bucket_name="bucket_name",
-    key="key",
-    module_id="module_id",
-    organization_id="organization_id",
-    user_id="user_id",
 )
 ```
 
@@ -237,10 +217,6 @@ client = Raindrop()
 response = client.object.with_raw_response.retrieve(
     object_key="object_key",
     bucket_name="bucket_name",
-    key="key",
-    module_id="module_id",
-    organization_id="organization_id",
-    user_id="user_id",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -262,10 +238,6 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 with client.object.with_streaming_response.retrieve(
     object_key="object_key",
     bucket_name="bucket_name",
-    key="key",
-    module_id="module_id",
-    organization_id="organization_id",
-    user_id="user_id",
 ) as response:
     print(response.headers.get("X-My-Header"))
 

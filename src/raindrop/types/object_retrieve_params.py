@@ -9,21 +9,21 @@ __all__ = ["ObjectRetrieveParams"]
 
 class ObjectRetrieveParams(TypedDict, total=False):
     bucket_name: Required[str]
+    """**DESCRIPTION** Name of the bucket **REQUIRED** true"""
 
-    key: Required[str]
+    key: str
     """
-    **DESCRIPTION** Object key/path to download **REQUIRED** true **EXAMPLE**
-    "my-key"
+    **DESCRIPTION** Object key/path to delete **REQUIRED** true **EXAMPLE** "my-key"
     """
 
-    module_id: Required[str]
+    module_id: str
     """
     **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
     "01jtgtrd37acrqf7k24dggg31s"
     """
 
-    organization_id: Required[str]
+    organization_id: str
     """**DESCRIPTION** Organization ID for access control **REQUIRED** true"""
 
-    user_id: Required[str]
+    user_id: str
     """**DESCRIPTION** User ID for access control **REQUIRED** true"""

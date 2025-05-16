@@ -12,25 +12,11 @@ __all__ = ["ObjectUploadParams"]
 
 
 class ObjectUploadParams(TypedDict, total=False):
-    bucket_name: Required[str]
+    path_bucket_name: Required[Annotated[str, PropertyInfo(alias="bucket_name")]]
+    """**DESCRIPTION** Name of the bucket **REQUIRED** true"""
 
-    query_key: Required[Annotated[str, PropertyInfo(alias="key")]]
-    """
-    **DESCRIPTION** Object key/path in the bucket **REQUIRED** true **EXAMPLE**
-    "my-key"
-    """
-
-    query_module_id: Required[Annotated[str, PropertyInfo(alias="module_id")]]
-    """
-    **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
-    "01jtgtrd37acrqf7k24dggg31s"
-    """
-
-    query_organization_id: Required[Annotated[str, PropertyInfo(alias="organization_id")]]
-    """**DESCRIPTION** Organization ID for access control **REQUIRED** true"""
-
-    query_user_id: Required[Annotated[str, PropertyInfo(alias="user_id")]]
-    """**DESCRIPTION** User ID for access control **REQUIRED** true"""
+    body_bucket_name: Annotated[str, PropertyInfo(alias="bucket_name")]
+    """**DESCRIPTION** Name of the bucket **REQUIRED** true"""
 
     content: Annotated[Union[str, Base64FileInput], PropertyInfo(format="base64")]
     """**DESCRIPTION** Binary content of the object **REQUIRED** true"""
@@ -41,20 +27,23 @@ class ObjectUploadParams(TypedDict, total=False):
     "application/pdf"
     """
 
-    body_key: Annotated[str, PropertyInfo(alias="key")]
+    key: str
     """
     **DESCRIPTION** Object key/path in the bucket **REQUIRED** true **EXAMPLE**
     "my-key"
     """
 
-    body_module_id: Annotated[str, PropertyInfo(alias="module_id")]
+    module_id: str
     """
     **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
     "01jtgtrd37acrqf7k24dggg31s"
     """
 
-    body_organization_id: Annotated[str, PropertyInfo(alias="organization_id")]
+    body_object_key: Annotated[str, PropertyInfo(alias="object_key")]
+    """**DESCRIPTION** Key/path of the object in the bucket **REQUIRED** true"""
+
+    organization_id: str
     """**DESCRIPTION** Organization ID for access control **REQUIRED** true"""
 
-    body_user_id: Annotated[str, PropertyInfo(alias="user_id")]
+    user_id: str
     """**DESCRIPTION** User ID for access control **REQUIRED** true"""

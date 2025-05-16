@@ -27,6 +27,15 @@ class TestObject:
         object_ = client.object.retrieve(
             object_key="object_key",
             bucket_name="bucket_name",
+        )
+        assert_matches_type(ObjectRetrieveResponse, object_, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_retrieve_with_all_params(self, client: Raindrop) -> None:
+        object_ = client.object.retrieve(
+            object_key="object_key",
+            bucket_name="bucket_name",
             key="key",
             module_id="module_id",
             organization_id="organization_id",
@@ -40,10 +49,6 @@ class TestObject:
         response = client.object.with_raw_response.retrieve(
             object_key="object_key",
             bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
         )
 
         assert response.is_closed is True
@@ -57,10 +62,6 @@ class TestObject:
         with client.object.with_streaming_response.retrieve(
             object_key="object_key",
             bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -77,25 +78,25 @@ class TestObject:
             client.object.with_raw_response.retrieve(
                 object_key="object_key",
                 bucket_name="",
-                key="key",
-                module_id="module_id",
-                organization_id="organization_id",
-                user_id="user_id",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `object_key` but received ''"):
             client.object.with_raw_response.retrieve(
                 object_key="",
                 bucket_name="bucket_name",
-                key="key",
-                module_id="module_id",
-                organization_id="organization_id",
-                user_id="user_id",
             )
 
     @pytest.mark.skip()
     @parametrize
     def test_method_list(self, client: Raindrop) -> None:
+        object_ = client.object.list(
+            bucket_name="bucket_name",
+        )
+        assert_matches_type(ObjectListResponse, object_, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_list_with_all_params(self, client: Raindrop) -> None:
         object_ = client.object.list(
             bucket_name="bucket_name",
             module_id="module_id",
@@ -109,9 +110,6 @@ class TestObject:
     def test_raw_response_list(self, client: Raindrop) -> None:
         response = client.object.with_raw_response.list(
             bucket_name="bucket_name",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
         )
 
         assert response.is_closed is True
@@ -124,9 +122,6 @@ class TestObject:
     def test_streaming_response_list(self, client: Raindrop) -> None:
         with client.object.with_streaming_response.list(
             bucket_name="bucket_name",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -142,21 +137,14 @@ class TestObject:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket_name` but received ''"):
             client.object.with_raw_response.list(
                 bucket_name="",
-                module_id="module_id",
-                organization_id="organization_id",
-                user_id="user_id",
             )
 
     @pytest.mark.skip()
     @parametrize
     def test_method_upload(self, client: Raindrop) -> None:
         object_ = client.object.upload(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            query_key="key",
-            query_module_id="module_id",
-            query_organization_id="organization_id",
-            query_user_id="user_id",
+            path_object_key="object_key",
+            path_bucket_name="bucket_name",
         )
         assert_matches_type(ObjectUploadResponse, object_, path=["response"])
 
@@ -164,18 +152,16 @@ class TestObject:
     @parametrize
     def test_method_upload_with_all_params(self, client: Raindrop) -> None:
         object_ = client.object.upload(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            query_key="key",
-            query_module_id="module_id",
-            query_organization_id="organization_id",
-            query_user_id="user_id",
+            path_object_key="object_key",
+            path_bucket_name="bucket_name",
+            body_bucket_name="bucket_name",
             content="U3RhaW5sZXNzIHJvY2tz",
             content_type="content_type",
-            body_key="key",
-            body_module_id="module_id",
-            body_organization_id="organization_id",
-            body_user_id="user_id",
+            key="key",
+            module_id="module_id",
+            body_object_key="object_key",
+            organization_id="organization_id",
+            user_id="user_id",
         )
         assert_matches_type(ObjectUploadResponse, object_, path=["response"])
 
@@ -183,12 +169,8 @@ class TestObject:
     @parametrize
     def test_raw_response_upload(self, client: Raindrop) -> None:
         response = client.object.with_raw_response.upload(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            query_key="key",
-            query_module_id="module_id",
-            query_organization_id="organization_id",
-            query_user_id="user_id",
+            path_object_key="object_key",
+            path_bucket_name="bucket_name",
         )
 
         assert response.is_closed is True
@@ -200,12 +182,8 @@ class TestObject:
     @parametrize
     def test_streaming_response_upload(self, client: Raindrop) -> None:
         with client.object.with_streaming_response.upload(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            query_key="key",
-            query_module_id="module_id",
-            query_organization_id="organization_id",
-            query_user_id="user_id",
+            path_object_key="object_key",
+            path_bucket_name="bucket_name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -218,24 +196,16 @@ class TestObject:
     @pytest.mark.skip()
     @parametrize
     def test_path_params_upload(self, client: Raindrop) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket_name` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path_bucket_name` but received ''"):
             client.object.with_raw_response.upload(
-                object_key="object_key",
-                bucket_name="",
-                query_key="key",
-                query_module_id="module_id",
-                query_organization_id="organization_id",
-                query_user_id="user_id",
+                path_object_key="object_key",
+                path_bucket_name="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `object_key` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path_object_key` but received ''"):
             client.object.with_raw_response.upload(
-                object_key="",
-                bucket_name="bucket_name",
-                query_key="key",
-                query_module_id="module_id",
-                query_organization_id="organization_id",
-                query_user_id="user_id",
+                path_object_key="",
+                path_bucket_name="bucket_name",
             )
 
 
@@ -245,6 +215,15 @@ class TestAsyncObject:
     @pytest.mark.skip()
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncRaindrop) -> None:
+        object_ = await async_client.object.retrieve(
+            object_key="object_key",
+            bucket_name="bucket_name",
+        )
+        assert_matches_type(ObjectRetrieveResponse, object_, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_retrieve_with_all_params(self, async_client: AsyncRaindrop) -> None:
         object_ = await async_client.object.retrieve(
             object_key="object_key",
             bucket_name="bucket_name",
@@ -261,10 +240,6 @@ class TestAsyncObject:
         response = await async_client.object.with_raw_response.retrieve(
             object_key="object_key",
             bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
         )
 
         assert response.is_closed is True
@@ -278,10 +253,6 @@ class TestAsyncObject:
         async with async_client.object.with_streaming_response.retrieve(
             object_key="object_key",
             bucket_name="bucket_name",
-            key="key",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -298,25 +269,25 @@ class TestAsyncObject:
             await async_client.object.with_raw_response.retrieve(
                 object_key="object_key",
                 bucket_name="",
-                key="key",
-                module_id="module_id",
-                organization_id="organization_id",
-                user_id="user_id",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `object_key` but received ''"):
             await async_client.object.with_raw_response.retrieve(
                 object_key="",
                 bucket_name="bucket_name",
-                key="key",
-                module_id="module_id",
-                organization_id="organization_id",
-                user_id="user_id",
             )
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_list(self, async_client: AsyncRaindrop) -> None:
+        object_ = await async_client.object.list(
+            bucket_name="bucket_name",
+        )
+        assert_matches_type(ObjectListResponse, object_, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_list_with_all_params(self, async_client: AsyncRaindrop) -> None:
         object_ = await async_client.object.list(
             bucket_name="bucket_name",
             module_id="module_id",
@@ -330,9 +301,6 @@ class TestAsyncObject:
     async def test_raw_response_list(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.object.with_raw_response.list(
             bucket_name="bucket_name",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
         )
 
         assert response.is_closed is True
@@ -345,9 +313,6 @@ class TestAsyncObject:
     async def test_streaming_response_list(self, async_client: AsyncRaindrop) -> None:
         async with async_client.object.with_streaming_response.list(
             bucket_name="bucket_name",
-            module_id="module_id",
-            organization_id="organization_id",
-            user_id="user_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -363,21 +328,14 @@ class TestAsyncObject:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket_name` but received ''"):
             await async_client.object.with_raw_response.list(
                 bucket_name="",
-                module_id="module_id",
-                organization_id="organization_id",
-                user_id="user_id",
             )
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_upload(self, async_client: AsyncRaindrop) -> None:
         object_ = await async_client.object.upload(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            query_key="key",
-            query_module_id="module_id",
-            query_organization_id="organization_id",
-            query_user_id="user_id",
+            path_object_key="object_key",
+            path_bucket_name="bucket_name",
         )
         assert_matches_type(ObjectUploadResponse, object_, path=["response"])
 
@@ -385,18 +343,16 @@ class TestAsyncObject:
     @parametrize
     async def test_method_upload_with_all_params(self, async_client: AsyncRaindrop) -> None:
         object_ = await async_client.object.upload(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            query_key="key",
-            query_module_id="module_id",
-            query_organization_id="organization_id",
-            query_user_id="user_id",
+            path_object_key="object_key",
+            path_bucket_name="bucket_name",
+            body_bucket_name="bucket_name",
             content="U3RhaW5sZXNzIHJvY2tz",
             content_type="content_type",
-            body_key="key",
-            body_module_id="module_id",
-            body_organization_id="organization_id",
-            body_user_id="user_id",
+            key="key",
+            module_id="module_id",
+            body_object_key="object_key",
+            organization_id="organization_id",
+            user_id="user_id",
         )
         assert_matches_type(ObjectUploadResponse, object_, path=["response"])
 
@@ -404,12 +360,8 @@ class TestAsyncObject:
     @parametrize
     async def test_raw_response_upload(self, async_client: AsyncRaindrop) -> None:
         response = await async_client.object.with_raw_response.upload(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            query_key="key",
-            query_module_id="module_id",
-            query_organization_id="organization_id",
-            query_user_id="user_id",
+            path_object_key="object_key",
+            path_bucket_name="bucket_name",
         )
 
         assert response.is_closed is True
@@ -421,12 +373,8 @@ class TestAsyncObject:
     @parametrize
     async def test_streaming_response_upload(self, async_client: AsyncRaindrop) -> None:
         async with async_client.object.with_streaming_response.upload(
-            object_key="object_key",
-            bucket_name="bucket_name",
-            query_key="key",
-            query_module_id="module_id",
-            query_organization_id="organization_id",
-            query_user_id="user_id",
+            path_object_key="object_key",
+            path_bucket_name="bucket_name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -439,22 +387,14 @@ class TestAsyncObject:
     @pytest.mark.skip()
     @parametrize
     async def test_path_params_upload(self, async_client: AsyncRaindrop) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `bucket_name` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path_bucket_name` but received ''"):
             await async_client.object.with_raw_response.upload(
-                object_key="object_key",
-                bucket_name="",
-                query_key="key",
-                query_module_id="module_id",
-                query_organization_id="organization_id",
-                query_user_id="user_id",
+                path_object_key="object_key",
+                path_bucket_name="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `object_key` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path_object_key` but received ''"):
             await async_client.object.with_raw_response.upload(
-                object_key="",
-                bucket_name="bucket_name",
-                query_key="key",
-                query_module_id="module_id",
-                query_organization_id="organization_id",
-                query_user_id="user_id",
+                path_object_key="",
+                path_bucket_name="bucket_name",
             )
