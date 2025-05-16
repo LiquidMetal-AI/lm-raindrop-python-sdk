@@ -2,7 +2,7 @@ import operator
 from typing import Any
 from typing_extensions import override
 
-from lm_raindrop._utils import LazyProxy
+from raindrop._utils import LazyProxy
 
 
 class RecursiveLazyProxy(LazyProxy[Any]):

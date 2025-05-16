@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from lm_raindrop._types import NOT_GIVEN, Base64FileInput
-from lm_raindrop._utils import (
+from raindrop._types import NOT_GIVEN, Base64FileInput
+from raindrop._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from lm_raindrop._compat import PYDANTIC_V2
-from lm_raindrop._models import BaseModel
+from raindrop._compat import PYDANTIC_V2
+from raindrop._models import BaseModel
 
 _T = TypeVar("_T")
 
