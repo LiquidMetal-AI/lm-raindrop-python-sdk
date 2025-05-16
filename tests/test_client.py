@@ -23,7 +23,6 @@ from pydantic import ValidationError
 
 from raindrop import Raindrop, AsyncRaindrop, APIResponseValidationError
 from raindrop._types import Omit
-from raindrop._utils import maybe_transform
 from raindrop._models import BaseModel, FinalRequestOptions
 from raindrop._constants import RAW_RESPONSE_HEADER
 from raindrop._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
@@ -33,7 +32,6 @@ from raindrop._base_client import (
     BaseClient,
     make_request_options,
 )
-from raindrop.types.document_query_create_params import DocumentQueryCreateParams
 
 from .utils import update_env
 
@@ -723,12 +721,13 @@ class TestRaindrop:
     @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/document_query").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(
+            side_effect=httpx.TimeoutException("Test timeout error")
+        )
 
         with pytest.raises(APITimeoutError):
-            self.client.post(
-                "/v1/document_query",
-                body=cast(object, maybe_transform({}, DocumentQueryCreateParams)),
+            self.client.get(
+                "/v1/object/bucket_name/object_key",
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -738,12 +737,11 @@ class TestRaindrop:
     @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/document_query").mock(return_value=httpx.Response(500))
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            self.client.post(
-                "/v1/document_query",
-                body=cast(object, maybe_transform({}, DocumentQueryCreateParams)),
+            self.client.get(
+                "/v1/object/bucket_name/object_key",
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -774,9 +772,9 @@ class TestRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create()
+        response = client.object.with_raw_response.retrieve(object_key="object_key", bucket_name="bucket_name")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -798,9 +796,11 @@ class TestRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.object.with_raw_response.retrieve(
+            object_key="object_key", bucket_name="bucket_name", extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -821,9 +821,11 @@ class TestRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
-        response = client.document_query.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.object.with_raw_response.retrieve(
+            object_key="object_key", bucket_name="bucket_name", extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1508,12 +1510,13 @@ class TestAsyncRaindrop:
     @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/document_query").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(
+            side_effect=httpx.TimeoutException("Test timeout error")
+        )
 
         with pytest.raises(APITimeoutError):
-            await self.client.post(
-                "/v1/document_query",
-                body=cast(object, maybe_transform({}, DocumentQueryCreateParams)),
+            await self.client.get(
+                "/v1/object/bucket_name/object_key",
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1523,12 +1526,11 @@ class TestAsyncRaindrop:
     @mock.patch("raindrop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/document_query").mock(return_value=httpx.Response(500))
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await self.client.post(
-                "/v1/document_query",
-                body=cast(object, maybe_transform({}, DocumentQueryCreateParams)),
+            await self.client.get(
+                "/v1/object/bucket_name/object_key",
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1560,9 +1562,9 @@ class TestAsyncRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
-        response = await client.document_query.with_raw_response.create()
+        response = await client.object.with_raw_response.retrieve(object_key="object_key", bucket_name="bucket_name")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1585,10 +1587,10 @@ class TestAsyncRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
-        response = await client.document_query.with_raw_response.create(
-            extra_headers={"x-stainless-retry-count": Omit()}
+        response = await client.object.with_raw_response.retrieve(
+            object_key="object_key", bucket_name="bucket_name", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1611,9 +1613,11 @@ class TestAsyncRaindrop:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document_query").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/object/bucket_name/object_key").mock(side_effect=retry_handler)
 
-        response = await client.document_query.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.object.with_raw_response.retrieve(
+            object_key="object_key", bucket_name="bucket_name", extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
