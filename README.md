@@ -26,9 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 ```python
 from lm_raindrop import Raindrop
 
-client = Raindrop(
-    api_key="My API Key",
-)
+client = Raindrop()
 
 response = client.search.find(
     bucket_locations=[{"bucket": {}}],
@@ -38,6 +36,11 @@ response = client.search.find(
 print(response.pagination)
 ```
 
+While you can provide an `api_key` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `RAINDROP_API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
+
 ## Async usage
 
 Simply import `AsyncRaindrop` instead of `Raindrop` and use `await` with each API call:
@@ -46,9 +49,7 @@ Simply import `AsyncRaindrop` instead of `Raindrop` and use `await` with each AP
 import asyncio
 from lm_raindrop import AsyncRaindrop
 
-client = AsyncRaindrop(
-    api_key="My API Key",
-)
+client = AsyncRaindrop()
 
 
 async def main() -> None:
@@ -87,9 +88,7 @@ All errors inherit from `lm_raindrop.APIError`.
 import lm_raindrop
 from lm_raindrop import Raindrop
 
-client = Raindrop(
-    api_key="My API Key",
-)
+client = Raindrop()
 
 try:
     client.search.find(
@@ -134,7 +133,6 @@ from lm_raindrop import Raindrop
 
 # Configure the default for all requests:
 client = Raindrop(
-    api_key="My API Key",
     # default is 2
     max_retries=0,
 )
@@ -157,14 +155,12 @@ from lm_raindrop import Raindrop
 
 # Configure the default for all requests:
 client = Raindrop(
-    api_key="My API Key",
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
 client = Raindrop(
-    api_key="My API Key",
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
@@ -213,9 +209,7 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 ```py
 from lm_raindrop import Raindrop
 
-client = Raindrop(
-    api_key="My API Key",
-)
+client = Raindrop()
 response = client.search.with_raw_response.find(
     bucket_locations=[{
         "bucket": {}
@@ -300,7 +294,6 @@ import httpx
 from lm_raindrop import Raindrop, DefaultHttpxClient
 
 client = Raindrop(
-    api_key="My API Key",
     # Or use the `RAINDROP_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
@@ -323,9 +316,7 @@ By default the library closes underlying HTTP connections whenever the client is
 ```py
 from lm_raindrop import Raindrop
 
-with Raindrop(
-    api_key="My API Key",
-) as client:
+with Raindrop() as client:
   # make requests here
   ...
 
