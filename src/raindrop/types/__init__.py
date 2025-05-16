@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from .text_result import TextResult as TextResult
-from .bucket_response import BucketResponse as BucketResponse
+from .pagination_info import PaginationInfo as PaginationInfo
 from .search_run_params import SearchRunParams as SearchRunParams
 from .search_run_response import SearchRunResponse as SearchRunResponse
 from .bucket_locator_param import BucketLocatorParam as BucketLocatorParam
@@ -14,4 +14,10 @@ from .document_query_create_response import DocumentQueryCreateResponse as Docum
 from .summarize_page_create_summary_params import SummarizePageCreateSummaryParams as SummarizePageCreateSummaryParams
 from .summarize_page_create_summary_response import (
     SummarizePageCreateSummaryResponse as SummarizePageCreateSummaryResponse,
+)
+from .liquidmetal_v1alpha1_search_agent_service_get_paginated_results_params import (
+    LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsParams as LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsParams,
+)
+from .liquidmetal_v1alpha1_search_agent_service_get_paginated_results_response import (
+    LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsResponse as LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsResponse,
 )

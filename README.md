@@ -27,26 +27,33 @@ pip install git+ssh://git@github.com/stainless-sdks/raindrop-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from raindrop import Raindrop
 
 client = Raindrop(
-    api_key="My API Key",
+    api_key=os.environ.get("RAINDROP_API_KEY"),  # This is the default and can be omitted
 )
 
 document_query = client.document_query.create()
 print(document_query.answer)
 ```
 
+While you can provide an `api_key` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `RAINDROP_API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
+
 ## Async usage
 
 Simply import `AsyncRaindrop` instead of `Raindrop` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from raindrop import AsyncRaindrop
 
 client = AsyncRaindrop(
-    api_key="My API Key",
+    api_key=os.environ.get("RAINDROP_API_KEY"),  # This is the default and can be omitted
 )
 
 
@@ -82,9 +89,7 @@ All errors inherit from `raindrop.APIError`.
 import raindrop
 from raindrop import Raindrop
 
-client = Raindrop(
-    api_key="My API Key",
-)
+client = Raindrop()
 
 try:
     client.document_query.create()
@@ -125,7 +130,6 @@ from raindrop import Raindrop
 
 # Configure the default for all requests:
 client = Raindrop(
-    api_key="My API Key",
     # default is 2
     max_retries=0,
 )
@@ -144,14 +148,12 @@ from raindrop import Raindrop
 
 # Configure the default for all requests:
 client = Raindrop(
-    api_key="My API Key",
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
 client = Raindrop(
-    api_key="My API Key",
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
@@ -196,9 +198,7 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 ```py
 from raindrop import Raindrop
 
-client = Raindrop(
-    api_key="My API Key",
-)
+client = Raindrop()
 response = client.document_query.with_raw_response.create()
 print(response.headers.get('X-My-Header'))
 
@@ -273,7 +273,6 @@ import httpx
 from raindrop import Raindrop, DefaultHttpxClient
 
 client = Raindrop(
-    api_key="My API Key",
     # Or use the `RAINDROP_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
@@ -296,9 +295,7 @@ By default the library closes underlying HTTP connections whenever the client is
 ```py
 from raindrop import Raindrop
 
-with Raindrop(
-    api_key="My API Key",
-) as client:
+with Raindrop() as client:
   # make requests here
   ...
 

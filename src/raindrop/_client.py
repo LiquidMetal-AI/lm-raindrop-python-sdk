@@ -13,6 +13,7 @@ from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
     Omit,
+    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -21,9 +22,9 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import search, chunk_search, document_query, summarize_page
+from .resources import search, chunk_search, document_query, summarize_page, liquidmetal_v1alpha1_search_agent_service
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import RaindropError, APIStatusError
+from ._exceptions import APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -47,11 +48,14 @@ class Raindrop(SyncAPIClient):
     chunk_search: chunk_search.ChunkSearchResource
     summarize_page: summarize_page.SummarizePageResource
     search: search.SearchResource
+    liquidmetal_v1alpha1_search_agent_service: (
+        liquidmetal_v1alpha1_search_agent_service.LiquidmetalV1alpha1SearchAgentServiceResource
+    )
     with_raw_response: RaindropWithRawResponse
     with_streaming_response: RaindropWithStreamedResponse
 
     # client options
-    api_key: str
+    api_key: str | None
 
     def __init__(
         self,
@@ -82,10 +86,6 @@ class Raindrop(SyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("RAINDROP_API_KEY")
-        if api_key is None:
-            raise RaindropError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the RAINDROP_API_KEY environment variable"
-            )
         self.api_key = api_key
 
         if base_url is None:
@@ -108,6 +108,9 @@ class Raindrop(SyncAPIClient):
         self.chunk_search = chunk_search.ChunkSearchResource(self)
         self.summarize_page = summarize_page.SummarizePageResource(self)
         self.search = search.SearchResource(self)
+        self.liquidmetal_v1alpha1_search_agent_service = (
+            liquidmetal_v1alpha1_search_agent_service.LiquidmetalV1alpha1SearchAgentServiceResource(self)
+        )
         self.with_raw_response = RaindropWithRawResponse(self)
         self.with_streaming_response = RaindropWithStreamedResponse(self)
 
@@ -118,12 +121,31 @@ class Raindrop(SyncAPIClient):
 
     @property
     @override
+    def auth_headers(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
+
+    @property
+    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
             "X-Stainless-Async": "false",
             **self._custom_headers,
         }
+
+    @override
+    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
+        if self.api_key and headers.get("Authorization"):
+            return
+        if isinstance(custom_headers.get("Authorization"), Omit):
+            return
+
+        raise TypeError(
+            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
+        )
 
     def copy(
         self,
@@ -215,11 +237,14 @@ class AsyncRaindrop(AsyncAPIClient):
     chunk_search: chunk_search.AsyncChunkSearchResource
     summarize_page: summarize_page.AsyncSummarizePageResource
     search: search.AsyncSearchResource
+    liquidmetal_v1alpha1_search_agent_service: (
+        liquidmetal_v1alpha1_search_agent_service.AsyncLiquidmetalV1alpha1SearchAgentServiceResource
+    )
     with_raw_response: AsyncRaindropWithRawResponse
     with_streaming_response: AsyncRaindropWithStreamedResponse
 
     # client options
-    api_key: str
+    api_key: str | None
 
     def __init__(
         self,
@@ -250,10 +275,6 @@ class AsyncRaindrop(AsyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("RAINDROP_API_KEY")
-        if api_key is None:
-            raise RaindropError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the RAINDROP_API_KEY environment variable"
-            )
         self.api_key = api_key
 
         if base_url is None:
@@ -276,6 +297,9 @@ class AsyncRaindrop(AsyncAPIClient):
         self.chunk_search = chunk_search.AsyncChunkSearchResource(self)
         self.summarize_page = summarize_page.AsyncSummarizePageResource(self)
         self.search = search.AsyncSearchResource(self)
+        self.liquidmetal_v1alpha1_search_agent_service = (
+            liquidmetal_v1alpha1_search_agent_service.AsyncLiquidmetalV1alpha1SearchAgentServiceResource(self)
+        )
         self.with_raw_response = AsyncRaindropWithRawResponse(self)
         self.with_streaming_response = AsyncRaindropWithStreamedResponse(self)
 
@@ -286,12 +310,31 @@ class AsyncRaindrop(AsyncAPIClient):
 
     @property
     @override
+    def auth_headers(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
+
+    @property
+    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
             "X-Stainless-Async": f"async:{get_async_library()}",
             **self._custom_headers,
         }
+
+    @override
+    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
+        if self.api_key and headers.get("Authorization"):
+            return
+        if isinstance(custom_headers.get("Authorization"), Omit):
+            return
+
+        raise TypeError(
+            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
+        )
 
     def copy(
         self,
@@ -384,6 +427,11 @@ class RaindropWithRawResponse:
         self.chunk_search = chunk_search.ChunkSearchResourceWithRawResponse(client.chunk_search)
         self.summarize_page = summarize_page.SummarizePageResourceWithRawResponse(client.summarize_page)
         self.search = search.SearchResourceWithRawResponse(client.search)
+        self.liquidmetal_v1alpha1_search_agent_service = (
+            liquidmetal_v1alpha1_search_agent_service.LiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse(
+                client.liquidmetal_v1alpha1_search_agent_service
+            )
+        )
 
 
 class AsyncRaindropWithRawResponse:
@@ -392,6 +440,11 @@ class AsyncRaindropWithRawResponse:
         self.chunk_search = chunk_search.AsyncChunkSearchResourceWithRawResponse(client.chunk_search)
         self.summarize_page = summarize_page.AsyncSummarizePageResourceWithRawResponse(client.summarize_page)
         self.search = search.AsyncSearchResourceWithRawResponse(client.search)
+        self.liquidmetal_v1alpha1_search_agent_service = (
+            liquidmetal_v1alpha1_search_agent_service.AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithRawResponse(
+                client.liquidmetal_v1alpha1_search_agent_service
+            )
+        )
 
 
 class RaindropWithStreamedResponse:
@@ -400,6 +453,9 @@ class RaindropWithStreamedResponse:
         self.chunk_search = chunk_search.ChunkSearchResourceWithStreamingResponse(client.chunk_search)
         self.summarize_page = summarize_page.SummarizePageResourceWithStreamingResponse(client.summarize_page)
         self.search = search.SearchResourceWithStreamingResponse(client.search)
+        self.liquidmetal_v1alpha1_search_agent_service = liquidmetal_v1alpha1_search_agent_service.LiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse(
+            client.liquidmetal_v1alpha1_search_agent_service
+        )
 
 
 class AsyncRaindropWithStreamedResponse:
@@ -408,6 +464,9 @@ class AsyncRaindropWithStreamedResponse:
         self.chunk_search = chunk_search.AsyncChunkSearchResourceWithStreamingResponse(client.chunk_search)
         self.summarize_page = summarize_page.AsyncSummarizePageResourceWithStreamingResponse(client.summarize_page)
         self.search = search.AsyncSearchResourceWithStreamingResponse(client.search)
+        self.liquidmetal_v1alpha1_search_agent_service = liquidmetal_v1alpha1_search_agent_service.AsyncLiquidmetalV1alpha1SearchAgentServiceResourceWithStreamingResponse(
+            client.liquidmetal_v1alpha1_search_agent_service
+        )
 
 
 Client = Raindrop

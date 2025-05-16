@@ -3,13 +3,22 @@
 from typing import Optional
 
 from .._models import BaseModel
-from .bucket_response import BucketResponse
 
-__all__ = ["TextResult", "Source"]
+__all__ = ["TextResult", "Source", "SourceBucket"]
+
+
+class SourceBucket(BaseModel):
+    application_name: Optional[str] = None
+
+    application_version_id: Optional[str] = None
+
+    bucket_name: Optional[str] = None
+
+    module_id: Optional[str] = None
 
 
 class Source(BaseModel):
-    bucket: Optional[BucketResponse] = None
+    bucket: Optional[SourceBucket] = None
     """
     **DESCRIPTION** The bucket information containing this result **EXAMPLE**
     {"moduleId": "01jt3vs2nyt2xwk2f54x2bkn84", "bucketName": "mr-bucket"}
